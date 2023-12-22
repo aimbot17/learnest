@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "./Sidebar";
-import useCallApi from "../hooks/useCallApi";
+import useCallApi from "../../hooks/useCallApi";
 import { API_BASE_URL } from "../../config/Index.ts";
 import Shimmer from "../utils/Shimmer";
 import { useParams } from "react-router-dom";
@@ -8,8 +8,7 @@ import { useParams } from "react-router-dom";
 const PlayerLayout = () => {
   const API = useCallApi(API_BASE_URL) as [object, boolean, boolean];
   const [data, error, loading] = API;
-  const { courseId } = useParams();  
-
+  const { courseId } = useParams();
 
   if (error) {
     return (
@@ -41,7 +40,7 @@ function VideoPlayer() {
   return (
     <video
       id="player"
-      className={`flex w-9/12 text-stone-50 h-screen ml-auto justify-center`}
+      className={`flex text-stone-50 h-screen ml-auto justify-center`}
       controls
     ></video>
   );

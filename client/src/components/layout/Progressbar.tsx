@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 const CustomProgressBar:React.FC = () => {
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(10);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress < 100 ? prevProgress + 1 : 100
-      );
-    }, 1000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setProgress((prevProgress) =>
+  //       prevProgress < 100 ? prevProgress + 1 : 100
+  //     );
+  //   }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   return (
     <div className="progress-bar-container mt-8 mb-3">
