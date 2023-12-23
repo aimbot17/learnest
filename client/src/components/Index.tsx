@@ -8,21 +8,18 @@ const App_Layout: React.FC = () => {
       <div>
         <div className={"text-4xl font-bold"}>
           Learn & become the
-          <div className={"text-[#6674cc]"}>
+          <div className={"text-btnColor"}>
             Top 1% software
             <div>developer</div>
           </div>
         </div>
-        {/* Typing Effect */}
         <div>
-          <span>
-          Hello -
-          </span>
-            {/* <TypingEffect /> */}
+          <span>Hello -</span>
+          {/* <TypingEffect /> */}
         </div>
         <Link to={"/course"}>
           <button
-            className={"bg-[#6674CC] text-white p-[15px] px-[27px] rounded-xl"}
+            className={"bg-btnColor text-white p-[15px] px-[27px] rounded-xl"}
             type="button"
           >
             Explore new batches

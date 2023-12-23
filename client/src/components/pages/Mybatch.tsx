@@ -26,7 +26,7 @@ const Mybatch = () => {
                 </h6>
                 {/* Completion */}
                 <CustomProgressBar />
-                <div className="bg-[#6674cc] py-[11px] px-[22px] w-52 text-sm text-center text-white">
+                <div className="bg-btnColor py-[11px] px-[22px] w-52 text-sm text-center text-white">
                   <button>Continue</button>
                 </div>
               </div>

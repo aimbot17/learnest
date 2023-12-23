@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const useCallApi: React.FC = (API_BASE_URL: string) => {
+const useCallApi = (API_BASE_URL: string) => {
   const [data, setData] = useState<object>({});
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const CustomProgressBar:React.FC = () => {
+const CustomProgressBar = () => {
   const [progress, setProgress] = useState<number>(10);
 
   // useEffect(() => {

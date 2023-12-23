@@ -2,8 +2,11 @@
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        btnColor: "#6674cc",
+      },
+    },
   },
   plugins: [],
-}
-
+};

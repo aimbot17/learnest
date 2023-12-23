@@ -1,10 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App"
+import App from "../App";
 import App_Layout from "../components/Index";
-import ErrorPage from "../components/utils/Errors/ParamError";
 
+const ErrorPage = lazy(() => import("../components/utils/Errors/ParamError"));
 const Home = lazy(() => import("../components/pages/Home.tsx"));
 const Courses = lazy(() => import("../components/pages/Courses.tsx"));
 const MyBatch = lazy(() => import("../components/pages/Mybatch.tsx"));
@@ -65,7 +65,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: "watch/:courseId",
+    path: "/watch/:courseId",
     element: (
       <Suspense>
         <Videoplayer />
