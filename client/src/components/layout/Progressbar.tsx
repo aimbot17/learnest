@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const CustomProgressBar = () => {
   const [progress, setProgress] = useState<number>(10);
+
+  const handledta = () => {
+    setProgress(90);
+  };
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

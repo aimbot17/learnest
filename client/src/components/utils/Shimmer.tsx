@@ -1,6 +1,5 @@
-import React from "react";
 
-const PlayerShimmer: React.FC = () => {
+const PlayerShimmer = () => {
   return (
     <div className="flex text-white w-full h-full">
       <div className="w-3/12  bg-sidebarHeader"></div>

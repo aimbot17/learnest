@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/courseImage.jpeg";
 import CustomProgressBar from "../layout/Progressbar";

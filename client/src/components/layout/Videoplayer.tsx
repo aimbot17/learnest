@@ -1,4 +1,3 @@
-import React from "react";
 import Sidebar from "./Sidebar";
 import useCallApi from "../../hooks/useCallApi";
 import { API_BASE_URL } from "../../config/Index.ts";

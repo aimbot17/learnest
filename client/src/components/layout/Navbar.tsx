@@ -1,8 +1,7 @@
-import React from "react";
 import { Ncomponents } from "../../config/data";
 import { Link } from "react-router-dom";
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   return (
     <div className="w-full bg-white shadow-lg z-10">
       <div className="flex items-center justify-center p-4 bg-white">

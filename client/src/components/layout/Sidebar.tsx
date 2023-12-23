@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CaretDoubleLeft, CaretDoubleRight } from "phosphor-react";
 
@@ -39,7 +39,7 @@ const Sidebar: React.FC<sidebarProps> = ({ sidebar }) => {
             )}
           </div>
           <div className={"mt-5 text-2xl text-white"}>
-            {sidebar?.course?.title}
+            {sidebar?.course}
           </div>
         </div>
         <div className={"bg-white h-full w-full overflow-scroll"}>

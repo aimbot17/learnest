@@ -1,7 +1,6 @@
-import React from "react";
 import { Fcomponents } from "../../config/data";
 
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <div className="flex items-center justify-center m-10 bg-white">
       <div className="flex items-center justify-between gap-10 w-full max-w-6xl">
