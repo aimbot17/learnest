@@ -24,7 +24,7 @@ const App_Layout = () => {
           </div>
         </div>
         <div>
-          <span>Hello -</span>
+          <span>Hello - <Frontend></Frontend></span>
           {/* <TypingEffect /> */}
         </div>
         <div>
