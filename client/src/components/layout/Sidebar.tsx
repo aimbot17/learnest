@@ -2,11 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CaretDoubleLeft, CaretDoubleRight } from "phosphor-react";
 
-interface sidebarProps {
-  sidebar: Record<string, object>;
+interface Course {
+  title?: string;
 }
 
-const Sidebar: React.FC<sidebarProps> = ({ sidebar }) => {
+interface SidebarProps {
+  sidebar: {
+    course?: Course;
+  };
+  courseId?: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ sidebar, courseId }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const toggleSidebar = (): void => {
@@ -39,11 +46,12 @@ const Sidebar: React.FC<sidebarProps> = ({ sidebar }) => {
             )}
           </div>
           <div className={"mt-5 text-2xl text-white"}>
-            {sidebar?.course}
+            {sidebar?.course?.title}
           </div>
         </div>
         <div className={"bg-white h-full w-full overflow-scroll"}>
-          {/* {console.log(sidebar)} */}
+          {/* Additional content */}
+          {courseId}
         </div>
       </div>
     </>
