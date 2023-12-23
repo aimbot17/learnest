@@ -3,7 +3,7 @@ import { useState } from "react";
 const CustomProgressBar = () => {
   const [progress, setProgress] = useState<number>(10);
 
-  const handledta = () => {
+  const handledata = () => {
     setProgress(90);
   };
 
@@ -27,6 +27,7 @@ const CustomProgressBar = () => {
           <div
             style={{ width: `${progress}%` }}
             className="bg-[#6674cc] h-2"
+            onClick={handledata}
           ></div>
         </div>
       </div>

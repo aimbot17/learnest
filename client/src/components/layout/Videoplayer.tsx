@@ -4,6 +4,10 @@ import { API_BASE_URL } from "../../config/Index.ts";
 import Shimmer from "../utils/Shimmer";
 import { useParams } from "react-router-dom";
 
+interface VideoPlayerProps {
+  courseId?: string;
+}
+
 const PlayerLayout = () => {
   const API = useCallApi(API_BASE_URL) as [object, boolean, boolean];
   const [data, error, loading] = API;
@@ -27,20 +31,22 @@ const PlayerLayout = () => {
 
   return (
     <div className={"flex w-full h-full"}>
-      <Sidebar sidebar={data} courseId={courseId} />
-      <VideoPlayer courseId={courseId} />
+      <Sidebar sidebar={data} courseId={courseId || "sasasas"} />
+      <VideoPlayer courseId={courseId ?? ""} />
     </div>
   );
 };
 
 export default PlayerLayout;
 
-function VideoPlayer() {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ courseId }) => {
   return (
     <video
       id="player"
       className={`flex text-stone-50 h-screen ml-auto justify-center`}
       controls
-    ></video>
+    >
+      {courseId}
+    </video>
   );
-}
+};
