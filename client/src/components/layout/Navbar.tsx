@@ -12,7 +12,14 @@ const Navbar = () => {
           <ul className="flex gap-6 items-center">
             {Ncomponents.map((el) => (
               <li key={el.index}>
-                <Link to={`/` + el.routes}>
+                <Link
+                  to={`/${el.routes}`}
+                  aria-current={
+                    window.location.pathname === `/${el.routes}`
+                      ? "page"
+                      : undefined
+                  }
+                >
                   <div
                     className={`flex gap-2 items-center justify-center font-semibold text-gray-700 text-base cursor-pointer `}
                   >

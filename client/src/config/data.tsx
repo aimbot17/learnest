@@ -15,25 +15,30 @@ import Logo from "../assets/images/apnacollege.png";
 type DropdownItem = {
   index: number;
   name: string;
-  icon?: JSX.Element;
 };
 
-type FooterComponent = {
+type Subtext = {
   index: number;
-  img?: string;
-  text?: string;
-  name?: string;
-  subtext?: DropdownItem[];
+  name: string;
+  icon: JSX.Element;
 };
 
-type NavComponent = {
+interface FooterComponent {
   index: number;
-  img?: string;
-  name?: string;
-  icon?: JSX.Element;
-  routes?: string;
-  dropdownItems?: string[];
-};
+  img: string;
+  text: string;
+  name: string;
+  subtext: Subtext[];
+}
+
+interface NavComponent {
+  index: number;
+  img: string;
+  name: string;
+  icon: JSX.Element;
+  routes: string;
+  dropdownItems: DropdownItem[];
+}
 
 export const Ncomponents: NavComponent[] = [
   {

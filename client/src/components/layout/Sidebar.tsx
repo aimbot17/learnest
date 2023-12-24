@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebar, courseId }) => {
   return (
     <>
       <div
-        className={`h-screen bg-[#333A46] transition-all duration-500 ease-in-out overflow-hidden`}
+        className={`w-3/12 h-screen bg-[#333A46] transition-all duration-500 ease-in-out overflow-hidden`}
       >
         <div className={`text-black px-5 py-3`}>
           <div
@@ -50,8 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebar, courseId }) => {
           </div>
         </div>
         <div className={"bg-white h-full w-full overflow-scroll"}>
-          {/* Additional content */}
-          {courseId}
+          {console.log(sidebar?.course)}
         </div>
       </div>
     </>

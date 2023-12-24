@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import image from "../../assets/images/courseImage.jpeg";
 import CustomProgressBar from "../layout/Progressbar";
-
-const _id = "62a6cd5e1e9e2fbf212d608e";
+import { _Id } from "../../config/Index";
 
 const Mybatch = () => {
   return (
