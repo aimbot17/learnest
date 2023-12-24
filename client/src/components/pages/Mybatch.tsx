@@ -14,7 +14,7 @@ const Mybatch = () => {
       <div className={"bg-white w-full px-44 py-28 mt-10"}>
         <div className={"text-lg"}>COURSES</div>
         <div className={"flex flex-col items-center justify-center mt-6"}>
-          <Link to={"/watch/" + _id}>
+          <Link to={"/watch/" + _Id}>
             <div className="w-96 bg-[#F8F8FD] rounded-xl">
               <img src={image} alt="banner" />
               <div className={"p-5"}>

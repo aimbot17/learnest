@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebar, courseId }) => {
           </div>
         </div>
         <div className={"bg-white h-full w-full overflow-scroll"}>
-          {console.log(sidebar?.course)}
+          {courseId}
         </div>
       </div>
     </>
