@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import image from "../../assets/images/courseImage.jpeg";
 import CustomProgressBar from "../layout/Progressbar";
-
-const _id = "62a6cd5e1e9e2fbf212d608e";
+import { _Id } from "../../config/Index";
 
 const Mybatch = () => {
   return (
@@ -15,7 +14,7 @@ const Mybatch = () => {
       <div className={"bg-white w-full px-44 py-28 mt-10"}>
         <div className={"text-lg"}>COURSES</div>
         <div className={"flex flex-col items-center justify-center mt-6"}>
-          <Link to={"/watch/" + _id}>
+          <Link to={"/watch/" + _Id}>
             <div className="w-96 bg-[#F8F8FD] rounded-xl">
               <img src={image} alt="banner" />
               <div className={"p-5"}>

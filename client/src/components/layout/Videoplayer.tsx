@@ -43,7 +43,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ courseId }) => {
   return (
     <video
       id="player"
-      className={`flex text-stone-50 h-screen ml-auto justify-center`}
+      className={`w-9/12 flex text-stone-50 h-screen ml-auto justify-center`}
       controls
     >
       {courseId}
