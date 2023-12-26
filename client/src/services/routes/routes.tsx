@@ -1,16 +1,16 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import App_Layout from "../components/Index";
+import App from "../../App";
+import App_Layout from "../../pages/Index";
 
-const ErrorPage = lazy(() => import("../components/utils/Errors/ParamError"));
-const Home = lazy(() => import("../components/pages/Home.tsx"));
-const Courses = lazy(() => import("../components/pages/Courses.tsx"));
-const MyBatch = lazy(() => import("../components/pages/Mybatch.tsx"));
-const Resources = lazy(() => import("../components/pages/Resources.tsx"));
-const Videoplayer = lazy(() => import("../components/layout/Videoplayer.tsx"));
-const Profile = lazy(() => import("../components/pages/dashboard/Profile.tsx"));
+const ErrorPage = lazy(() => import("../../utils/Errors/ParamError"));
+const Home = lazy(() => import("../../pages/Home"));
+const Courses = lazy(() => import("../../pages/course/Courses"));
+const MyBatch = lazy(() => import("../../pages/Mybatch"));
+const Resources = lazy(() => import("../../pages/Resources"));
+const Videoplayer = lazy(() => import("../../components/videoplayer/Videoplayer"));
+const Profile = lazy(() => import("../../pages/dashboard/Profile"));
 
 const routes = createBrowserRouter([
   {

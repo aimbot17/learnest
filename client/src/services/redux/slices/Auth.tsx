@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const AuthenticationSlice = createSlice({
   name: "auth",
   initialState: {
-    Signup: ["Banana", "Apple"],
+    signup: [1],
   },
   reducers: {
     addUser: (state, action) => {
-      state.Signup.push(action.payload);
+      state.signup.push(action.payload);
     },
     signout: (state) => {
-      state.Signup = [];
+      state.signup = [];
     },
   },
 });

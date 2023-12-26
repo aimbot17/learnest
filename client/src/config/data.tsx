@@ -38,7 +38,7 @@ interface NavComponent {
   name: string;
   icon: React.ReactNode;
   routes: string;
-  dropdownItems?: DropdownItem[]; // Make dropdownItems optional
+  dropdownItems?: DropdownItem[]; 
 }
 
 export const Ncomponents: NavComponent[] = [
@@ -47,7 +47,7 @@ export const Ncomponents: NavComponent[] = [
     img: Logo,
     routes: "",
     name: "",
-    icon: <></>, // Placeholder, provide appropriate default
+    icon: <></>, 
   },
   {
     index: 1,

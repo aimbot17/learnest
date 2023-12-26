@@ -1,7 +1,7 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 import useCallApi from "../../hooks/useCallApi";
 import { API_BASE_URL } from "../../config/Index.ts";
-import Shimmer from "../utils/Shimmer";
+import Shimmer from "../../utils/Shimmer";
 import { useParams } from "react-router-dom";
 
 interface VideoPlayerProps {
