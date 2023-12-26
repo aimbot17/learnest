@@ -14,6 +14,7 @@ dist-ssr
 # SECRET
 .env 
 
+Todo.md
 
 # Editor directories and files
 .vscode/*

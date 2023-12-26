@@ -1,4 +1,4 @@
-import { Fcomponents } from "../../config/data";
+import { Fcomponents } from "../config/data";
 
 const Footer = () => {
   return (

@@ -1,5 +1,5 @@
 interface AuthState {
-  Signup: string[];
+  signup: string[];
 }
 
 export interface RootState {

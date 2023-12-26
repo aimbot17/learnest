@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../redux/slices/Auth";
-import { RootState } from "./utils/RootState";
+import { addUser } from "../services/redux/slices/Auth";
+import { RootState } from "../utils/RootState";
 // import TypingEffect from "./utils/TypingEffect";
 
-const Data = "Hello world!";
+let Data:number = 0;
 
 const App_Layout = () => {
-  const Login = useSelector((store: RootState) => store.auth.Signup);
+  const Login = useSelector((store: RootState) => store.auth.signup);
   const dispatch = useDispatch();
 
   const handleAddItem = () => {
-    dispatch(addUser(Data));
+    dispatch(addUser(Data++));
   };
 
   return (

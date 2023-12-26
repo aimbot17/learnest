@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
-import image from "../../assets/images/courseImage.jpeg";
-import CustomProgressBar from "../layout/Progressbar";
-import { _Id } from "../../config/Index";
+import image from "../assets/images/courseImage.jpeg";
+import ProgressBar from "../utils/Progressbar";
+import { _Id } from "../config/Index";
+import { useSearchParams } from "react-router-dom";
 
 const Mybatch = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function handleParams() {
+    setSearchParams({ courseId: _Id });
+  }
+
+  console.log(handleParams, searchParams);
+
   return (
     <div
       className={
@@ -23,7 +32,7 @@ const Mybatch = () => {
                   Welcome Alphait! Please find your curriculum inside.
                 </h6>
                 {/* Completion */}
-                <CustomProgressBar />
+                <ProgressBar />
                 <div className="bg-btnColor py-[11px] px-[22px] w-52 text-sm text-center text-white">
                   <button>Continue</button>
                 </div>

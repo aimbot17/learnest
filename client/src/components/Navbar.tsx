@@ -1,9 +1,12 @@
-import { Ncomponents } from "../../config/data";
-import { Link } from "react-router-dom";
+import { Ncomponents } from "../config/data";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Navbar = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams, setSearchParams);
+
   return (
-    <div className="w-full bg-white shadow-lg z-10">
+    <div className="w-full bg-white">
       <div className="flex items-center justify-center p-4 bg-white">
         <nav className="flex items-center justify-between w-full max-w-6xl">
           <Link to={"/"}>
