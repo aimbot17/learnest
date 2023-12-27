@@ -38,7 +38,7 @@ interface NavComponent {
   name: string;
   icon: React.ReactNode;
   routes: string;
-  dropdownItems?: DropdownItem[]; 
+  dropdownItems?: DropdownItem[];
 }
 
 export const Ncomponents: NavComponent[] = [
@@ -47,7 +47,7 @@ export const Ncomponents: NavComponent[] = [
     img: Logo,
     routes: "",
     name: "",
-    icon: <></>, 
+    icon: <></>,
   },
   {
     index: 1,
@@ -89,8 +89,8 @@ export const Ncomponents: NavComponent[] = [
   },
   {
     index: 5,
-    name: "Profile",
-    routes: "profile",
+    name: "Login",
+    routes: "auth",
     icon: <UserCircle size={30} />,
     img: "",
   },
