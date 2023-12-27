@@ -1,7 +1,12 @@
-interface AuthState {
-  signup: string[];
+interface AuthData {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
 }
-
 export interface RootState {
-  auth: AuthState;
+  auth: {
+    signup: AuthData;
+  };
 }

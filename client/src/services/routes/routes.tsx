@@ -1,16 +1,19 @@
-/* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../../App";
 import App_Layout from "../../pages/Index";
+// import PrivateRoute from "./Private-routes";
 
 const ErrorPage = lazy(() => import("../../utils/Errors/ParamError"));
 const Home = lazy(() => import("../../pages/Home"));
 const Courses = lazy(() => import("../../pages/course/Courses"));
 const MyBatch = lazy(() => import("../../pages/Mybatch"));
 const Resources = lazy(() => import("../../pages/Resources"));
-const Videoplayer = lazy(() => import("../../components/videoplayer/Videoplayer"));
+const Videoplayer = lazy(
+  () => import("../../components/videoplayer/Videoplayer")
+);
 const Profile = lazy(() => import("../../pages/dashboard/Profile"));
+import { AuthRoute } from "./logic-route";
 
 const routes = createBrowserRouter([
   {
@@ -29,7 +32,7 @@ const routes = createBrowserRouter([
       {
         path: "/home",
         element: (
-          <Suspense>
+          <Suspense fallback={<div>Loading Home...</div>}>
             <Home />
           </Suspense>
         ),
@@ -37,7 +40,7 @@ const routes = createBrowserRouter([
       {
         path: "/course",
         element: (
-          <Suspense>
+          <Suspense fallback={<div>Loading Courses...</div>}>
             <Courses />
           </Suspense>
         ),
@@ -45,7 +48,7 @@ const routes = createBrowserRouter([
       {
         path: "/mybatch",
         element: (
-          <Suspense>
+          <Suspense fallback={<div>Loading MyBatch...</div>}>
             <MyBatch />
           </Suspense>
         ),
@@ -53,7 +56,7 @@ const routes = createBrowserRouter([
       {
         path: "/resources",
         element: (
-          <Suspense>
+          <Suspense fallback={<div>Loading Resources...</div>}>
             <Resources />
           </Suspense>
         ),
@@ -61,9 +64,13 @@ const routes = createBrowserRouter([
     ],
   },
   {
+    path: "/auth/*",
+    element: <AuthRoute />,
+  },
+  {
     path: "/profile",
     element: (
-      <Suspense>
+      <Suspense fallback={<div>Loading Profile...</div>}>
         <Profile />
       </Suspense>
     ),
@@ -71,7 +78,7 @@ const routes = createBrowserRouter([
   {
     path: "/watch/:courseId",
     element: (
-      <Suspense>
+      <Suspense fallback={<div>Loading Videoplayer...</div>}>
         <Videoplayer />
       </Suspense>
     ),
