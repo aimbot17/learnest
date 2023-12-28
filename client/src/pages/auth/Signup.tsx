@@ -3,14 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signUpUser } from "../../services/redux/slices/Auth";
 import { v4 as uuidv4 } from "uuid";
-
-interface AuthData {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  phoneNumber: string;
-}
+import { X } from "phosphor-react";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -21,23 +14,20 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const userData: AuthData = {
+  const userData = {
     id: uuidv4(),
+    isAuthenticated: true,
     name,
     email,
     password,
     phoneNumber,
   };
-
-  console.log(uuidv4());
-
   const clearInput = () => {
     setName("");
     setEmail("");
     setPassword("");
     setPhoneNumber("");
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     data();
@@ -51,6 +41,9 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <Link to={"/auth"} className="absolute top-0 left-0 p-4">
+        <X size={30} />
+      </Link>
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
