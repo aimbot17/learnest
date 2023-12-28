@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
+const initialState = {
+  signup: {},
+};
 
 const AuthenticationSlice = createSlice({
   name: "auth",
-  initialState: {
-    signup: {} ,
-  },
+  initialState,
   reducers: {
     signUpUser: (state, action) => {
       state.signup = action.payload;

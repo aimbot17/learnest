@@ -2,7 +2,8 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../../App";
 import App_Layout from "../../pages/Index";
-// import PrivateRoute from "./Private-routes";
+import { AuthRoute } from "./logic-route";
+import PrivateRoutes from "./Private-routes";
 
 const ErrorPage = lazy(() => import("../../utils/Errors/ParamError"));
 const Home = lazy(() => import("../../pages/Home"));
@@ -13,7 +14,6 @@ const Videoplayer = lazy(
   () => import("../../components/videoplayer/Videoplayer")
 );
 const Profile = lazy(() => import("../../pages/dashboard/Profile"));
-import { AuthRoute } from "./logic-route";
 
 const routes = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const routes = createBrowserRouter([
         element: <App_Layout />,
       },
       {
-        path: "/home",
+        path: "/Home",
         element: (
           <Suspense fallback={<div>Loading Home...</div>}>
             <Home />
@@ -41,7 +41,9 @@ const routes = createBrowserRouter([
         path: "/course",
         element: (
           <Suspense fallback={<div>Loading Courses...</div>}>
-            <Courses />
+            <PrivateRoutes>
+              <Courses />
+            </PrivateRoutes>
           </Suspense>
         ),
       },
@@ -49,7 +51,9 @@ const routes = createBrowserRouter([
         path: "/mybatch",
         element: (
           <Suspense fallback={<div>Loading MyBatch...</div>}>
-            <MyBatch />
+            <PrivateRoutes>
+              <MyBatch />
+            </PrivateRoutes>
           </Suspense>
         ),
       },
@@ -57,7 +61,9 @@ const routes = createBrowserRouter([
         path: "/resources",
         element: (
           <Suspense fallback={<div>Loading Resources...</div>}>
-            <Resources />
+            <PrivateRoutes>
+              <Resources />
+            </PrivateRoutes>
           </Suspense>
         ),
       },
@@ -71,7 +77,9 @@ const routes = createBrowserRouter([
     path: "/profile",
     element: (
       <Suspense fallback={<div>Loading Profile...</div>}>
-        <Profile />
+        <PrivateRoutes>
+          <Profile />
+        </PrivateRoutes>
       </Suspense>
     ),
   },
@@ -79,7 +87,9 @@ const routes = createBrowserRouter([
     path: "/watch/:courseId",
     element: (
       <Suspense fallback={<div>Loading Videoplayer...</div>}>
-        <Videoplayer />
+        <PrivateRoutes>
+          <Videoplayer />
+        </PrivateRoutes>
       </Suspense>
     ),
   },

@@ -2,6 +2,7 @@ import { useState, SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../utils/RootState";
+import { X, Eye, EyeSlash } from "phosphor-react";
 
 const Login = () => {
   const loginData = useSelector((store: RootState) => store.auth.signup);
@@ -10,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -26,6 +28,9 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <Link to={"/Home"} className="absolute top-0 left-0 p-4">
+        <X size={30} />
+      </Link>
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -54,20 +59,29 @@ const Login = () => {
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
           </div>
-          <div>{error}</div>
+          <div className="text-red-500">{error}</div>
           <div>
             <button
               type="submit"

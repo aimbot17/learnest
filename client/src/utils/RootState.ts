@@ -4,6 +4,7 @@ interface AuthData {
   email: string;
   password: string;
   phoneNumber: string;
+  isAuthenticated: boolean;
 }
 export interface RootState {
   auth: {
