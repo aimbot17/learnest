@@ -12,7 +12,7 @@ These instructions will help you set up a local copy of the project for developm
 
 Make sure you have the following software installed on your machine:
 
-- [Node.js](https://nodejs.org/) (v14 or later)
+- [Node.js](https://nodejs.org/) (v16 or later)
 - [npm](https://www.npmjs.com/) (Node Package Manager)
 - [Git](https://git-scm.com/) (optional, but recommended)
 - [Docker](https://www.docker.com/) (for containerization, optional but recommended)
