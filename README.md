@@ -41,21 +41,7 @@ Make sure you have the following software installed on your machine:
    ```bash
    cd apnacollege/client
    ```
-
-   - **With Docker:**
-
-     Build the Docker image for the client:
-
-     ```bash
-     docker build -t apnacollege-client .
-     ```
-
-     Run the Docker container for the client:
-
-     ```bash
-     docker run -p 3000:5173 apnacollege-client
-     ```
-
+   
    - **Without Docker:**
 
      Install dependencies:
