@@ -53,7 +53,7 @@ Make sure you have the following software installed on your machine:
      Run the Docker container for the client:
 
      ```bash
-     docker run -p 3000:3000 apnacollege-client
+     docker run -p 3000:5173 apnacollege-client
      ```
 
    - **Without Docker:**
