@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 const Auth = () => {
   return (
     <div>
-      <Link to={"/auth"}>Login</Link>
+      <div>
+        <Link to={"/auth"}>Login</Link>
+      </div>
+      <div>
+        <Link to={"/auth/signup"}>Signup</Link>
+      </div>
     </div>
   );
 };

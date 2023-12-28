@@ -41,7 +41,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Link to={"/auth"} className="absolute top-0 left-0 p-4">
+      <Link to={"/Home"} className="absolute top-0 left-0 p-4">
         <X size={30} />
       </Link>
       <div className="max-w-md w-full space-y-8">
