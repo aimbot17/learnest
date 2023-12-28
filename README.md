@@ -12,7 +12,7 @@ These instructions will help you set up a local copy of the project for developm
 
 Make sure you have the following software installed on your machine:
 
-- [Node.js](https://nodejs.org/) (v16 or later)
+- [Node.js](https://nodejs.org/) (v18 or later)
 - [npm](https://www.npmjs.com/) (Node Package Manager)
 - [Git](https://git-scm.com/) (optional, but recommended)
 - [Docker](https://www.docker.com/) (for containerization, optional but recommended)
@@ -25,7 +25,7 @@ Make sure you have the following software installed on your machine:
    git clone https://github.com/JoshiUtsav/apnacollege.git
    ```
 
-2. **Docker Installation (Optional, but Recommended):**
+2. **Docker Installation (Optional):**
 
    If you prefer using Docker for containerization, follow these steps:
 
@@ -39,7 +39,7 @@ Make sure you have the following software installed on your machine:
    Navigate to the `client` directory:
 
    ```bash
-   cd apnacollege/client
+   cd apnacollege-clone/client
    ```
    
    - **Without Docker:**
@@ -56,4 +56,4 @@ Make sure you have the following software installed on your machine:
      npm run dev
      ```
 
-4. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the app.
+4. Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the app.
