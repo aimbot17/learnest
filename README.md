@@ -36,24 +36,24 @@ Make sure you have the following software installed on your machine:
 
 3. **Frontend Setup:**
 
-   Navigate to the `frontend` directory:
+   Navigate to the `client` directory:
 
    ```bash
-   cd apnacollege/frontend
+   cd apnacollege/client
    ```
 
    - **With Docker:**
 
-     Build the Docker image for the frontend:
+     Build the Docker image for the client:
 
      ```bash
-     docker build -t apnacollege-frontend .
+     docker build -t apnacollege-client .
      ```
 
-     Run the Docker container for the frontend:
+     Run the Docker container for the client:
 
      ```bash
-     docker run -p 3000:3000 apnacollege-frontend
+     docker run -p 3000:3000 apnacollege-client
      ```
 
    - **Without Docker:**
