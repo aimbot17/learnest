@@ -1,12 +1,32 @@
 import { useState, SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import { CaretCircleLeft } from "phosphor-react";
+import axios from "axios";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+
+    try {
+      setLoading(true);
+      const API_URL = "http://localhost:8000/auth/forgot-password";
+      const response = await axios.post(API_URL, { email });
+      console.log(response);
+      setSuccess(true);
+      setEmail("");
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
+      console.error("Error making POST request:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -22,6 +42,15 @@ const ForgetPassword = () => {
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+            <div>
+              {loading && <p>Loading...</p>}
+              {error && <p className="text-red-500">{error}</p>}
+              {success && (
+                <p className="text-green-500">
+                  Password reset email sent successfully!
+                </p>
+              )}
+            </div>
             <div className="rounded-md shadow-sm space-y-4">
               <div>
                 <label htmlFor="email" className="sr-only">
