@@ -2,7 +2,7 @@
 
 ## Description
 
-Welcome to Apna College, a web app designed to provide a user experience similar to Apna College, with additional features and improvements. Explore the app, and feel free to contribute to enhance its functionality.
+Welcome to Apna College, a web app designed to provide a user experience similar to Apna College, with additional features and improvements.
 
 ## Getting Started
 
