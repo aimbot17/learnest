@@ -14,7 +14,6 @@ Make sure you have the following software installed on your machine:
 
 - [Node.js](https://nodejs.org/) (v18 or later)
 - [npm](https://www.npmjs.com/) (Node Package Manager)
-- [Git](https://git-scm.com/) (optional, but recommended)
 
 ### Installation
 
