@@ -1,17 +1,9 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "./src/index.ts",
-      "use": "@vercel/node",
-      "config": { "outDir": "dist" }
-    }
+    { "src": "./src/index.ts", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/",
-      "methods": ["GET", "POST", "PUT", "DELETE"]
-    }
+    { "src": "/(.*)", "dest": "/", "methods": ["GET", "POST", "PUT", "DELETE"] }
   ]
 }
