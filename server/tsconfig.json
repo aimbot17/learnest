@@ -7,7 +7,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
@@ -15,8 +14,12 @@
     },
     "resolveJsonModule": true,
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": false, 
+    "removeComments": true, 
+    "noImplicitAny": true,
+    "noUnusedLocals": true, 
+    "noUnusedParameters": true 
   },
-  "include": ["./src/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
