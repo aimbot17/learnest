@@ -9,17 +9,18 @@
     "outDir": "./dist",
     "moduleResolution": "node",
     "baseUrl": "./src",
+    "types": ["express", "node", "winston", "supertest", "jest"],
     "paths": {
       "*": ["types/*"]
     },
     "resolveJsonModule": true,
     "declaration": true,
-    "sourceMap": false, 
-    "removeComments": true, 
+    "sourceMap": false,
+    "removeComments": true,
     "noImplicitAny": true,
-    "noUnusedLocals": true, 
-    "noUnusedParameters": true 
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

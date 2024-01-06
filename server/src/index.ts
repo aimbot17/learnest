@@ -4,7 +4,7 @@ import * as http from 'http';
 import winston from 'winston';
 
 // Create Express app
-const app = express();
+export const app = express();
 const port = process.env.PORT || 3000;
 
 // Configure Winston logger
