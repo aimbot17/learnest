@@ -1,38 +1,26 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "This is a small server for apnacollege client",
+  "description": "",
   "main": "index.js",
-  "engines": {
-    "node": "18.x"
-  },
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon --exec ts-node index.ts",
-    "test": "jest"
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "keywords": [],
-  "author": "Utsav Joshi",
+  "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/body-parser": "^1.19.5",
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^8.2.0",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.11",
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.2",
-    "supertest": "^6.3.3",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
   "dependencies": {
+    "express": "^4.18.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^20.10.6",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "eslint": "^8.56.0"
   }
 }
