@@ -9,7 +9,7 @@
     "outDir": "./dist",
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "types": ["express", "jest", "node", "supertest", "winston"],
+    "types": ["node", "express", "jest"],
     "paths": {
       "*": ["types/*"]
     },
