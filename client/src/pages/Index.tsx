@@ -1,20 +1,22 @@
 import { Link } from "react-router-dom";
-// import TypingEffect from "./utils/TypingEffect";
+import { useTypingEffect } from "../hooks/useTypingEffect";
 
 const App_Layout = () => {
+  const { typedSuperpower } = useTypingEffect();
+
   return (
     <div className={"pt-16 mt-10 flex items-center justify-center gap-10"}>
       <div>
         <div className={"text-4xl font-bold"}>
           Learn & become the
           <div className={"text-btnColor"}>
-            Top 1% software
+            <span>Top 1% software</span>
             <div>developer</div>
           </div>
         </div>
+        {/* <TypingEffect /> */}
         <div>
-          <span>Hello - Frontend</span>
-          {/* <TypingEffect /> */}
+          {typedSuperpower}
         </div>
         <Link to={"/course"}>
           <button
