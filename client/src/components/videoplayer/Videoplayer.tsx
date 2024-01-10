@@ -1,5 +1,5 @@
 import Sidebar from "../Sidebar";
-import useCallApi from "../../hooks/useCallApi";
+import useApi from "../../hooks/useApi";
 import { API_BASE_URL } from "../../config/Index.ts";
 import Shimmer from "../../utils/Shimmer";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ interface VideoPlayerProps {
 }
 
 const PlayerLayout = () => {
-  const API = useCallApi(API_BASE_URL) as [object, boolean, boolean];
+  const API = useApi(API_BASE_URL) as [object, boolean, boolean];
   const [data, error, loading] = API;
   const { courseId } = useParams();
 

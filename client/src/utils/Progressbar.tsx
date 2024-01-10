@@ -7,18 +7,6 @@ const CustomProgressBar = () => {
     setProgress(90);
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress < 100 ? prevProgress + 1 : 100
-  //     );
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
-
   return (
     <div className="progress-bar-container mt-8 mb-3">
       <div>

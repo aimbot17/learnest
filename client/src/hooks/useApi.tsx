@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useCallApi = (API_BASE_URL: string) => {
+const useApi = (API_BASE_URL: string) => {
   const [data, setData] = useState<object>({});
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,4 +25,4 @@ const useCallApi = (API_BASE_URL: string) => {
 
   return [data, error, loading];
 };
-export default useCallApi;
+export default useApi;
