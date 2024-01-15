@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { useTypingEffect } from "../hooks/useTypingEffect";
+import { Button } from "../components/Button.component";
 
 const App_Layout = () => {
   const { typedSuperpower } = useTypingEffect();
@@ -15,17 +15,8 @@ const App_Layout = () => {
           </div>
         </div>
         {/* <TypingEffect /> */}
-        <div>
-          {typedSuperpower}
-        </div>
-        <Link to={"/course"}>
-          <button
-            className={"bg-btnColor text-white p-[15px] px-[27px] rounded-xl"}
-            type="button"
-          >
-            Explore new batches
-          </button>
-        </Link>
+        <div>{typedSuperpower}</div>
+        <Button content={"Explore new batches"} link={"/course"} />
       </div>
     </div>
   );

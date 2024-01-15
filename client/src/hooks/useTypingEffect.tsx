@@ -1,6 +1,6 @@
 export const useTypingEffect = () => {
-  const typedSuperpower = "Hello, world!";
+  const typedSuperpower: string = "Alpha - New Courses";
   return {
     typedSuperpower,
   };
-};  
+};
