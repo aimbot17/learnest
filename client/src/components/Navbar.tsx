@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CaretDown, UserCircle } from "phosphor-react";
 import Logo from "../assets/images/apnacollege.png";

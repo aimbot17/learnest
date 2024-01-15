@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  CaretDown,
-  UserCircle,
   CaretRight,
   UserCircleGear,
   EnvelopeSimple,
@@ -12,11 +10,6 @@ import {
   TwitterLogo,
 } from "phosphor-react";
 import Logo from "../assets/images/apnacollege.png";
-
-type DropdownItem = {
-  index: number;
-  name: string;
-};
 
 type Subtext = {
   index: number;

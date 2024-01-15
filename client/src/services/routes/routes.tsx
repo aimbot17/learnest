@@ -11,7 +11,7 @@ const Courses = lazy(() => import("../../pages/course/Courses"));
 const MyBatch = lazy(() => import("../../pages/Mybatch"));
 const Resources = lazy(() => import("../../pages/Resources"));
 const Videoplayer = lazy(
-  () => import("../../components/videoplayer/Videoplayer")
+  () => import("../../components/Videoplayer/Videoplayer")
 );
 const Profile = lazy(() => import("../../pages/dashboard/Profile"));
 

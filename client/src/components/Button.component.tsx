@@ -1,6 +1,12 @@
-import { Link } from "react-router-dom";    
+import React from "react";
+import { Link } from "react-router-dom";
 
-export const Button = ({ content, link }) => {
+interface ButtonProps {
+  content: string;
+  link: string;
+}
+
+export const Button: React.FC<ButtonProps> = ({ content, link }) => {
   return (
     <Link to={link}>
       <button
