@@ -86,7 +86,7 @@ const routes = createBrowserRouter([
     element: (
       <Suspense fallback={<div>Loading Videoplayer...</div>}>
         <PrivateRoutes>
-          <Videoplayer />
+          <VideoPlayer />
         </PrivateRoutes>
       </Suspense>
     ),
