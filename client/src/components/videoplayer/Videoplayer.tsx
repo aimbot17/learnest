@@ -1,6 +1,6 @@
 import Sidebar from "../Sidebar";
 import useApi from "../../hooks/useApi";
-import { API_BASE_URL } from "../../config/Index.ts";
+import { API_BASE_URL } from "../../config/Index";
 import Shimmer from "../../utils/Shimmer";
 import { useParams } from "react-router-dom";
 
