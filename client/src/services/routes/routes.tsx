@@ -10,10 +10,8 @@ const Home = lazy(() => import("../../pages/Home"));
 const Courses = lazy(() => import("../../pages/course/Courses"));
 const MyBatch = lazy(() => import("../../pages/Mybatch"));
 const Resources = lazy(() => import("../../pages/Resources"));
-const Videoplayer = lazy(
-  () => import("../../components/videoplayer/Videoplayer")
-);
 const Profile = lazy(() => import("../../pages/dashboard/Profile"));
+const  VideoPlayer = lazy(() => import("../../pages/Videoplayer"));
 
 const routes = createBrowserRouter([
   {
@@ -88,7 +86,7 @@ const routes = createBrowserRouter([
     element: (
       <Suspense fallback={<div>Loading Videoplayer...</div>}>
         <PrivateRoutes>
-          <Videoplayer />
+          <VideoPlayer />
         </PrivateRoutes>
       </Suspense>
     ),

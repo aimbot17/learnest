@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  CaretDown,
-  UserCircle,
   CaretRight,
   UserCircleGear,
   EnvelopeSimple,
@@ -12,11 +10,6 @@ import {
   TwitterLogo,
 } from "phosphor-react";
 import Logo from "../assets/images/apnacollege.png";
-
-type DropdownItem = {
-  index: number;
-  name: string;
-};
 
 type Subtext = {
   index: number;
@@ -31,70 +24,6 @@ interface FooterComponent {
   name: string;
   subtext: Subtext[];
 }
-
-interface NavComponent {
-  index: number;
-  img: string;
-  name: string;
-  icon: React.ReactNode;
-  routes: string;
-  dropdownItems?: DropdownItem[];
-}
-
-export const Ncomponents: NavComponent[] = [
-  {
-    index: 0,
-    img: Logo,
-    routes: "",
-    name: "",
-    icon: <></>,
-  },
-  {
-    index: 1,
-    name: "Home",
-    routes: "Home",
-    img: "",
-    icon: <></>,
-  },
-  {
-    index: 2,
-    name: "Courses",
-    icon: <CaretDown size={13} />,
-    routes: "course",
-    img: "",
-    dropdownItems: [
-      { index: 1, name: "Course 1" },
-      { index: 2, name: "Course 2" },
-      { index: 3, name: "Course 3" },
-    ],
-  },
-  {
-    index: 3,
-    name: "Resources",
-    routes: "resources",
-    icon: <CaretDown size={13} />,
-    img: "",
-    dropdownItems: [
-      { index: 1, name: "Course 1" },
-      { index: 2, name: "Course 2" },
-      { index: 3, name: "Course 3" },
-    ],
-  },
-  {
-    index: 4,
-    routes: "mybatch",
-    name: "My Batch",
-    img: "",
-    icon: <></>,
-  },
-  {
-    index: 5,
-    name: "Login",
-    routes: "auth",
-    icon: <UserCircle size={30} />,
-    img: "",
-  },
-];
 
 export const Fcomponents: FooterComponent[] = [
   {
