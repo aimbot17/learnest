@@ -3,10 +3,7 @@ import useApi from "../hooks/useApi";
 import { API_BASE_URL } from "../config/Index";
 import Shimmer from "../utils/Shimmer";
 import { useParams } from "react-router-dom";
-
-interface VideoPlayerProps {
-  courseId?: string;
-}
+import VideoPlayer from "../components/Videoplayer/videoplayer.component";
 
 const PlayerLayout = () => {
   const API = useApi(API_BASE_URL) as [object, boolean, boolean];
@@ -38,15 +35,3 @@ const PlayerLayout = () => {
 };
 
 export default PlayerLayout;
-
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ courseId }) => {
-  return (
-    <video
-      id="player"
-      className={`w-9/12 flex text-stone-50 h-screen ml-auto justify-center`}
-      controls
-    >
-      {courseId}
-    </video>
-  );
-};
