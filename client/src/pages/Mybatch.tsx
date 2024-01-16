@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import image from "../assets/images/courseImage.jpeg";
-import ProgressBar from "../utils/Progressbar";
+import CustomProgressBar from "../utils/Loader/Progressbar";
 import { _Id } from "../config/Index";
 import { useSearchParams } from "react-router-dom";
 
@@ -32,7 +32,9 @@ const Mybatch = () => {
                   Welcome Alphait! Please find your curriculum inside.
                 </h6>
                 {/* Completion */}
-                <ProgressBar />
+                <div>
+                  <CustomProgressBar />
+                </div>
                 <div className="bg-btnColor py-[11px] px-[22px] w-52 text-sm text-center text-white">
                   <button>Continue</button>
                 </div>
