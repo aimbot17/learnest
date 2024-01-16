@@ -1,40 +1,112 @@
-import { Fcomponents } from "../config/data";
+import Logo from "../assets/images/apnacollege.png";
+import {
+  CaretRight,
+  UserCircleGear,
+  EnvelopeSimple,
+  FacebookLogo,
+  InstagramLogo,
+  YoutubeLogo,
+  LinkedinLogo,
+  TwitterLogo,
+} from "phosphor-react";
 
 const Footer = () => {
   return (
-    <div className="flex items-center justify-center m-10 bg-white">
-      <div className="flex items-center justify-between gap-10 w-full max-w-6xl">
-        {Fcomponents.map((el, i) => (
-          <div
-            key={el.index}
-            className="flex flex-col items-start justify-center"
-            style={{ height: "200px", width: "200px", flexGrow: 1 }}
-          >
-            <div key={i} className="">
-              <div className="relative flex items-start justify-start text-base">
-                {el.img && <img src={el.img} alt={el.name} className="h-12" />}
-                <span className="text-lg font-bold">{el.name}</span>
-              </div>
-            </div>
-            <div
-              key={el.index}
-              className="flex flex-col items-start justify-center"
-              style={{ height: "200px", width: "200px", flexGrow: 1 }}
-            >
-              {el.text && <div className="text-black text-lg">{el.text}</div>}
-              {el.subtext &&
-                el.subtext.map((subitem) => (
-                  <div
-                    className="flex items-center justify-start"
-                    key={subitem.index}
-                  >
-                    <span className="mr-2">{subitem.icon}</span>
-                    <span>{subitem.name}</span>
-                  </div>
-                ))}
-            </div>
+    <div
+      className={"flex items-center justify-center p-10 mt-7 bg-white w-full"}
+    >
+      <div className={"flex items-center justify-around gap-10"}>
+        <div className="text-base flex flex-col items-start justify-center gap-5 w-52 h-56">
+          <div>
+            <img src={Logo} alt={"Logo"} className="h-12" />
           </div>
-        ))}
+          <div className="text-lg">
+            {"We are India's most loved coding community. Join us!"}
+          </div>
+        </div>
+        <div
+          className={"w-52 h-56 flex flex-col items-start justify-start gap-2"}
+        >
+          <div className="text-black font-bold text-lg mt-5">HELPFUL LINKS</div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <CaretRight />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <CaretRight />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <CaretRight />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <CaretRight />
+            </div>
+            <div>Courses</div>
+          </div>
+        </div>
+        <div
+          className={"w-52 h-56 flex flex-col items-start justify-start gap-2"}
+        >
+          <div className="text-black font-bold text-lg mt-5">GET IN TOUCH</div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <EnvelopeSimple />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <EnvelopeSimple />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <UserCircleGear />
+            </div>
+            <div>Courses</div>
+          </div>
+        </div>
+        <div
+          className={"w-52 h-56 flex flex-col items-start justify-start gap-2"}
+        >
+          <div className="text-black font-bold text-lg mt-5">
+            CONNECT WITH US
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <FacebookLogo />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <InstagramLogo />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <TwitterLogo />
+            </div>
+            <div>Courses</div>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <YoutubeLogo />
+            </div>
+            <div>Courses</div>
+          </div>
+        </div>
       </div>
     </div>
   );
