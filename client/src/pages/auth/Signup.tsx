@@ -30,6 +30,7 @@ const Signup = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    localStorage.setItem("userData", JSON.stringify(userData));
     data();
   };
 

@@ -3,7 +3,7 @@ import useApi from "../hooks/useApi";
 import { API_BASE_URL } from "../config/Index";
 import Shimmer from "../utils/Loader/Shimmer";
 import { useParams } from "react-router-dom";
-import VideoPlayer from "../components/Videoplayer/videoplayer.component";
+import VideoPlayer from "../components/videoplayer.component";
 
 const PlayerLayout = () => {
   const API = useApi(API_BASE_URL) as [object, boolean, boolean];
@@ -20,15 +20,15 @@ const PlayerLayout = () => {
 
   if (loading) {
     return (
-      <>
+      <div>
         <Shimmer />
-      </>
+      </div>
     );
   }
 
   return (
     <div className={"flex w-full h-full"}>
-      <Sidebar sidebar={data} courseId={courseId || "sasasas"} />
+      <Sidebar courseId={courseId || "course_id"} />
       <VideoPlayer courseId={courseId ?? ""} />
     </div>
   );
