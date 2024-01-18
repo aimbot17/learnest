@@ -1,37 +1,20 @@
-import {
-  amazon,
-  google,
-  microsoft,
-  goldmanSachs,
-  paypal,
-  samsung,
-  saleforce,
-  isro,
-} from "../config/Index";
+import { companyLogos } from "../config/Index";
 
 const CompanyScroller = () => {
   return (
     <div className="scroller-container">
       <div
         className={
-          "flex flex-row text-center justify-center gap-10 w-11/12 rounded-sm overflow-hidden scroller-content"
+          "flex w-full flex-row text-center justify-center gap-10 rounded-sm overflow-hidden scroller-content"
         }
       >
-        {[
-          amazon,
-          google,
-          microsoft,
-          goldmanSachs,
-          paypal,
-          samsung,
-          saleforce,
-          isro,
-        ].map((image, index) => (
+        {companyLogos.map((logo) => (
           <img
-            key={index}
-            src={image}
-            alt={`company-${index}`}
-            className={"w-32"}
+            key={logo.index}
+            src={logo.img}
+            alt={`company-${logo.index}`}
+            loading="lazy"
+            className={"w-32 object-contain aspect-video"}
           />
         ))}
       </div>

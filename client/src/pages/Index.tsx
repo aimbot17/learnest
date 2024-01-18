@@ -6,7 +6,7 @@ const App_Layout = () => {
   const { typedSuperpower } = useTypingEffect();
 
   return (
-    <div className={"flex flex-col gap-5"}>
+    <div className={"flex flex-col gap-5 bg-[#F8F8FD]"}>
       <div className={"pt-16 mt-10 flex items-center justify-center gap-10"}>
         <div className={"flex flex-col items-start justify-center gap-3"}>
           <div className={"text-4xl font-bold"}>

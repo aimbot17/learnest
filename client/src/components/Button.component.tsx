@@ -10,7 +10,7 @@ export const Button: React.FC<ButtonProps> = ({ content, link }) => {
   return (
     <Link to={link}>
       <button
-        className={"bg-btnColor text-white p-[15px] px-[27px] rounded-xl"}
+        className={"bg-btnColor text-white p-[15px] px-[27px] font-semibold rounded-xl"}
         type="button"
       >
         {content}
