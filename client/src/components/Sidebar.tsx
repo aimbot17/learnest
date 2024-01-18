@@ -21,12 +21,12 @@ const Sidebar: React.FC<SidebarProps> = ({ courseId }) => {
   ];
   const [data, error, loading] = API;
 
-  useEffect(() => {
-    const videoTimeout = setTimeout(() => {
-      const video = data?.course?.videos;
-      console.log(video);
-    }, 2000);
-  }, [API]);
+  // useEffect(() => {
+  //   const videoTimeout = setTimeout(() => {
+  //     const video = data?.course?.videos;
+  //     console.log(video);
+  //   }, 2000);
+  // }, [API]);
 
   const toggleSidebar = (): void => {
     setIsOpen((prev) => !prev);
@@ -71,7 +71,6 @@ export default Sidebar;
 const Sidebar_Data = ({}) => {
   return (
     <div>
-      <h1>{console.log()}</h1>
     </div>
   );
 };

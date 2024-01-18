@@ -17,10 +17,10 @@ const useApi = (API_BASE_URL: string) => {
       setData(result);
       setLoading(false);
     } catch (error) {
-      if (error.name !== "AbortError") {
+      if (error instanceof Error && error.name !== "AbortError") {
         setError(true);
         setLoading(false);
-      }
+      }      
     }
   };
 
