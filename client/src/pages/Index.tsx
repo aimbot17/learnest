@@ -1,6 +1,7 @@
 import { useTypingEffect } from "../hooks/useTypingEffect";
 import { Button } from "../components/Button.component";
 import CompanyScroller from "../components/scroller.component";
+import AuthChecker from "../utils/AuthCheck";
 
 const App_Layout = () => {
   const { typedSuperpower } = useTypingEffect();

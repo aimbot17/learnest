@@ -82,7 +82,7 @@ const routes = createBrowserRouter([
     ),
   },
   {
-    path: "/watch/:courseId",
+    path: "/watch",
     element: (
       <Suspense fallback={<div>Loading Videoplayer...</div>}>
         <PrivateRoutes>

@@ -1,11 +1,11 @@
 import { useState, SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "../../utils/RootState";
 import { X, Eye, EyeSlash } from "phosphor-react";
 
 const Login = () => {
-  const loginData = useSelector((store: RootState) => store.auth.signup);
+  const dispatch = useDispatch();
   const Navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
@@ -15,14 +15,15 @@ const Login = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (
-      loginData &&
-      loginData.email === email &&
-      loginData.password === password
-    ) {
+
+    try {
+      const userData = await login(email, password);
+
+      dispatch(loginUser(userData));
+
       Navigate("/Home");
-    } else {
-      setError("Invalid email or password");
+    } catch (error) {
+      setError(error.message);
     }
   };
 

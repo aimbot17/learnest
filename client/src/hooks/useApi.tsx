@@ -1,28 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 const useApi = (API_BASE_URL: string) => {
   const [data, setData] = useState<object>({});
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function apiQuery() {
+  const apiQuery = async () => {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch(API_BASE_URL);
-      const data = await res.json();
-      setData(data);
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const res = await fetch(API_BASE_URL, { signal });
+      const result = await res.json();
+      setData(result);
       setLoading(false);
     } catch (error) {
-      setError(true);
-      setLoading(false);
+      if (error.name !== "AbortError") {
+        setError(true);
+        setLoading(false);
+      }
     }
-  }
+  };
 
   useEffect(() => {
     apiQuery();
+    return () => {};
   }, []);
 
-  return [data, error, loading];
+  const memoizedApiQuery = useMemo(() => apiQuery, []);
+
+  return [data, error, loading, memoizedApiQuery];
 };
+
 export default useApi;
