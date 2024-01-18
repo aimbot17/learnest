@@ -1,8 +1,9 @@
-import { useState, SyntheticEvent } from "react";
+import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../utils/RootState";
 import { X, Eye, EyeSlash } from "phosphor-react";
+import { loginUser } from "../../services/redux/slices/Auth";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,18 +14,25 @@ const Login = () => {
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const userData = {
+    email,
+    password,
+  };
+
+  const clearInput = () => {
+    setEmail("");
+    setPassword("");
+  };
+
+  const data = () => {
+    dispatch(loginUser(userData));
+    clearInput();
+    Navigate("/Home");
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    try {
-      const userData = await login(email, password);
-
-      dispatch(loginUser(userData));
-
-      Navigate("/Home");
-    } catch (error) {
-      setError(error.message);
-    }
+    data();
   };
 
   return (
