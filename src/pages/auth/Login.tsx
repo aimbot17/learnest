@@ -17,7 +17,7 @@ const Login = () => {
   const userData = {
     email,
     password,
-  };
+  };  
 
   const clearInput = () => {
     setEmail("");
