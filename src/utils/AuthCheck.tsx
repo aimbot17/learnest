@@ -5,7 +5,6 @@ const AuthChecker = () => {
 
   useEffect(() => {
     const login_data = localStorage.getItem("userData");
-
     if (login_data !== null) {
       setUserLoggedIn(JSON.parse(login_data));
     }

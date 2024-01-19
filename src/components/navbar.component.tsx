@@ -1,12 +1,33 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CaretDown, UserCircle } from "phosphor-react";
 import Logo from "../assets/images/apnacollege.png";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+
   const [isCoursesDropdownOpen, setCoursesDropdownOpen] = useState(false);
   const [isResourcesDropdownOpen, setResourcesDropdownOpen] = useState(false);
+  const [isUserLoggedOut, setUserLoggedOut] = useState<object>({});
+
+  // Login Info
+  const isUserLoggedIn = localStorage.getItem("userData");
+
+  const handleLogout = () => {
+    localStorage.removeItem("userData");
+    navigate("/mybatch");
+  };
+
+  const handleCoursesDropdownToggle = () => {
+    setCoursesDropdownOpen(!isCoursesDropdownOpen);
+    setResourcesDropdownOpen(false);
+  };
+
+  const handleResourcesDropdownToggle = () => {
+    setResourcesDropdownOpen(!isResourcesDropdownOpen);
+    setCoursesDropdownOpen(false);
+  };
 
   const navItems = [
     { path: "/", label: "Home" },
@@ -31,18 +52,13 @@ const Navbar = () => {
       ],
     },
     { path: "/mybatch", label: "My Batch" },
-    { path: "/auth", label: "Login", icon: <UserCircle size={30} /> },
+    {
+      path: isUserLoggedIn ? "" : "/auth",
+      label: isUserLoggedIn ? "Logout" : "Login",
+      icon: <UserCircle size={30} />,
+      onClick: isUserLoggedIn ? handleLogout : undefined,
+    },
   ];
-
-  const handleCoursesDropdownToggle = () => {
-    setCoursesDropdownOpen(!isCoursesDropdownOpen);
-    setResourcesDropdownOpen(false);
-  };
-
-  const handleResourcesDropdownToggle = () => {
-    setResourcesDropdownOpen(!isResourcesDropdownOpen);
-    setCoursesDropdownOpen(false);
-  };
 
   return (
     <div className="w-full bg-white">
@@ -53,7 +69,7 @@ const Navbar = () => {
           </Link>
           <ul className="flex gap-6 items-center">
             {navItems.map((item) => (
-              <li key={item.path}>
+              <li key={item.path} onClick={item.onClick}>
                 {item.subItems ? (
                   <div
                     onClick={
