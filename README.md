@@ -25,12 +25,6 @@ Make sure you have the following software installed on your machine:
 
 3. **Frontend Setup:**
 
-   Navigate to the `client` directory:
-
-   ```bash
-   cd apnacollege-clone/client
-   ```
-   
    - **Without Docker:**
 
      Install dependencies:
