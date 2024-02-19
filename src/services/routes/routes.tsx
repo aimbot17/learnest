@@ -11,7 +11,7 @@ const Courses = lazy(() => import("../../pages/course/Courses"));
 const MyBatch = lazy(() => import("../../pages/Mybatch"));
 const Resources = lazy(() => import("../../pages/Resources"));
 const Profile = lazy(() => import("../../pages/dashboard/Profile"));
-const  VideoPlayer = lazy(() => import("../../pages/Videoplayer"));
+const VideoPlayer = lazy(() => import("../../pages/Videoplayer"));
 
 const routes = createBrowserRouter([
   {
@@ -83,13 +83,18 @@ const routes = createBrowserRouter([
   },
   {
     path: "/watch",
-    element: (
-      <Suspense fallback={<div>Loading Videoplayer...</div>}>
-        <PrivateRoutes>
-          <VideoPlayer />
-        </PrivateRoutes>
-      </Suspense>
-    ),
+    children: [
+      {
+        path: ":course_id",
+        element: (
+          <Suspense fallback={<div>Loading Videoplayer...</div>}>
+            <PrivateRoutes>
+              <VideoPlayer />
+            </PrivateRoutes>
+          </Suspense>
+        ),
+      },
+    ],
   },
 ]);
 
