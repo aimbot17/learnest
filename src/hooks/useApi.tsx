@@ -20,7 +20,7 @@ const useApi = (API_BASE_URL: string) => {
       if (error instanceof Error && error.name !== "AbortError") {
         setError(true);
         setLoading(false);
-      }      
+      }
     }
   };
 
