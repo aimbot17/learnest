@@ -1,4 +1,4 @@
-# Apna College
+# Apna College ( clone ) frontend
 
 ## Description
 
