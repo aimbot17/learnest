@@ -20,7 +20,7 @@ Make sure you have the following software installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/JoshiUtsav/apnacollege.git
+   git clone https://github.com/JoshiUtsav/apnacollege-frontend.git
    ```
 
 3. **Frontend Setup:**
