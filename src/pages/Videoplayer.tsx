@@ -1,7 +1,12 @@
 import Sidebar from "../components/Sidebar";
 import VideoPlayer from "../components/videoplayer.component";
 
-const PlayerLayout = () => {
+import { useLocation } from "react-router-dom";
+
+const Video_Player_Layout = () => {
+  const location = useLocation();
+  console.log(location);
+
   return (
     <div className={"flex w-full h-full"}>
       <Sidebar />
@@ -10,4 +15,4 @@ const PlayerLayout = () => {
   );
 };
 
-export default PlayerLayout;
+export default Video_Player_Layout;

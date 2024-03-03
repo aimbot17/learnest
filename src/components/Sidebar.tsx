@@ -21,7 +21,9 @@ const Sidebar = () => {
           </div>
         </div>
         {/* Sidebar Data */}
-        <div></div>
+        <div>
+          Sidebar data
+        </div>
       </div>
     </>
   );
