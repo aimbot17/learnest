@@ -83,18 +83,13 @@ const routes = createBrowserRouter([
   },
   {
     path: "/watch",
-    children: [
-      {
-        path: ":course_id",
-        element: (
-          <Suspense fallback={<div>Loading Videoplayer...</div>}>
-            <PrivateRoutes>
-              <VideoPlayer />
-            </PrivateRoutes>
-          </Suspense>
-        ),
-      },
-    ],
+    element: (
+      <Suspense fallback={<div>Loading Video player...</div>}>
+        <PrivateRoutes>
+          <VideoPlayer />
+        </PrivateRoutes>
+      </Suspense>
+    ),
   },
 ]);
 
