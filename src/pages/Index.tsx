@@ -1,7 +1,8 @@
 import { useTypingEffect } from "../hooks/useTypingEffect";
 import { Button } from "../components/Button.component";
-import CompanyScroller from "../components/scroller.component";
+import CompanyScrollCarousel from "@/components/scroller.component";
 import AuthChecker from "../utils/AuthCheck";
+import { companyLogos } from "@/config/Index";
 
 const App_Layout = () => {
   const { typedSuperpower } = useTypingEffect();
@@ -30,7 +31,7 @@ const App_Layout = () => {
           <span className={"text-btnColor font-bold"}>dream job at</span>
         </h1>
         <div className="flex items-center justify-center p-10">
-          <CompanyScroller />
+          <CompanyScrollCarousel data={companyLogos}/>
         </div>
       </div>
     </div>
