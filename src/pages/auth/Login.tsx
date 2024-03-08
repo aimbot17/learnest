@@ -1,9 +1,9 @@
 import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { RootState } from "../../utils/RootState";
+import { RootState } from "@/utils/RootState";
 import { X, Eye, EyeSlash } from "phosphor-react";
-import { loginUser } from "../../services/redux/slices/Auth";
+import { loginUser } from "@/services/redux/slices/Auth";
 
 const Login = () => {
   const dispatch = useDispatch();

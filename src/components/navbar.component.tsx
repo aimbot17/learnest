@@ -39,9 +39,9 @@ const Navbar = () => {
     { path: "/mybatch", label: "My Batch" },
     {
       path: "/auth",
-      label: "Login",
+      label: localStorage.getItem("userData") ? "Logout" : "Login",
       icon: <UserCircle size={30} />,
-      onClick: handleLogout,
+      onClick: localStorage.getItem("userData") ? handleLogout : undefined,
     },
   ];
 

@@ -1,22 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signUpUser } from "../../services/redux/slices/Auth";
 import { v4 as uuidv4 } from "uuid";
-import { X } from "phosphor-react";
+import { X, Eye, EyeSlash } from "phosphor-react";
+import axios from "axios";
 
-const Signup = () => {
-  const dispatch = useDispatch();
-  let Navigate = useNavigate();
+const SignUp = () => {
+  let navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const userData = {
     id: uuidv4(),
-    isAuthenticated: true,
     name,
     email,
     password,
@@ -27,17 +26,17 @@ const Signup = () => {
     setEmail("");
     setPassword("");
     setPhoneNumber("");
+    navigate("/Home");
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("userData", JSON.stringify(userData));
-    data();
-  };
-
-  const data = () => {
-    dispatch(signUpUser(userData));
-    clearInput();
-    Navigate("/Home");
+    try {
+      const signUpResponse = await axios.post("/auth/signup", userData);
+      clearInput();
+    } catch (error) {
+      console.log("Error during signUp: ", error);
+      setError("Error during signUp. Please try again.");
+    }
   };
 
   return (
@@ -89,17 +88,26 @@ const Signup = () => {
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
             <div>
               <label htmlFor="phoneNumber" className="sr-only">
@@ -141,4 +149,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;

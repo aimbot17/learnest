@@ -1,18 +1,24 @@
-import { companyLogos } from "../config/Index";
+interface ScrollCarouselProps {
+  data: Array<{
+    index: number;
+    img: string;
+  }>;
+}
 
-const CompanyScroller = () => {
+const Scroll_Carousel = (props: ScrollCarouselProps) => {
+  const { data } = props;
   return (
-    <div className="scroller-container">
+    <div className="scroll-container">
       <div
         className={
-          "flex w-full flex-row text-center justify-center gap-10 rounded-sm overflow-hidden scroller-content"
+          "flex w-full flex-row text-center justify-center gap-10 rounded-sm overflow-hidden scroll-content"
         }
       >
-        {companyLogos.map((logo) => (
+        {data.map((img) => (
           <img
-            key={logo.index}
-            src={logo.img}
-            alt={`company-${logo.index}`}
+            key={img.index}
+            src={img.img}
+            alt={`company-${img.index}`}
             loading="lazy"
             className={"w-32 object-contain aspect-video"}
           />
@@ -22,4 +28,4 @@ const CompanyScroller = () => {
   );
 };
 
-export default CompanyScroller;
+export default Scroll_Carousel;
