@@ -53,3 +53,7 @@ export const companyLogos = [
     img: "https://lwfiles.mycourse.app/62a6cd5e1e9e2fbf212d608d-public/2c6580da38af7ceff65addfda59f06b9.png",
   },
 ];
+
+// Backend API URL
+export const API_URL = import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:3000";
+console.log(import.meta.env.VITE_REACT_APP_API_URL);

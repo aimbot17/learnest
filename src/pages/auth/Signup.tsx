@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { X, Eye, EyeSlash } from "phosphor-react";
 import axios from "axios";
+import {API_URL} from "@/config/Index"
 
 const SignUp = () => {
   let navigate = useNavigate();
@@ -31,7 +32,7 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const signUpResponse = await axios.post("/auth/signup", userData);
+      const signUpResponse = await axios.post(`${API_URL}/auth/signup`, userData);
       clearInput();
     } catch (error) {
       console.log("Error during signUp: ", error);
