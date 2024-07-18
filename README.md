@@ -40,3 +40,5 @@ Make sure you have the following software installed on your machine:
      ```
 
 4. Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the app.
+
+5. Backend Repo - [Link](https://github.com/JoshiUtsav/apnacollege-backend).
