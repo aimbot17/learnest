@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { X, Eye, EyeSlash } from "phosphor-react";
 import axios from "axios";
-import {API_URL} from "@/config/Index"
+import { API_URL } from "@/config/Index";
 
 const SignUp = () => {
   let navigate = useNavigate();
@@ -16,7 +15,6 @@ const SignUp = () => {
   const [error, setError] = useState<string>("");
 
   const userData = {
-    id: uuidv4(),
     name,
     email,
     password,
@@ -27,13 +25,16 @@ const SignUp = () => {
     setEmail("");
     setPassword("");
     setPhoneNumber("");
-    navigate("/Home");
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const signUpResponse = await axios.post(`${API_URL}/auth/signup`, userData);
+      const signup_user = await axios.post(`${API_URL}/auth/signup`, userData);
+      const result = signup_user;
+      console.log(result);
+      
       clearInput();
+      navigate("/Home");
     } catch (error) {
       console.log("Error during signUp: ", error);
       setError("Error during signUp. Please try again.");

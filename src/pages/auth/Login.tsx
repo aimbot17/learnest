@@ -1,9 +1,11 @@
 import { useState, FormEvent } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/utils/RootState";
 import { X, Eye, EyeSlash } from "phosphor-react";
 import { loginUser } from "@/services/redux/slices/Auth";
+import { API_URL } from "@/config/Index";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -17,22 +19,24 @@ const Login = () => {
   const userData = {
     email,
     password,
-  };  
+  };
 
   const clearInput = () => {
     setEmail("");
     setPassword("");
   };
 
-  const data = () => {
-    dispatch(loginUser(userData));
-    clearInput();
-    Navigate("/Home");
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    data();
+    try {
+      const login_user = await axios.post(`${API_URL}/auth/login`, userData);
+
+      clearInput();
+      Navigate("/Home");
+    } catch (error) {
+      console.log("Error during Login: ", error);
+      setError("Error during Login. Please try again.");
+    }
   };
 
   return (
