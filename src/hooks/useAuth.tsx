@@ -7,7 +7,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     axios
-      .get("/api/checkAuth") // Create this endpoint in Express
+      .get("/api/checkAuth")
       .then((response) => {
         setIsAuthenticated(response.data.isAuthenticated);
       })
