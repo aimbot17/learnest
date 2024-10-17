@@ -1,8 +1,4 @@
-# Apna College ( clone ) frontend
-
-## Description
-
-Welcome to Apna College, a web app designed to provide a user experience similar to Apna College, with additional features and improvements.
+# Code school frontend
 
 ## Getting Started
 
@@ -20,7 +16,7 @@ Make sure you have the following software installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/JoshiUtsav/apnacollege-frontend.git
+   git clone https://github.com/JoshiUtsav/constcode.git
    ```
 
 3. **Frontend Setup:**
@@ -41,4 +37,4 @@ Make sure you have the following software installed on your machine:
 
 4. Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the app.
 
-5. Backend Repo - [Link](https://github.com/JoshiUtsav/apnacollege-backend).
+5. Backend Repo - [Link](https://github.com/JoshiUtsav/constcode-backend).
