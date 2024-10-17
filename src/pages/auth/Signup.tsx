@@ -3,16 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { X, Eye, EyeSlash } from "phosphor-react";
 import axios from "axios";
 import { API_URL } from "@/config/Index";
+import { useAuthStore } from "@/store/useAuthStore"; // Import the Zustand store
 
 const SignUp = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser, setError } = useAuthStore(); // Use Zustand store for state management
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   const userData = {
     name,
@@ -20,24 +21,29 @@ const SignUp = () => {
     password,
     phoneNumber,
   };
+
   const clearInput = () => {
     setName("");
     setEmail("");
     setPassword("");
     setPhoneNumber("");
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const signup_user = await axios.post(`${API_URL}/auth/signup`, userData);
-      const result = signup_user;
-      console.log(result);
-      
+      // const signup_user = await axios.post(`${API_URL}/auth/signup`, userData);
+      // const result = signup_user.data;
+
+      setUser({ email: email, phoneNumber: phoneNumber });
       clearInput();
-      navigate("/Home");
-    } catch (error) {
+      navigate("/dashboard");
+    } catch (error: any) {
       console.log("Error during signUp: ", error);
-      setError("Error during signUp. Please try again.");
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error during signUp. Please try again.";
+      setError(errorMessage);
     }
   };
 
@@ -128,6 +134,9 @@ const SignUp = () => {
               />
             </div>
           </div>
+
+          {/* Display error message */}
+          <div className="text-red-500">{useAuthStore().error}</div>
 
           <div>
             <button

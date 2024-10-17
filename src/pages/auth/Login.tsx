@@ -1,48 +1,67 @@
-import { useState, FormEvent } from "react";
+// src/components/Login.tsx
+import { FormEvent, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { X, Eye, EyeSlash } from "phosphor-react";
 import { API_URL } from "@/config/Index";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser, setError, clearUser } = useAuthStore();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const user_login = {
-    email,
-    password,
-    phoneNumber,
-  };
 
   const clearInput = () => {
     setEmail("");
     setPassword("");
     setPhoneNumber("");
+    // clearUser();
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      const login_user = await axios.post(`${API_URL}/auth/login`, user_login, {
-        withCredentials: true,
-      });
 
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/auth/login`,
+        { email, password, phoneNumber },
+        { withCredentials: true }
+      );
+
+      // Set user data in Zustand store
+      setUser({ email: data.email, phoneNumber: data.phoneNumber });
       clearInput();
-      Navigate("/Home");
-    } catch (error) {
-      console.log("Error during Login: ", error);
-      setError("Error during Login. Please try again.");
+      navigate("/dashboard");
+    } catch (error: any) {
+      console.error("Error during Login: ", error);
+      if (axios.isAxiosError(error)) {
+        // Check if the error has a response with a status code
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          setError(
+            error.response.data.message || "An unexpected error occurred."
+          );
+        } else if (error.request) {
+          // The request was made but no response was received
+          setError("No response from the server. Please try again.");
+        } else {
+          // Something happened in setting up the request
+          setError("Error: " + error.message);
+        }
+      } else {
+        // Handle non-Axios errors
+        setError("An unexpected error occurred.");
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Link to={"/Home"} className="absolute top-0 left-0 p-4">
+      <Link to="/Home" className="absolute top-0 left-0 p-4">
         <X size={30} />
       </Link>
       <div className="max-w-md w-full space-y-8">
@@ -61,7 +80,6 @@ const Login = () => {
                 id="email"
                 name="email"
                 type="email"
-                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -77,7 +95,6 @@ const Login = () => {
                 id="phoneNumber"
                 name="phoneNumber"
                 type="tel"
-                autoComplete="tel"
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -94,7 +111,6 @@ const Login = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -112,30 +128,14 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="text-red-500">{error}</div>
+          {/* Display error message */}
+          <div className="text-red-500">{useAuthStore().error}</div>
+
           <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 12a2 2 0 100-4 2 2 0 000 4z"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M4 8a8 8 0 1116 0H4zm16 2H4a6 6 0 1112 0z"
-                  />
-                </svg>
-              </span>
               Sign in
             </button>
           </div>
