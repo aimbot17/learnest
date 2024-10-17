@@ -7,9 +7,7 @@ import PrivateRoutes from "./Private-routes";
 
 const ErrorPage = lazy(() => import("../utils/Errors/ParamError"));
 const Home = lazy(() => import("../pages/Home"));
-const MyBatch = lazy(() => import("../pages/Mybatch"));
 const Resources = lazy(() => import("../pages/Resources"));
-const VideoPlayer = lazy(() => import("../pages/Videoplayer"));
 
 const routes = createBrowserRouter([
   {
@@ -34,16 +32,6 @@ const routes = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading Home...</div>}>
             <Home />
-          </Suspense>
-        ),
-      },
-      {
-        path: "/mybatch",
-        element: (
-          <Suspense fallback={<div>Loading MyBatch...</div>}>
-            <PrivateRoutes>
-              <MyBatch />
-            </PrivateRoutes>
           </Suspense>
         ),
       },

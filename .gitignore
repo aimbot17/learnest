@@ -26,3 +26,4 @@ Todo.md
 *.njsproj
 *.sln
 *.sw?
+.vercel
