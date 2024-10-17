@@ -1,35 +1,36 @@
 import { useState, FormEvent } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { RootState } from "@/utils/RootState";
 import { X, Eye, EyeSlash } from "phosphor-react";
-import { loginUser } from "@/services/redux/slices/Auth";
 import { API_URL } from "@/config/Index";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const Navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const userData = {
+  const user_login = {
     email,
     password,
+    phoneNumber,
   };
 
   const clearInput = () => {
     setEmail("");
     setPassword("");
+    setPhoneNumber("");
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const login_user = await axios.post(`${API_URL}/auth/login`, userData);
+      const login_user = await axios.post(`${API_URL}/auth/login`, user_login, {
+        withCredentials: true,
+      });
 
       clearInput();
       Navigate("/Home");
@@ -64,8 +65,24 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
+              />
+            </div>
+            <div>
+              <label htmlFor="phoneNumber" className="sr-only">
+                Phone Number
+              </label>
+              <input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                autoComplete="tel"
+                required
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Phone Number"
               />
             </div>
             <div>
@@ -81,7 +98,7 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
                 <button
@@ -94,6 +111,7 @@ const Login = () => {
               </div>
             </div>
           </div>
+
           <div className="text-red-500">{error}</div>
           <div>
             <button
@@ -122,14 +140,6 @@ const Login = () => {
             </button>
           </div>
         </form>
-        <div className="text-center mt-4">
-          <Link
-            to="/auth/forgot-password"
-            className="text-sm text-indigo-600 hover:text-indigo-500"
-          >
-            Forgot your password?
-          </Link>
-        </div>
         <div className="text-center">
           <Link
             to="/auth/signup"
