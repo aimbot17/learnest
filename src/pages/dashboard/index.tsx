@@ -1,9 +1,10 @@
-import React from 'react'
+import { Fragment } from "react/jsx-runtime";
+import Sidebar from "@/components/sidebar.component";
 
-const Dashboard = () => {
+export default function Dashboard() {
   return (
-    <div>Dashboard</div>
-  )
+    <Fragment>
+      <Sidebar />
+    </Fragment>
+  );
 }
-
-export default Dashboard

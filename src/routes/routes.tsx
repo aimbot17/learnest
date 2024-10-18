@@ -12,7 +12,6 @@ const ErrorPage = lazy(() => import("@/utils/Errors/ParamError"));
 const Login = lazy(() => import("@/pages/auth/Login"));
 const Register = lazy(() => import("@/pages/auth/Signup"));
 const Dashboard = lazy(() => import("@/pages/dashboard/index"));
-const Courses = lazy(() => import("@/pages/Courses/index"));
 
 // Types
 type ProtectedRouteProps = {
@@ -66,9 +65,7 @@ const dashboardRoutes: RouteObject[] = [
   {
     path: "courses",
     element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <Courses />
-      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>{/* <Courses /> */}</Suspense>
     ),
   },
   // Add more dashboard routes as needed
