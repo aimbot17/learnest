@@ -1,51 +1,58 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { X, Eye, EyeSlash } from "phosphor-react";
+import { Eye, EyeSlash } from "phosphor-react";
 import axios from "axios";
 import { API_URL } from "@/config/Index";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const SignUp = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const { setUser, setError } = useAuthStore();
 
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+  });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
-  const userData = {
-    name,
-    email,
-    password,
-    phoneNumber,
+  const clearForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+    });
+    navigate("/dashboard");
   };
-  const clearInput = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-    setPhoneNumber("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const signup_user = await axios.post(`${API_URL}/auth/signup`, userData);
-      const result = signup_user;
-      console.log(result);
+      const { data } = await axios.post(`${API_URL}/auth/signup`, formData);
+
+      console.log(data);
       
-      clearInput();
-      navigate("/Home");
+
+      setUser(data);
+      clearForm();
     } catch (error) {
-      console.log("Error during signUp: ", error);
-      setError("Error during signUp. Please try again.");
+      let errorMessage = "Error during sign-up. Please try again.";
+      if (axios.isAxiosError(error) && error.response?.data) {
+        errorMessage = error.response.data.message || errorMessage;
+      }
+      setError(errorMessage);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <Link to={"/Home"} className="absolute top-0 left-0 p-4">
-        <X size={30} />
-      </Link>
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -64,8 +71,8 @@ const SignUp = () => {
                 type="text"
                 autoComplete="name"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={formData.name}
+                onChange={handleInputChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Name"
               />
@@ -80,8 +87,8 @@ const SignUp = () => {
                 type="email"
                 autoComplete="email"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleInputChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
               />
@@ -97,8 +104,8 @@ const SignUp = () => {
                   type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formData.password}
+                  onChange={handleInputChange}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
@@ -121,13 +128,16 @@ const SignUp = () => {
                 type="tel"
                 autoComplete="tel"
                 required
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Phone Number"
               />
             </div>
           </div>
+
+          {/* Display error message */}
+          <div className="text-red-500">{useAuthStore().error}</div>
 
           <div>
             <button
