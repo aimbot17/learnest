@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "phosphor-react";
+import Button from "@/components/button.component";
 import useAuthStore from "@/store/useAuthStore";
+import Input from "@/components/input.component";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const { signup, setUser } = useAuthStore();
@@ -15,16 +16,8 @@ const SignUp = () => {
     password: "",
     phoneNumber: "",
   });
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const clearForm = () => {
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      phoneNumber: "",
-    });
-  };
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,7 +42,8 @@ const SignUp = () => {
           username: formData.name,
           phoneNumber: formData.phoneNumber,
         });
-        clearForm();
+        // Clear form data after sign-up
+        setFormData({ name: "", email: "", password: "", phoneNumber: "" });
         navigate("/dashboard");
       } else {
         toast.error(message || "Signup failed");
@@ -69,96 +63,62 @@ const SignUp = () => {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                value={formData.name}
-                onChange={handleInputChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Name"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={formData.email}
-                onChange={handleInputChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="phoneNumber" className="sr-only">
-                Phone Number
-              </label>
-              <input
-                id="phoneNumber"
-                name="phoneNumber"
-                type="tel"
-                autoComplete="tel"
-                required
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                className="appearance-none mb-5 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Phone Number"
-              />
-            </div>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleInputChange}
+              autoComplete="name"
+              required
+            />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleInputChange}
+              autoComplete="email"
+              required
+            />
+            <Input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="tel"
+              placeholder="Phone Number"
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+              autoComplete="tel"
+              required
+            />
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              autoComplete="current-password"
+              required
+              showPasswordToggle
+              showPassword={showPassword}
+              onTogglePasswordVisibility={() =>
+                setShowPassword((prev) => !prev)
+              }
+            />
           </div>
-
           <span className="font-medium">
             Already have an account?{" "}
             <Link
               to="/auth/login"
-              className="text-indigo-600 hover:text-indigo-500 hover:underline"
+              className="text-gray-500 hover:text-gray-600 hover:underline"
             >
               Login
             </Link>
           </span>
-          <button
-            type="submit"
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Sign up
-          </button>
+          <Button type="submit" content="Sign up" />
         </form>
       </div>
     </div>

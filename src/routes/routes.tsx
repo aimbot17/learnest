@@ -27,10 +27,6 @@ const AuthLayout = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  if (isAuthenticated) {
-    return <LoadingFallback />;
-  }
-
   return <Outlet />;
 };
 
