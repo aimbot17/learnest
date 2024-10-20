@@ -1,41 +1,34 @@
-import { lazy, Suspense, ReactNode } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   createBrowserRouter,
   Navigate,
   Outlet,
   RouteObject,
+  useNavigate,
 } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import useAuthStore from "@/store/useAuthStore";
+import ProtectedRoute from "@/routes/protected.route";
 
 // Lazy-loaded components
 const ErrorPage = lazy(() => import("@/utils/Errors/ParamError"));
 const Login = lazy(() => import("@/pages/auth/Login"));
-const Register = lazy(() => import("@/pages/auth/Signup"));
+const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Dashboard = lazy(() => import("@/pages/dashboard/index"));
-
-// Types
-type ProtectedRouteProps = {
-  children?: ReactNode;
-};
-
 // Components
 const LoadingFallback = () => <div>Loading...</div>;
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuthenticated = false;
-
-  if (!isAuthenticated) {
-    return <Navigate to="/auth/login" replace />;
-  }
-
-  return children ? <>{children}</> : <Outlet />;
-};
-
 const AuthLayout = () => {
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <LoadingFallback />;
   }
 
   return <Outlet />;
@@ -55,7 +48,7 @@ const authRoutes: RouteObject[] = [
     path: "signup",
     element: (
       <Suspense fallback={<LoadingFallback />}>
-        <Register />
+        <Signup />
       </Suspense>
     ),
   },
@@ -68,7 +61,6 @@ const dashboardRoutes: RouteObject[] = [
       <Suspense fallback={<LoadingFallback />}>{/* <Courses /> */}</Suspense>
     ),
   },
-  // Add more dashboard routes as needed
 ];
 
 const routes = createBrowserRouter([
