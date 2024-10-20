@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Eye, EyeSlash } from "phosphor-react";
 import axios from "axios";
 import { API_URL } from "@/config/Index";
-import { useAuthStore } from "@/store/useAuthStore";
+import useAuthStore from "@/store/useAuthStore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { setUser, setError } = useAuthStore();
+  const { setUser, login } = useAuthStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -22,7 +23,6 @@ const Login = () => {
       password: "",
       phoneNumber: "",
     });
-    navigate("/dashboard");
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,29 +33,24 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${API_URL}/auth/login`, formData, {
-        withCredentials: true,
-      });
-
-      setUser(data);
+      await login(formData.email, formData.password, formData.phoneNumber);
+      toast.success("Logged in successfully");
       clearForm();
     } catch (error) {
       let errorMessage = "Error during login. Please try again.";
       if (axios.isAxiosError(error) && error.response?.data) {
         errorMessage = error.response.data.message || errorMessage;
       }
-      setError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center space-y-8 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Log in to your account
-          </h2>
-        </div>
+        <h2 className=" text-center text-3xl font-extrabold text-gray-900">
+          Log in
+        </h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
@@ -103,7 +98,7 @@ const Login = () => {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none mb-5 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
                 <button
@@ -117,26 +112,22 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Display error message */}
-          <div className="text-red-500">{useAuthStore().error}</div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          <span className="font-medium">
+            Don't have an account?{" "}
+            <Link
+              to="/auth/signup"
+              className="text-indigo-600 hover:text-indigo-500 hover:underline"
             >
-              Sign in
-            </button>
-          </div>
-        </form>
-        <div className="text-center">
-          <Link
-            to="/auth/signup"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+              Sign up
+            </Link>
+          </span>
+          <button
+            type="submit"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500"
           >
-            Don't have an account? Sign up
-          </Link>
-        </div>
+            Log in
+          </button>
+        </form>
       </div>
     </div>
   );

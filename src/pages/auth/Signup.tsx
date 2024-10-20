@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeSlash } from "phosphor-react";
-import axios from "axios";
-import { API_URL } from "@/config/Index";
-import { useAuthStore } from "@/store/useAuthStore";
+import useAuthStore from "@/store/useAuthStore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
+  const { signup, setUser } = useAuthStore();
   const navigate = useNavigate();
-  const { setUser, setError } = useAuthStore();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +24,6 @@ const SignUp = () => {
       password: "",
       phoneNumber: "",
     });
-    navigate("/dashboard");
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,19 +34,28 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${API_URL}/auth/signup`, formData);
+      const { success, message } = await signup(
+        formData.name,
+        formData.email,
+        formData.password,
+        formData.phoneNumber
+      );
 
-      console.log(data);
-      
-
-      setUser(data);
-      clearForm();
-    } catch (error) {
-      let errorMessage = "Error during sign-up. Please try again.";
-      if (axios.isAxiosError(error) && error.response?.data) {
-        errorMessage = error.response.data.message || errorMessage;
+      if (success) {
+        toast.success("Account created successfully");
+        setUser({
+          name: formData.name,
+          email: formData.email,
+          username: formData.name,
+          phoneNumber: formData.phoneNumber,
+        });
+        clearForm();
+        navigate("/dashboard");
+      } else {
+        toast.error(message || "Signup failed");
       }
-      setError(errorMessage);
+    } catch (error) {
+      toast.error("Error during sign-up. Please try again.");
     }
   };
 
@@ -55,8 +63,8 @@ const SignUp = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign up for an account
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+            Sign up
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -130,32 +138,28 @@ const SignUp = () => {
                 required
                 value={formData.phoneNumber}
                 onChange={handleInputChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none mb-5 rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Phone Number"
               />
             </div>
           </div>
 
-          {/* Display error message */}
-          <div className="text-red-500">{useAuthStore().error}</div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          <span className="font-medium">
+            Already have an account?{" "}
+            <Link
+              to="/auth/login"
+              className="text-indigo-600 hover:text-indigo-500 hover:underline"
             >
-              Sign up
-            </button>
-          </div>
-        </form>
-        <div className="text-center">
-          <Link
-            to="/auth/login"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+              Login
+            </Link>
+          </span>
+          <button
+            type="submit"
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Already have an account? Login
-          </Link>
-        </div>
+            Sign up
+          </button>
+        </form>
       </div>
     </div>
   );
