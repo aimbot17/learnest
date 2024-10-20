@@ -8,7 +8,6 @@ interface User {
   email: string;
   username: string;
   phoneNumber: string;
-  // Add other fields from your User model as needed
 }
 
 // Define a type for the state
