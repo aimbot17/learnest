@@ -12,6 +12,7 @@
     "start": "vite"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.1",
     "axios": "^1.6.3",
     "js-cookie": "^3.0.5",
     "phosphor-react": "^1.4.1",

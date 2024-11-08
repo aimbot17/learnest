@@ -1,23 +1,30 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import useAuthStore from "@/store/useAuthStore";
+import { useUserStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  fallbackPath?: string;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { user, refreshAccessToken, logout } = useAuthStore();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  children,
+  fallbackPath = "/auth/login",
+}) => {
+  const { user } = useUserStore();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isValidating, setIsValidating] = useState(true);
 
   useEffect(() => {
     const validateSession = async () => {
+      setIsValidating(true);
       try {
         if (!user) {
-          await refreshAccessToken();
+          throw new Error("User is not authenticated");
         }
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -29,15 +36,22 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           toast.error("An unexpected error occurred. Please try again.");
         }
 
-        logout();
-        navigate("/auth/login");
+        navigate(fallbackPath, {
+          state: { from: location.pathname },
+          replace: true,
+        });
+      } finally {
+        setIsValidating(false);
       }
     };
 
     validateSession();
-  }, [user, refreshAccessToken, navigate, logout]);
+  }, [user, navigate, location, fallbackPath]);
 
-  // Only render children if the user is authenticated
+  if (isValidating) {
+    return <div>Loading...</div>;
+  }
+
   return user ? <>{children}</> : null;
 };
 
