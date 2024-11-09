@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@/store/useAuthStore";
+import Sidebar from "@/components/sidebar.component";
 
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
@@ -13,11 +14,12 @@ export default function Dashboard() {
   }, [user, navigate]);
 
   if (!user) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (
-    <div>
+    <div className="flex">
+      <Sidebar />
       <h1>Welcome to your dashboard, {user.name}!</h1>
     </div>
   );

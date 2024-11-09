@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@/components/icons.component";
 
 // Types for props
@@ -12,14 +12,51 @@ interface DropdownItem {
   icon?: string;
 }
 
-interface User {
-  username: string;
-  avatar: string;
+interface SidebarState {
+  isProfileDropdownOpen: boolean;
+  isMoreDropdownOpen: boolean;
 }
 
-const Sidebar: React.FC<{ user: User }> = ({ user }) => {
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
+const Sidebar: React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+  const [sidebarState, setSidebarState] = useState<SidebarState>({
+    isProfileDropdownOpen: false,
+    isMoreDropdownOpen: false,
+  });
+
+  useEffect(() => {
+    // Load user data from localStorage
+    const storedUser = localStorage.getItem("user-storage");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
+    // Load sidebar state from localStorage
+    const storedSidebarState = localStorage.getItem("user-storage");
+    if (storedSidebarState) {
+      setSidebarState(JSON.parse(storedSidebarState));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save sidebar state to localStorage whenever it changes
+    localStorage.setItem("sidebarState", JSON.stringify(sidebarState));
+  }, [sidebarState]);
+
+  const toggleProfileDropdown = () => {
+    setSidebarState((prev) => ({
+      ...prev,
+      isProfileDropdownOpen: !prev.isProfileDropdownOpen,
+    }));
+  };
+
+  const toggleMoreDropdown = () => {
+    setSidebarState((prev) => ({
+      ...prev,
+      isMoreDropdownOpen: !prev.isMoreDropdownOpen,
+    }));
+  };
 
   // Sidebar items configuration
   const sidebarItems: SidebarItemProps[] = [
@@ -43,15 +80,19 @@ const Sidebar: React.FC<{ user: User }> = ({ user }) => {
     { name: "Logout", icon: "logout" },
   ];
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="flex h-screen flex-col justify-between bg-gray-50 w-56">
       <div className="flex flex-col overflow-hidden h-full">
         {/* Header */}
         <DropdownHeader
-          title={user.username.toUpperCase()}
-          logoUrl={user.avatar}
-          isOpen={isProfileDropdownOpen}
-          onToggle={() => setIsProfileDropdownOpen((prev) => !prev)}
+          title={user?.state?.user?.data?.username.toUpperCase() || "Profile"}
+          logoUrl={user.avatar || "https://via.placeholder.com/150"}
+          isOpen={sidebarState.isProfileDropdownOpen}
+          onToggle={toggleProfileDropdown}
           items={dropdownItems}
         />
 
@@ -62,8 +103,8 @@ const Sidebar: React.FC<{ user: User }> = ({ user }) => {
         <SidebarSection
           title="More"
           items={moreItems}
-          isOpen={isMoreDropdownOpen}
-          onToggle={() => setIsMoreDropdownOpen((prev) => !prev)}
+          isOpen={sidebarState.isMoreDropdownOpen}
+          onToggle={toggleMoreDropdown}
         />
       </div>
     </div>
@@ -146,7 +187,7 @@ const SidebarSection: React.FC<{
     )}
     <div
       className={`transition-all duration-300 overflow-hidden ${
-        isOpen ? "max-h-40" : "max-h-0"
+        isOpen ? "max-h-50" : "max-h-0"
       }`}
     >
       {items.map((item, index) => (

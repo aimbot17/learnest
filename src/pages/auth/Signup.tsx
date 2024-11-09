@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "@/components/button.component";
@@ -6,10 +6,11 @@ import Input from "@/components/input.component";
 import BookingPage from "@/components/bookdemo.component";
 import { Icon } from "@/components/icons.component";
 import { useApi } from "@/hooks/useApi";
-import { API_URL } from "@/config/Index";
+import { API_URL } from "@/config/config";
 import type { User } from "@/types/RootState";
+import { useUserStore } from "@/store/useAuthStore";
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState<User>({
     name: "",
     email: "",
@@ -18,8 +19,9 @@ const SignUp: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
 
-  const { data, loading, executeRequest, error } = useApi<User>(
+  const { loading, executeRequest } = useApi<User>(
     `${API_URL}/api/auth/signup`,
     "POST",
     { immediate: false }
@@ -29,14 +31,13 @@ const SignUp: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const userData = await executeRequest("POST", formData);
-      console.log(userData);
-
-      toast.success("Sign up successful! Welcome aboard!");
+      setUser(userData);
+      toast.success("Sign up successful!");
       navigate("/dashboard");
     } catch (err) {
       if (err instanceof Error) {
@@ -69,7 +70,7 @@ const SignUp: React.FC = () => {
               name="name"
               type="text"
               placeholder="Name"
-              value={formData.name}
+              value={formData.name || ""}
               onChange={handleInputChange}
               autoComplete="name"
               required
@@ -89,7 +90,7 @@ const SignUp: React.FC = () => {
               name="phoneNumber"
               type="tel"
               placeholder="Phone Number"
-              value={formData.phoneNumber}
+              value={formData.phoneNumber || ""}
               onChange={handleInputChange}
               autoComplete="tel"
               required
@@ -99,7 +100,7 @@ const SignUp: React.FC = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              value={formData.password}
+              value={formData.password || ""}
               onChange={handleInputChange}
               autoComplete="new-password"
               required

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { isAxiosError } from "axios";
 import { useUserStore } from "@/store/useAuthStore";
 import { toast } from "react-toastify";
+import { LoadingFallback } from "@/components/loader.component";
 import "react-toastify/dist/ReactToastify.css";
 
 interface ProtectedRouteProps {
@@ -26,8 +27,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         if (!user) {
           throw new Error("User is not authenticated");
         }
+        // Here you could add an API call to validate the user's session if needed
       } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (isAxiosError(error)) {
           toast.error(
             error.response?.data.message ||
               "Session expired. Please log in again."
@@ -49,10 +51,32 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }, [user, navigate, location, fallbackPath]);
 
   if (isValidating) {
-    return <div>Loading...</div>;
+    return <LoadingFallback />;
   }
 
   return user ? <>{children}</> : null;
+};
+
+export const AuthLayout: React.FC = () => {
+  const { setUser } = useUserStore();
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("user-storage");
+    if (token) {
+      setIsAuthenticated(true);
+      navigate("/dashboard", { replace: true });
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [navigate, setUser]);
+
+  if (isAuthenticated) {
+    return null;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

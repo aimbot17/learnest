@@ -1,25 +1,26 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { useUserStore } from "@/store/useAuthStore";
-import Button from "@/components/button.component";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
+import Button from "@/components/button.component";
 import Input from "@/components/input.component";
 import BookingPage from "@/components/bookdemo.component";
 import { Icon } from "@/components/icons.component";
-import { API_URL } from "@/config/Index"; // Adjust this import based on your project structure
 import { useApi } from "@/hooks/useApi";
+import { API_URL } from "@/config/config";
+import type { User } from "@/types/RootState";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
     phoneNumber: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   // Using useApi hook to initialize the API call setup
-  const { executeRequest, loading, error } = useApi(
+  const { executeRequest, loading } = useApi<User>(
     `${API_URL}/api/auth/login`,
     "POST",
     { immediate: false }
@@ -33,9 +34,10 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await executeRequest("POST", formData);
-      toast.success("Logged in successfully");
+      const userData = await executeRequest("POST", formData);
       setFormData({ email: "", password: "", phoneNumber: "" });
+      toast.success("Logged in successfully");
+      navigate("/dashboard");
     } catch (error) {
       let errorMessage = "Error during login. Please try again.";
       if (axios.isAxiosError(error) && error.response?.data) {
