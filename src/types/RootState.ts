@@ -11,3 +11,10 @@ export interface RootState {
     signup: AuthData;
   };
 }
+
+export interface User {
+  email: string;
+  name?: string;
+  password?: string;
+  phoneNumber?: string;
+}

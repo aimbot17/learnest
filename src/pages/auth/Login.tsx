@@ -1,20 +1,30 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import useAuthStore from "@/store/useAuthStore";
-import Button from "@/components/button.component";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
+import Button from "@/components/button.component";
 import Input from "@/components/input.component";
+import BookingPage from "@/components/bookdemo.component";
+import { Icon } from "@/components/icons.component";
+import { useApi } from "@/hooks/useApi";
+import { API_URL } from "@/config/config";
+import type { User } from "@/types/RootState";
 
 const Login = () => {
-  const { setUser, login } = useAuthStore();
-
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
     phoneNumber: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  // Using useApi hook to initialize the API call setup
+  const { executeRequest, loading } = useApi<User>(
+    `${API_URL}/api/auth/login`,
+    "POST",
+    { immediate: false }
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,9 +34,10 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData.email, formData.password, formData.phoneNumber);
-      toast.success("Logged in successfully");
+      const userData = await executeRequest("POST", formData);
       setFormData({ email: "", password: "", phoneNumber: "" });
+      toast.success("Logged in successfully");
+      navigate("/dashboard");
     } catch (error) {
       let errorMessage = "Error during login. Please try again.";
       if (axios.isAxiosError(error) && error.response?.data) {
@@ -37,8 +48,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center space-y-8 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <BookingPage />
+
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-center text-3xl font-extrabold text-gray-900">
           Log in
         </h2>
@@ -67,7 +80,7 @@ const Login = () => {
             <Input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={formData.password}
               onChange={handleInputChange}
@@ -80,18 +93,49 @@ const Login = () => {
               }
             />
           </div>
-
-          <span className="font-medium">
-            Don't have an account?{" "}
+          <div className="flex items-center justify-between">
+            <span className="text-sm">
+              Don't have an account?{" "}
+              <Link
+                to="/auth/signup"
+                className="font-medium text-primary hover:text-primary-700"
+              >
+                Sign up
+              </Link>
+            </span>
             <Link
-              to="/auth/signup"
-              className="text-gray-500 hover:text-gray-600 hover:underline"
+              to="/auth/forgot-password"
+              className="text-sm font-medium text-primary hover:text-primary-700"
             >
-              Sign up
+              Forgot password?
             </Link>
-          </span>
-          <Button content="Log in" type="submit" />
+          </div>
+          <Button type="submit" fullWidth disabled={loading}>
+            {loading ? "Logging in..." : "Log In"}
+          </Button>
         </form>
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            <Button variant="outline" fullWidth>
+              <Icon name="twitter" />
+              Twitter
+            </Button>
+            <Button variant="outline" fullWidth>
+              <Icon name="github" />
+              GitHub
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,26 @@
-import { Fragment } from "react/jsx-runtime";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/useAuthStore";
 import Sidebar from "@/components/sidebar.component";
 
 export default function Dashboard() {
+  const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <Fragment>
+    <div className="flex">
       <Sidebar />
-    </Fragment>
+      <h1>Welcome to your dashboard, {user.name}!</h1>
+    </div>
   );
 }

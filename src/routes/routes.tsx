@@ -1,34 +1,19 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import {
   createBrowserRouter,
   Navigate,
   Outlet,
   RouteObject,
-  useNavigate,
 } from "react-router-dom";
-import useAuthStore from "@/store/useAuthStore";
 import ProtectedRoute from "@/routes/protected.route";
+import { LoadingFallback } from "@/components/loader.component";
+import { AuthLayout } from "@/routes/protected.route";
 
 // Lazy-loaded components
 const ErrorPage = lazy(() => import("@/utils/Errors/ParamError"));
 const Login = lazy(() => import("@/pages/auth/Login"));
 const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Dashboard = lazy(() => import("@/pages/dashboard/index"));
-// Components
-const LoadingFallback = () => <div>Loading...</div>;
-
-const AuthLayout = () => {
-  const { isAuthenticated } = useAuthStore();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
-
-  return <Outlet />;
-};
 
 // Route configurations
 const authRoutes: RouteObject[] = [
@@ -52,9 +37,11 @@ const authRoutes: RouteObject[] = [
 
 const dashboardRoutes: RouteObject[] = [
   {
-    path: "courses",
+    path: "",
     element: (
-      <Suspense fallback={<LoadingFallback />}>{/* <Courses /> */}</Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Dashboard />
+      </Suspense>
     ),
   },
 ];
@@ -78,9 +65,7 @@ const routes = createBrowserRouter([
     path: "dashboard",
     element: (
       <ProtectedRoute>
-        <Suspense fallback={<LoadingFallback />}>
-          <Dashboard />
-        </Suspense>
+        <Outlet />
       </ProtectedRoute>
     ),
     children: dashboardRoutes,
