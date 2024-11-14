@@ -5,6 +5,8 @@ import Sidebar from "@/components/sidebar.component";
 
 export default function Dashboard() {
   const user = useUserStore((state) => state.user);
+  console.log(user);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function Dashboard() {
   return (
     <div className="flex">
       <Sidebar />
-      <h1>Welcome to your dashboard, {user.name}!</h1>
+      <h1>Welcome to your dashboard, {user?.name}!</h1>
     </div>
   );
 }

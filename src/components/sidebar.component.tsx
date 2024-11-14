@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Icon } from "@/components/icons.component";
+import Icon, { IconName } from "@/components/icons.component";
 
-// Types for props
 interface SidebarItemProps {
   name: string;
-  icon: string;
+  icon: IconName;
 }
 
 interface DropdownItem {
   name: string;
-  icon?: string;
+  icon?: IconName;
 }
 
 interface SidebarState {
@@ -17,30 +16,37 @@ interface SidebarState {
   isMoreDropdownOpen: boolean;
 }
 
+interface User {
+  username: string;
+  avatar: string;
+}
+
 const Sidebar: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [sidebarState, setSidebarState] = useState<SidebarState>({
     isProfileDropdownOpen: false,
     isMoreDropdownOpen: false,
   });
 
   useEffect(() => {
-    // Load user data from localStorage
     const storedUser = localStorage.getItem("user-storage");
-
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser({
+        username: parsedUser.state?.user?.data?.username || "User",
+        avatar:
+          parsedUser.state?.user?.data?.avatar ||
+          "https://via.placeholder.com/150",
+      });
     }
 
-    // Load sidebar state from localStorage
-    const storedSidebarState = localStorage.getItem("user-storage");
+    const storedSidebarState = localStorage.getItem("sidebarState");
     if (storedSidebarState) {
       setSidebarState(JSON.parse(storedSidebarState));
     }
   }, []);
 
   useEffect(() => {
-    // Save sidebar state to localStorage whenever it changes
     localStorage.setItem("sidebarState", JSON.stringify(sidebarState));
   }, [sidebarState]);
 
@@ -58,7 +64,6 @@ const Sidebar: React.FC = () => {
     }));
   };
 
-  // Sidebar items configuration
   const sidebarItems: SidebarItemProps[] = [
     { name: "Courses", icon: "book-open" },
     { name: "Batches", icon: "users" },
@@ -87,19 +92,14 @@ const Sidebar: React.FC = () => {
   return (
     <div className="flex h-screen flex-col justify-between bg-gray-50 w-56">
       <div className="flex flex-col overflow-hidden h-full">
-        {/* Header */}
         <DropdownHeader
-          title={user?.state?.user?.data?.username.toUpperCase() || "Profile"}
-          logoUrl={user.avatar || "https://via.placeholder.com/150"}
+          title={user.username.toUpperCase()}
+          logoUrl={user.avatar}
           isOpen={sidebarState.isProfileDropdownOpen}
           onToggle={toggleProfileDropdown}
           items={dropdownItems}
         />
-
-        {/* Sidebar Items */}
         <SidebarSection items={sidebarItems} />
-
-        {/* More Section */}
         <SidebarSection
           title="More"
           items={moreItems}
@@ -111,7 +111,6 @@ const Sidebar: React.FC = () => {
   );
 };
 
-// Dropdown Header Component
 const DropdownHeader: React.FC<{
   title: string;
   logoUrl: string;
@@ -123,24 +122,17 @@ const DropdownHeader: React.FC<{
     <button
       className="flex h-12 items-center rounded-md hover:bg-gray-200 px-2 w-52"
       onClick={onToggle}
+      aria-expanded={isOpen}
     >
       <img src={logoUrl} alt={`${title} Logo`} className="w-8 h-8 rounded" />
       <div className="ml-2 flex-1">
         <div className="text-base font-medium text-gray-900">{title}</div>
       </div>
-      <svg
-        className={`h-4 w-4 text-gray-700 transform transition-transform ${
-          isOpen ? "rotate-180" : ""
-        }`}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        viewBox="0 0 24 24"
-      >
-        <path d="m6 9 6 6 6-6" />
-      </svg>
+      <Icon
+        name="down-arrow"
+        className="h-5 w-5 text-gray-700 transform transition-transform"
+        style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+      />
     </button>
     <div
       className={`transition-all duration-300 overflow-hidden ${
@@ -149,14 +141,17 @@ const DropdownHeader: React.FC<{
     >
       <div className="mt-2">
         {items.map((item, index) => (
-          <SidebarItem key={index} name={item.name} icon={item.icon || ""} />
+          <SidebarItem
+            key={index}
+            name={item.name}
+            icon={item.icon || "user"}
+          />
         ))}
       </div>
     </div>
   </div>
 );
 
-// Sidebar Section Component
 const SidebarSection: React.FC<{
   title?: string;
   items: SidebarItemProps[];
@@ -168,21 +163,14 @@ const SidebarSection: React.FC<{
       <button
         className="flex items-center justify-between px-4 py-2 text-sm text-gray-600"
         onClick={onToggle}
+        aria-expanded={isOpen}
       >
         {title}
-        <svg
-          className={`h-4 w-4 transform transition-transform ${
-            isOpen ? "rotate-180" : ""
-          }`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          viewBox="0 0 24 24"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+        <Icon
+          name="down-arrow"
+          className="h-5 w-5 transform transition-transform"
+          style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+        />
       </button>
     )}
     <div
@@ -197,7 +185,6 @@ const SidebarSection: React.FC<{
   </div>
 );
 
-// Sidebar Item Component
 const SidebarItem: React.FC<SidebarItemProps> = ({ name, icon }) => (
   <button className="flex w-full items-center rounded text-gray-800 hover:bg-gray-100 px-2 py-1 mx-2 my-2">
     <span className="grid h-5 w-6 place-items-center">

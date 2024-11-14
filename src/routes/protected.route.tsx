@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { isAxiosError } from "axios";
-import { useUserStore } from "@/store/useAuthStore";
-import { toast } from "react-toastify";
 import { LoadingFallback } from "@/components/loader.component";
 import "react-toastify/dist/ReactToastify.css";
+import {useAuthStore} from "@/store/useAuthStore";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -15,7 +14,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   fallbackPath = "/auth/login",
 }) => {
-  const { user } = useUserStore();
+  const { user } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [isValidating, setIsValidating] = useState(true);

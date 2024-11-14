@@ -5,7 +5,7 @@ import axios from "axios";
 import Button from "@/components/button.component";
 import Input from "@/components/input.component";
 import BookingPage from "@/components/bookdemo.component";
-import { Icon } from "@/components/icons.component";
+import Icon from "@/components/icons.component";
 import { useApi } from "@/hooks/useApi";
 import { API_URL } from "@/config/config";
 import type { User } from "@/types/RootState";
@@ -72,7 +72,7 @@ const Login = () => {
               name="phoneNumber"
               type="tel"
               placeholder="Phone Number"
-              value={formData.phoneNumber}
+              value={formData.phoneNumber || ""}
               onChange={handleInputChange}
               autoComplete="tel"
               required
@@ -82,7 +82,7 @@ const Login = () => {
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              value={formData.password}
+              value={formData.password || ""}
               onChange={handleInputChange}
               autoComplete="current-password"
               required

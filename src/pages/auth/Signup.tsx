@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 import Button from "@/components/button.component";
 import Input from "@/components/input.component";
 import BookingPage from "@/components/bookdemo.component";
-import { Icon } from "@/components/icons.component";
+import Icon from "@/components/icons.component";
 import { useApi } from "@/hooks/useApi";
 import { API_URL } from "@/config/config";
 import type { User } from "@/types/RootState";
-import { useUserStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import type { BackendUserResponse } from "@/store/useAuthStore";
 
 const SignUp = () => {
   const [formData, setFormData] = useState<User>({
@@ -19,9 +20,9 @@ const SignUp = () => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setUser } = useUserStore();
+  const { setUser } = useAuthStore();
 
-  const { loading, executeRequest } = useApi<User>(
+  const { loading, executeRequest } = useApi<BackendUserResponse>(
     `${API_URL}/api/auth/signup`,
     "POST",
     { immediate: false }
@@ -35,8 +36,13 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userData = await executeRequest("POST", formData);
-      setUser(userData);
+      const response = await executeRequest("POST", {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+        number: formData.phoneNumber,
+      });
+      setUser(response);
       toast.success("Sign up successful!");
       navigate("/dashboard");
     } catch (err) {
