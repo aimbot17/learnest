@@ -1,44 +1,58 @@
-# Apna College ( clone ) frontend
+# Turborepo Tailwind CSS starter
 
-## Description
+This is an official starter Turborepo.
 
-Welcome to Apna College, a web app designed to provide a user experience similar to Apna College, with additional features and improvements.
+## Using this example
 
-## Getting Started
+Run the following command:
 
-These instructions will help you set up a local copy of the project for development and testing purposes.
+```sh
+npx create-turbo@latest -e with-tailwind
+```
 
-### Prerequisites
+## What's inside?
 
-Make sure you have the following software installed on your machine:
+This Turborepo includes the following packages/apps:
 
-- [Node.js](https://nodejs.org/) (v18 or later)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
+### Apps and Packages
 
-### Installation
+- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-1. Clone the repository:
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-   ```bash
-   git clone https://github.com/JoshiUtsav/apnacollege-frontend.git
-   ```
+### Building packages/ui
 
-3. **Frontend Setup:**
+This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.js`. This was chosen for several reasons:
 
-   - **Without Docker:**
+- Make sharing one `tailwind.config.js` to apps and packages as easy as possible.
+- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
+- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for it's classes.
+- Maintain clear package export boundaries.
 
-     Install dependencies:
+Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update the `tailwind.config.js` in your apps to be aware of your package locations, so it can find all usages of the `tailwindcss` class names for CSS compilation.
 
-     ```bash
-     npm install
-     ```
+For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
 
-     Run the development server:
+```js
+  content: [
+    // app content
+    `src/**/*.{js,ts,jsx,tsx}`,
+    // include packages if not transpiling
+    "../../packages/ui/*.{js,ts,jsx,tsx}",
+  ],
+```
 
-     ```bash
-     npm run dev
-     ```
+If you choose this strategy, you can remove the `tailwindcss` and `autoprefixer` dependencies from the `ui` package.
 
-4. Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the app.
+### Utilities
 
-5. Backend Repo - [Link](https://github.com/JoshiUtsav/apnacollege-backend).
+This Turborepo has some additional tools already setup for you:
+
+- [Tailwind CSS](https://tailwindcss.com/) for styles
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
