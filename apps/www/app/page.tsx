@@ -1,12 +1,17 @@
-import Hero from "@/components/hero";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import HeroSection from "@/components/hero-section";
+import FeaturesSection from "@/components/feature-section";
+import TestimonialsSection from "@/components/testimonials-section";
+import CTASection from "@/components/cta-section";
+import Footer from "@/components/footer";
 
-export default async function Index() {
+export default function Home() {
   return (
-    <>
-      <Hero />
-    </>
+    <main>
+      <HeroSection />
+      <FeaturesSection />
+      <TestimonialsSection />
+      <CTASection />
+      <Footer />
+    </main>
   );
 }
