@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Loader2, LogIn } from "lucide-react";
+import { Loader2, LogIn, BookOpen, GraduationCap } from "lucide-react";
 
 interface SignInResult {
   error?: string;
@@ -37,34 +37,41 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-background/80 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-background py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8 bg-card p-8 rounded-xl shadow-lg"
+        className="max-w-md w-full space-y-8 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg"
       >
         <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mb-6"
+          >
+            <GraduationCap className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-3xl font-bold text-foreground"
+            className="text-3xl font-bold text-gray-900 dark:text-white"
           >
-            Welcome back
+            Welcome Back
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-3 text-muted-foreground"
+            className="mt-3 text-gray-600 dark:text-gray-400"
           >
-            Don't have an account?{" "}
+            New to our platform?{" "}
             <Link
               href="/sign-up"
-              className="text-primary hover:text-primary/90 font-medium"
+              className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
-              Sign up
+              Create an account
             </Link>
           </motion.p>
         </div>
@@ -78,8 +85,12 @@ export default function Login() {
         >
           <div className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium flex items-center gap-1"
+              >
                 Email address
+                <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="email"
@@ -94,12 +105,16 @@ export default function Login() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm font-medium">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium flex items-center gap-1"
+                >
                   Password
+                  <span className="text-red-500">*</span>
                 </Label>
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-primary hover:text-primary/90"
+                  className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400"
                 >
                   Forgot password?
                 </Link>
@@ -114,10 +129,29 @@ export default function Login() {
                 className="w-full"
               />
             </div>
+
+            <div className="flex items-center">
+              <input
+                id="remember"
+                name="remember"
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label
+                htmlFor="remember"
+                className="ml-2 block text-sm text-gray-600 dark:text-gray-400"
+              >
+                Remember me
+              </label>
+            </div>
           </div>
 
           <div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -125,8 +159,8 @@ export default function Login() {
                 </>
               ) : (
                 <>
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Sign in
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Continue Learning
                 </>
               )}
             </Button>
@@ -134,10 +168,10 @@ export default function Login() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border"></div>
+              <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-background text-muted-foreground">
+              <span className="px-2 bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400">
                 Or continue with
               </span>
             </div>
@@ -147,8 +181,9 @@ export default function Login() {
             <Button
               type="button"
               variant="outline"
-              className="w-full"
+              className="w-full border-gray-300 dark:border-gray-700"
               onClick={() => {
+                // Implement Google Sign-in
                 console.log("Google Sign-in clicked");
               }}
             >

@@ -218,27 +218,3 @@ const FilterButtons: React.FC<{
     ))}
   </div>
 );
-
-// Main CoursesPage Component
-export default function CoursesPage({ courses = [] }: { courses: Course[] }) {
-  const [displayAs, setDisplayAs] = useState<"div" | "a">("div");
-
-  const filters = [
-    { label: "Live", count: 25 },
-    { label: "New", count: 2 },
-    { label: "Upcoming", count: 0 },
-  ];
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <Header title="Courses" />
-      <FilterButtons filters={filters} />
-      <div className="mb-4">
-        <Button onClick={() => setDisplayAs(displayAs === "div" ? "a" : "div")}>
-          Toggle Card as {displayAs === "div" ? "Link" : "Div"}
-        </Button>
-      </div>
-      <CourseList courses={courses} as={displayAs} />
-    </div>
-  );
-}

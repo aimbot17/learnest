@@ -31,7 +31,7 @@ export default function CTASection() {
             viewport={{ once: true }}
           >
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/signup">
+              <Link href="/sign-up">
                 Get Started Now
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
