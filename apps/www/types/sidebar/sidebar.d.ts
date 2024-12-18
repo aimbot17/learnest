@@ -1,23 +1,28 @@
+import { type LucideIcon } from "lucide-react";
+
 export interface SidebarItemProps {
   name: string;
-  icon: IconName;
+  icon: string;
+  path?: string;
+  badge?: number;
 }
 
-interface SidebarProps {
-  user: { email: string } | null;
-}
-
-interface SidebarItemProps {
+export interface DropdownItem {
   name: string;
-  icon: IconName;
+  icon: string;
+  onClick?: () => void;
 }
 
-interface DropdownItem {
-  name: string;
-  icon?: IconName;
+export interface SidebarProps {
+  user: {
+    email: string;
+    title?: string;
+    logoUrl?: string;
+    role?: string;
+  } | null;
 }
 
-interface SidebarState {
+export interface SidebarState {
   isProfileDropdownOpen: boolean;
   isMoreDropdownOpen: boolean;
 }

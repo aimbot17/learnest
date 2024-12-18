@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Loader2, Mail } from "lucide-react";
+import { Loader2, Mail, User, BookOpen, GraduationCap } from "lucide-react";
 
 interface SignInResult {
   error?: string;
@@ -37,32 +37,39 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-background/80 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white dark:from-blue-950 dark:to-background py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8 bg-card p-8 rounded-xl shadow-lg"
+        className="max-w-md w-full space-y-8 bg-white dark:bg-gray-900 p-8 rounded-xl shadow-lg"
       >
         <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mb-6"
+          >
+            <GraduationCap className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-3xl font-bold text-foreground"
+            className="text-3xl font-bold text-gray-900 dark:text-white"
           >
-            Create your account
+            Join Our Learning Community
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-3 text-muted-foreground"
+            className="mt-3 text-gray-600 dark:text-gray-400"
           >
             Already have an account?{" "}
             <Link
               href="/sign-in"
-              className="text-primary hover:text-primary/90 font-medium"
+              className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
               Sign in
             </Link>
@@ -77,9 +84,48 @@ export default function Signup() {
           className="mt-8 space-y-6"
         >
           <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="firstName"
+                  className="text-sm font-medium flex items-center gap-1"
+                >
+                  First Name
+                  <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  id="firstName"
+                  name="firstName"
+                  required
+                  placeholder="John"
+                  className="w-full"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="lastName"
+                  className="text-sm font-medium flex items-center gap-1"
+                >
+                  Last Name
+                  <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  id="lastName"
+                  name="lastName"
+                  required
+                  placeholder="Doe"
+                  className="w-full"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium flex items-center gap-1"
+              >
                 Email address
+                <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="email"
@@ -93,8 +139,33 @@ export default function Signup() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">
+              <Label
+                htmlFor="role"
+                className="text-sm font-medium flex items-center gap-1"
+              >
+                I am a<span className="text-red-500">*</span>
+              </Label>
+              <select
+                id="role"
+                name="role"
+                required
+                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+              >
+                <option value="">Select your role</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="professional">Professional</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium flex items-center gap-1"
+              >
                 Password
+                <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="password"
@@ -106,14 +177,18 @@ export default function Signup() {
                 placeholder="Create a password"
                 className="w-full"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Must be at least 6 characters long
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-sm font-medium">
+              <Label
+                htmlFor="confirmPassword"
+                className="text-sm font-medium flex items-center gap-1"
+              >
                 Confirm Password
+                <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="confirmPassword"
@@ -126,10 +201,44 @@ export default function Signup() {
                 className="w-full"
               />
             </div>
+
+            <div className="flex items-center">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                required
+                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label
+                htmlFor="terms"
+                className="ml-2 block text-sm text-gray-600 dark:text-gray-400"
+              >
+                I agree to the{" "}
+                <Link
+                  href="/terms"
+                  className="text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy"
+                  className="text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                >
+                  Privacy Policy
+                </Link>
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+            </div>
           </div>
 
           <div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -137,8 +246,8 @@ export default function Signup() {
                 </>
               ) : (
                 <>
-                  <Mail className="mr-2 h-4 w-4" />
-                  Sign up
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Start Learning
                 </>
               )}
             </Button>
@@ -146,10 +255,10 @@ export default function Signup() {
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border"></div>
+              <div className="w-full border-t border-gray-300 dark:border-gray-700"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-background text-muted-foreground">
+              <span className="px-2 bg-white text-gray-500 dark:bg-gray-900 dark:text-gray-400">
                 Or continue with
               </span>
             </div>
@@ -159,7 +268,7 @@ export default function Signup() {
             <Button
               type="button"
               variant="outline"
-              className="w-full"
+              className="w-full border-gray-300 dark:border-gray-700"
               onClick={() => {
                 // Implement Google Sign-up
                 console.log("Google Sign-up clicked");
