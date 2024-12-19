@@ -1,13 +1,11 @@
 import React from "react";
-import { getUser } from "@/utils/supabase/getUser";
-import Sidebar from "@/components/sidebar/sidebarWrapper";
-import { Courses } from "@/components/course/courses";
+import Dashboard from "@/components/dashboard";
 import { createClient } from "@/utils/supabase/client";
-import { Course } from "@/types/course/course";
+import { getUser } from "@/utils/supabase/getUser";
 
-export default async function Dashboard() {
-  const user = await getUser();
+export default async function DashboardPage() {
   const supabase = createClient();
+  const user = await getUser();
   const refinedUser = user && user.email ? { email: user.email } : null;
 
   const { data: coursesData, error: coursesError } = await supabase
@@ -33,8 +31,7 @@ export default async function Dashboard() {
     return <div>Error loading instructors</div>;
   }
 
-  // Map the fetched data to your Course type
-  const courses: Course[] = coursesData.map((course) => {
+  const courses = coursesData.map((course) => {
     const instructor = instructorsData.find(
       (instructor) => instructor.id === course.instructorId
     );
@@ -55,14 +52,5 @@ export default async function Dashboard() {
     };
   });
 
-  return (
-    <div className="flex h-screen bg-white text-black">
-      <div className="w-64 flex-shrink-0 border-r border-gray-200">
-        <Sidebar user={refinedUser} />
-      </div>
-      <main className="flex-grow overflow-y-auto">
-        <Courses courses={courses} />
-      </main>
-    </div>
-  );
+  return <Dashboard courses={courses} refinedUser={refinedUser} />;
 }
