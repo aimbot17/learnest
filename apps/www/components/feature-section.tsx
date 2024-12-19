@@ -1,7 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen, Users, Award, Globe, Zap, Heart } from "lucide-react";
+import {
+  Sparkles,
+  Rocket,
+  Shield,
+  Wrench,
+  MessageSquare,
+  Gift,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,39 +27,45 @@ interface FeatureCardProps {
 
 const features = [
   {
-    icon: <BookOpen className="h-8 w-8 text-primary" />,
-    title: "1000+ Courses",
-    description: "Access a vast library of courses across various subjects.",
+    icon: <Sparkles className="h-8 w-8 text-primary" />,
+    title: "Early Access Features",
+    description:
+      "Be the first to try groundbreaking features before public release.",
     color: "bg-primary/10",
   },
   {
-    icon: <Users className="h-8 w-8 text-blue-500" />,
-    title: "Vibrant Community",
-    description: "Join a thriving community of learners and educators.",
+    icon: <Shield className="h-8 w-8 text-blue-500" />,
+    title: "Founder Status",
+    description:
+      "Secure lifetime benefits and recognition as a founding member.",
     color: "bg-blue-500/10",
   },
   {
-    icon: <Award className="h-8 w-8 text-yellow-500" />,
-    title: "Earn Certificates",
-    description: "Showcase your skills with recognized certifications.",
+    icon: <Wrench className="h-8 w-8 text-yellow-500" />,
+    title: "Shape the Product",
+    description:
+      "Direct influence on feature development and platform direction.",
     color: "bg-yellow-500/10",
   },
   {
-    icon: <Globe className="h-8 w-8 text-green-500" />,
-    title: "Learn Anywhere",
-    description: "Access your courses from anywhere in the world, anytime.",
+    icon: <MessageSquare className="h-8 w-8 text-green-500" />,
+    title: "Priority Support",
+    description:
+      "Direct line to our development team for immediate assistance.",
     color: "bg-green-500/10",
   },
   {
-    icon: <Zap className="h-8 w-8 text-purple-500" />,
-    title: "Interactive Learning",
-    description: "Engage with hands-on projects and real-world applications.",
+    icon: <Rocket className="h-8 w-8 text-purple-500" />,
+    title: "Exclusive Updates",
+    description:
+      "Weekly insider previews of upcoming features and improvements.",
     color: "bg-purple-500/10",
   },
   {
-    icon: <Heart className="h-8 w-8 text-red-500" />,
-    title: "Personalized Path",
-    description: "Tailored learning experiences based on your goals and pace.",
+    icon: <Gift className="h-8 w-8 text-red-500" />,
+    title: "Beta Perks",
+    description:
+      "Special rewards and discounts exclusive to beta participants.",
     color: "bg-red-500/10",
   },
 ];
@@ -69,11 +82,11 @@ export default function FeaturesSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Unlock Your Potential
+            Pioneer the Future of Learning
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover why thousands of learners choose our platform for their
-            educational journey.
+            Join our beta program and help shape the next generation of online
+            education while enjoying exclusive benefits.
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
