@@ -20,6 +20,7 @@ export function CourseCard({ course }: CourseCardProps) {
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
         <div className="absolute top-2 left-2 flex flex-wrap gap-2">
           {course.tags.map((tag) => (
