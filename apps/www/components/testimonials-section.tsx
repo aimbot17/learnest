@@ -1,50 +1,39 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
+import { createClient } from "@/utils/supabase/client";
 
 interface TestimonialCardProps {
   name: string;
-  role: string;
   content: string;
   avatar: string;
-  date: string;
-  index: number;
 }
 
-const testimonials = [
-  {
-    name: "Alex Morgan",
-    role: "Beta Tester - Wave 1",
-    content:
-      "Being part of the beta has been incredible. The team is super responsive to feedback, and I've already seen my suggestions implemented in updates.",
-    avatar: "/placeholder.svg?height=100&width=100",
-    date: "2 weeks in beta",
-  },
-  {
-    name: "David Park",
-    role: "Early Access Member",
-    content:
-      "The exclusive features we get to test are game-changing. It's exciting to be part of shaping a platform that's going to revolutionize online learning.",
-    avatar: "/placeholder.svg?height=100&width=100",
-    date: "1 month in beta",
-  },
-  {
-    name: "Rachel Chen",
-    role: "Founding Member",
-    content:
-      "The beta community is amazing. We get sneak peeks at new features and direct access to the development team. It feels like being part of something special.",
-    avatar: "/placeholder.svg?height=100&width=100",
-    date: "3 weeks in beta",
-  },
-];
-
 export default function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<TestimonialCardProps[]>([]);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const supabase = createClient();
+      const { data, error } = await supabase.from("Testimonial").select("*");
+
+      if (error) {
+        console.error("Error fetching testimonials:", error.message);
+      } else {
+        setTestimonials(data || []);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
   return (
-    <section className="py-16 md:py-24 bg-muted/50">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,47 +44,54 @@ export default function TestimonialsSection() {
         >
           <Badge variant="secondary" className="mb-4">
             <Star className="h-3 w-3 mr-1 fill-primary" />
-            Beta Feedback
+            User Feedback
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Hear from Our Beta Pioneers
+            What Our Beta Users Are Saying
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Early adopters are already experiencing the future of learning. Join
-            them in shaping our platform.
+            Discover how our platform is transforming learning experiences.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} {...testimonial} index={index} />
-          ))}
+        <div className="relative">
+          <TestimonialRow testimonials={testimonials} direction="left" />
+          <TestimonialRow testimonials={testimonials} direction="right" />
         </div>
       </div>
     </section>
   );
 }
 
-function TestimonialCard({
-  name,
-  role,
-  content,
-  avatar,
-  date,
-  index,
-}: TestimonialCardProps) {
+function TestimonialRow({
+  testimonials,
+  direction,
+}: {
+  testimonials: TestimonialCardProps[];
+  direction: "left" | "right";
+}) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
+    <div
+      className={`flex ${direction === "left" ? "animate-scroll-left" : "animate-scroll-right"} mb-8`}
     >
-      <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden">
+      {[...testimonials, ...testimonials].map((testimonial, index) => (
+        <TestimonialCard key={index} {...testimonial} />
+      ))}
+    </div>
+  );
+}
+
+function TestimonialCard({ name, content, avatar }: TestimonialCardProps) {
+  return (
+    <div className="w-[300px] flex-shrink-0 mx-4">
+      <Card className="h-full relative overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-2">
         <div className="absolute top-0 right-0 w-16 h-16">
           <div className="absolute transform rotate-45 bg-primary/10 w-24 h-8 -right-6 top-6" />
         </div>
-        <CardHeader>
-          <div className="flex items-center space-x-4">
+        <CardContent className="p-6 relative">
+          <div className="absolute text-primary/10 -top-1 -left-1">
+            <Star className="h-8 w-8" />
+          </div>
+          <div className="flex items-center space-x-4 mb-4 relative z-10">
             <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
               <Image
                 src={avatar}
@@ -105,19 +101,12 @@ function TestimonialCard({
               />
             </div>
             <div>
-              <CardTitle className="text-lg font-semibold">{name}</CardTitle>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm text-primary font-medium">{role}</p>
-                <p className="text-xs text-muted-foreground">{date}</p>
-              </div>
+              <h3 className="text-lg font-semibold">{name}</h3>
             </div>
           </div>
-        </CardHeader>
-        <CardContent className="relative">
-          <Quote className="absolute text-primary/10 h-8 w-8 -left-1 -top-1" />
-          <p className="text-muted-foreground relative z-10 pt-2">{content}</p>
+          <p className="text-muted-foreground relative z-10">{content}</p>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

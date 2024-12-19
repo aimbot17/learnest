@@ -85,6 +85,8 @@ export default function SignUp() {
     setMessage("");
 
     const formData = new FormData(event.currentTarget);
+    console.log(formData);
+    
     try {
       const result: SignUpResult = await signUpAction(formData);
       if (result.error) {

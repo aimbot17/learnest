@@ -48,10 +48,10 @@ export function Navbar() {
           </div>
           <div className="hidden md:block">
             <Button asChild variant="ghost" className="mr-2">
-              <Link href="/sign-in">Teacher Login</Link>
+              <Link href="/sign-in">Login</Link>
             </Button>
             <Button asChild className="group">
-              <Link href="/beta-signup" className="flex items-center">
+              <Link href="/sign-up" className="flex items-center">
                 Join Beta Program
                 <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -99,10 +99,10 @@ export function Navbar() {
         <div className="pt-4 pb-3 border-t border-border/40">
           <div className="flex items-center px-5 space-y-3 flex-col">
             <Button asChild variant="ghost" className="w-full justify-center">
-              <Link href="/sign-in">Teacher Login</Link>
+              <Link href="/sign-in">Login</Link>
             </Button>
             <Button asChild className="w-full justify-center group">
-              <Link href="/beta-signup" className="flex items-center">
+              <Link href="/sign-up" className="flex items-center">
                 Join Beta Program
                 <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
