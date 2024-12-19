@@ -63,7 +63,7 @@ export default function HeroSection() {
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl"
           >
             Join an exclusive group of early adopters shaping the future of
-            learning. Only 100 spots remaining for beta access.
+            learning. 
           </motion.p>
 
           <motion.div

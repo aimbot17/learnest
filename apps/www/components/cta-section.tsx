@@ -72,7 +72,7 @@ export default function CTASection() {
               className="text-lg px-8 py-6 relative group overflow-hidden"
               asChild
             >
-              <Link href="/beta-signup">
+              <Link href="/sign-up">
                 <span className="relative z-10 flex items-center">
                   Join Beta Access
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
