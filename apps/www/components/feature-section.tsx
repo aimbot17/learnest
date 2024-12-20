@@ -73,7 +73,9 @@ const features = [
 export default function FeaturesSection() {
   return (
     <section className="py-16 md:py-24 bg-muted">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 sm:px-4">
+        {" "}
+        {/* Update 2 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +91,9 @@ export default function FeaturesSection() {
             education while enjoying exclusive benefits.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          {" "}
+          {/* Update 3 */}
           {features.map((feature, index) => (
             <FeatureCard key={index} {...feature} index={index} />
           ))}
@@ -114,11 +118,15 @@ function FeatureCard({
       viewport={{ once: true }}
     >
       <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-        <CardHeader>
+        <CardHeader className="p-4 md:p-6">
+          {" "}
+          {/* Update 1 */}
           <div className={`p-3 rounded-full ${color} w-fit`}>{icon}</div>
           <CardTitle className="text-xl font-semibold mt-4">{title}</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 md:p-6 pt-0">
+          {" "}
+          {/* Update 1 */}
           <CardDescription className="text-muted-foreground">
             {description}
           </CardDescription>
