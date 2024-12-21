@@ -1,18 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, ArrowRight, Users } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { Navbar } from "./navbar";
+import { sendPostRequest } from "@/utils/api";
 
 interface AnimatedButtonProps extends ButtonProps {
   children: React.ReactNode;
 }
 
 export default function HeroSection() {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleJoinBeta = async () => {
+    setLoading(true);
+    setMessage("");
+    try {
+      const response = await sendPostRequest({
+        url: "http://localhost:7000/api/beta-access",
+        data: { email },
+      });
+      const { data } = response;
+      setMessage(
+        data.message ||
+          "Thank you for signing up! You've successfully joined our beta program."
+      );
+    } catch (error: any) {
+      setMessage(
+        "Something went wrong while signing up. Please try again later."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-primary/10 to-background">
       <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
@@ -63,7 +89,7 @@ export default function HeroSection() {
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl"
           >
             Join an exclusive group of early adopters shaping the future of
-            learning. 
+            learning.
           </motion.p>
 
           <motion.div
@@ -76,14 +102,18 @@ export default function HeroSection() {
               placeholder="Enter your email"
               type="email"
               className="text-base"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <AnimatedButton
+              onClick={handleJoinBeta}
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              Join the Beta
+              {loading ? "Submitting..." : "Join the Beta"}
               <ArrowRight className="ml-2 h-4 w-4" />
             </AnimatedButton>
+            {message && <p>{message}</p>}
           </motion.div>
 
           <motion.div
