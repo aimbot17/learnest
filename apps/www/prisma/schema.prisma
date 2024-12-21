@@ -23,6 +23,27 @@ model User {
   @@map("users")
 }
 
+model PricingPlan {
+  id           String    @id @default(cuid())
+  name         String
+  monthlyPrice Int
+  yearlyPrice  Int
+  description  String
+  trialDays    Int
+  badge        String?   @default("")
+  highlighted  Boolean   @default(false)
+  features     Feature[]
+}
+
+model Feature {
+  id            String      @id @default(cuid())
+  name          String
+  included      Boolean
+  tooltip       String?     @default("")
+  pricingPlan   PricingPlan @relation(fields: [pricingPlanId], references: [id])
+  pricingPlanId String
+}
+
 model Course {
   id           String     @id @default(cuid())
   title        String

@@ -14,7 +14,7 @@ export const databaseConnect = async (): Promise<void> => {
 
   try {
     const databaseInstance = await mongoose.connect(DB_URI, {
-      dbName: 'constcode',
+      dbName: 'learnest',
     });
     logger.info(
       `MongoDB Connected! DB Host: ${databaseInstance.connection.host}`

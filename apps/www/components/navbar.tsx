@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const navItems = [
-  { name: "For Students", href: "#students" },
-  { name: "For Teachers", href: "#teachers" },
-  { name: "Features", href: "#features" },
-  { name: "Beta Program", href: "#beta" },
+  { name: "Product", href: "#product" },
+  { name: "Solutions", href: "#solutions" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "About", href: "#about" },
+  { name: "Resources", href: "#resources" },
 ];
 
 export function Navbar() {
