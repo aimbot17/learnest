@@ -39,7 +39,7 @@ export default function CTASection() {
             </Badge>
           </motion.div>
 
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl text-primary-foreground font-bold mb-4">
             Be Part of Something{" "}
             <span className="relative">
               Revolutionary

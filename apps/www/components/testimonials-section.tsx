@@ -70,6 +70,12 @@ export default function TestimonialsSection() {
     }
   }, [isInView, controls]);
 
+  // Calculate animation duration based on screen size
+  const getAnimationDuration = () => {
+    if (typeof window === "undefined") return 20;
+    return window.innerWidth < 640 ? 15 : window.innerWidth < 1024 ? 20 : 25;
+  };
+
   // Duplicate testimonials multiple times to ensure smooth scrolling
   const duplicatedTestimonials = [
     ...testimonials,
@@ -79,10 +85,11 @@ export default function TestimonialsSection() {
 
   return (
     <section
-      className="py-12 md:py-24 bg-gradient-to-b from-background to-muted/50 overflow-hidden"
+      className="relative py-6 sm:py-8 md:py-12 lg:py-16 bg-gradient-to-b from-background to-muted/50"
       ref={containerRef}
     >
-      <div className="container mx-auto px-4">
+      {/* Main container with proper max-width constraints */}
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={controls}
@@ -91,28 +98,28 @@ export default function TestimonialsSection() {
             hidden: { opacity: 0, y: 20 },
           }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-6 sm:mb-8 md:mb-10"
         >
-          <Badge variant="secondary" className="mb-4">
-            <Star className="h-3 w-3 mr-1 fill-primary" />
-            Beta Feedback
+          <Badge variant="secondary" className="mb-2 sm:mb-3">
+            <Star className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1 fill-primary" />
+            <span className="text-xs sm:text-sm">Beta Feedback</span>
           </Badge>
-          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2 sm:mb-3">
             What Our Beta Users Are Saying
           </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-[min(85%,40rem)] mx-auto">
             Join our growing community of satisfied beta testers
           </p>
         </motion.div>
 
         {!isLoading && (
-          <div className="relative mx-auto max-w-[100vw] space-y-8">
+          <div className="space-y-6 sm:space-y-8 overflow-hidden">
             {/* First Row - Left to Right */}
-            <div className="relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background to-transparent z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background to-transparent z-10" />
+            <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
+              <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 lg:w-32 bg-gradient-to-r from-background to-transparent z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 lg:w-32 bg-gradient-to-l from-background to-transparent z-10" />
               <motion.div
-                className="flex gap-6"
+                className="flex gap-4 sm:gap-6 px-4 sm:px-6 lg:px-8"
                 animate={{
                   x: ["-50%", "0%"],
                 }}
@@ -120,7 +127,7 @@ export default function TestimonialsSection() {
                   x: {
                     repeat: Infinity,
                     repeatType: "loop",
-                    duration: 20,
+                    duration: getAnimationDuration(),
                     ease: "linear",
                   },
                 }}
@@ -135,11 +142,11 @@ export default function TestimonialsSection() {
             </div>
 
             {/* Second Row - Right to Left */}
-            <div className="relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-background to-transparent z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-background to-transparent z-10" />
+            <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
+              <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 lg:w-32 bg-gradient-to-r from-background to-transparent z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 lg:w-32 bg-gradient-to-l from-background to-transparent z-10" />
               <motion.div
-                className="flex gap-6"
+                className="flex gap-4 sm:gap-6 px-4 sm:px-6 lg:px-8"
                 animate={{
                   x: ["0%", "-50%"],
                 }}
@@ -147,7 +154,7 @@ export default function TestimonialsSection() {
                   x: {
                     repeat: Infinity,
                     repeatType: "loop",
-                    duration: 20,
+                    duration: getAnimationDuration(),
                     ease: "linear",
                   },
                 }}
@@ -170,14 +177,14 @@ export default function TestimonialsSection() {
 function TestimonialCard({ name, content, avatar }: TestimonialCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="w-[280px] sm:w-[300px] md:w-[320px] flex-shrink-0"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 400 }}
+      className="w-[180px] xs:w-[220px] sm:w-[260px] md:w-[300px] lg:w-[320px] flex-shrink-0"
     >
       <Card className="h-full transition-all duration-300 hover:shadow-lg">
-        <CardContent className="p-4 md:p-6">
-          <div className="flex items-center space-x-3 md:space-x-4 mb-3 md:mb-4">
-            <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-primary/20">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full overflow-hidden border-2 border-primary/20">
               <Image
                 src={avatar}
                 alt={name}
@@ -185,19 +192,21 @@ function TestimonialCard({ name, content, avatar }: TestimonialCardProps) {
                 className="rounded-full object-cover"
               />
             </div>
-            <div>
-              <h3 className="font-semibold text-sm md:text-base">{name}</h3>
-              <div className="flex items-center mt-1">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-xs sm:text-sm truncate">
+                {name}
+              </h3>
+              <div className="flex items-center gap-0.5 mt-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="h-3 w-3 md:h-3.5 md:w-3.5 fill-primary text-primary"
+                    className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-primary text-primary"
                   />
                 ))}
               </div>
             </div>
           </div>
-          <p className="text-sm md:text-base text-muted-foreground line-clamp-3 md:line-clamp-4">
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3">
             {content}
           </p>
         </CardContent>
