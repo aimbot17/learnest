@@ -1,9 +1,21 @@
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="max-w-7xl flex flex-col gap-12 items-start">{children}</div>
-  );
+import React from "react";
+import { ReactNode } from "react";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+
+interface AuthLayoutProps {
+  children: ReactNode;
 }
+
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Main Content */}
+      <Navbar />
+      <main className="flex-grow container mx-auto">{children}</main>
+      <Footer />
+    </div>
+  );
+};
+
+export default AuthLayout;

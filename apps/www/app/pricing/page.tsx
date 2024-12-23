@@ -10,7 +10,6 @@ import { TrustBadges } from "@/components/pricing/trust-badges";
 import { BillingSwitchButton } from "@/components/pricing/billing-switch-button";
 import { createClient } from "@/utils/supabase/client";
 import { PricingPlan } from "@/types/pricing";
-import TestimonialsSection from "@/components/testimonials-section";
 
 export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(true);
@@ -20,40 +19,33 @@ export default function PricingPage() {
 
   const fetchData = async () => {
     try {
-      // Fetching the data from the Supabase table
-      const plansQuery = supabase.from("PricingPlan").select(`
-        id,
-        name,
-        monthlyPrice,
-        yearlyPrice,
-        description,
-        trialDays,
-        badge,
-        highlighted,
-        Feature (
+      const { data, error } = await supabase.from("PricingPlan").select(`
           id,
           name,
-          included,
-          tooltip
-        )
-      `);
+          monthlyPrice,
+          yearlyPrice,
+          description,
+          trialDays,
+          badge,
+          highlighted,
+          Feature (
+            id,
+            name,
+            included,
+            tooltip
+          )
+        `);
 
-      // Destructuring the result to access data and error
-      const { data, error } = await plansQuery;
-
-      // Handle error if present
       if (error) {
         console.error("Error fetching plans:", error);
-        return; // Early return on error
+        return;
       }
 
-      // Map through the data and include the features
       const plansWithFeatures = (data || []).map((plan: any) => ({
         ...plan,
-        features: plan.Feature, // Adding Feature as features
+        features: plan.Feature,
       }));
 
-      // Set the fetched data into state
       setPlans(plansWithFeatures);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -67,15 +59,15 @@ export default function PricingPage() {
   const memoizedPlans = useMemo(() => plans, [plans]);
 
   return (
-    <div className="container mx-auto py-16 px-4 space-y-16">
+    <div className="relative min-h-screen flex flex-col items-center bg-gradient-to-b from-primary/10 via-primary/5 to-background w-full">
       {/* Header Section */}
-      <div className="text-center max-w-3xl mx-auto">
+      <div className="text-center max-w-3xl mx-auto mt-16 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl font-bold tracking-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
             Simple, Transparent Pricing
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
@@ -90,8 +82,9 @@ export default function PricingPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
+        className="w-full px-4 mb-12"
       >
-        <Alert className="bg-primary/10 border-primary max-w-2xl mx-auto">
+        <Alert className="bg-primary/10 border-primary">
           <Timer className="h-4 w-4" />
           <AlertTitle>Limited Time Offer</AlertTitle>
           <AlertDescription>
@@ -102,36 +95,28 @@ export default function PricingPage() {
       </motion.div>
 
       {/* Billing Switch */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-12">
         <BillingSwitchButton isYearly={isYearly} onToggle={setIsYearly} />
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full px-4">
         {memoizedPlans.length > 0 ? (
           memoizedPlans.map((plan: PricingPlan) => (
             <PricingCard key={plan.id} plan={plan} isYearly={isYearly} />
           ))
         ) : (
-          <p>Loading pricing plans...</p>
+          <p className="text-center col-span-3">Loading pricing plans...</p>
         )}
       </div>
 
       {/* Trust Badges */}
-      <div className="py-12 border-y">
+      <div className="py-12 border-y w-full px-4">
         <TrustBadges />
       </div>
 
-      <div>
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Trusted by Leading Organizations
-        </h2>
-        {/* Assuming your testimonials component handles the rendering of testimonials */}
-        <TestimonialsSection />
-      </div>
-
       {/* FAQ and Support */}
-      <div className="text-center max-w-2xl mx-auto">
+      <div className="text-center w-full px-4 mb-16">
         <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
         <p className="text-muted-foreground mb-6">
           Our team is here to help you find the perfect plan for your needs.

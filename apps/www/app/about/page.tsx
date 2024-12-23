@@ -9,9 +9,14 @@ import {
   Target,
   Heart,
   Zap,
+  Award,
+  ThumbsUp,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import TeamMemberGrid from "@/components/team-member-grid";
+import TrustBadges from "@/components/trust-badges";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -25,19 +30,19 @@ const stagger = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/10 via-background to-background/50">
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 max-w-6xl">
         <motion.section
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-foreground">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
             About EduManage
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Empowering educators and learners with innovative technology
-            solutions.
+            solutions since 2015.
           </p>
         </motion.section>
 
@@ -45,10 +50,12 @@ export default function AboutPage() {
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="grid md:grid-cols-2 gap-12 mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <motion.div variants={fadeIn}>
-            <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
+          <motion.div variants={fadeIn} className="mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+              Our Mission
+            </h2>
             <p className="text-muted-foreground mb-4">
               At EduManage, our mission is to revolutionize education through
               technology. We strive to create intuitive and powerful tools that
@@ -63,7 +70,9 @@ export default function AboutPage() {
             </p>
           </motion.div>
           <motion.div variants={fadeIn}>
-            <h2 className="text-3xl font-semibold mb-4">Our Vision</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+              Our Vision
+            </h2>
             <p className="text-muted-foreground mb-4">
               We envision a future where technology seamlessly integrates with
               education, breaking down barriers and opening up new possibilities
@@ -82,12 +91,12 @@ export default function AboutPage() {
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl font-semibold mb-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center">
             Our Values
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 icon: BookOpen,
@@ -127,7 +136,7 @@ export default function AboutPage() {
               },
             ].map((value, index) => (
               <motion.div key={index} variants={fadeIn}>
-                <Card className="h-full">
+                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
                     <CardTitle className="flex items-center text-primary">
                       <value.icon className="mr-2 h-5 w-5" />
@@ -147,10 +156,10 @@ export default function AboutPage() {
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl font-semibold mb-6">Our Story</h2>
-          <div className="bg-card rounded-lg p-6 shadow-lg">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6">Our Story</h2>
+          <div className="bg-muted rounded-lg p-6 sm:p-8 shadow-lg">
             <p className="text-card-foreground mb-4">
               EduManage was born out of a shared frustration among educators and
               administrators with the limitations of existing educational
@@ -183,9 +192,11 @@ export default function AboutPage() {
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl font-semibold mb-6 text-center">Our Team</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center">
+            Our Team
+          </h2>
           <motion.p
             variants={fadeIn}
             className="text-muted-foreground text-center mb-8"
@@ -196,28 +207,19 @@ export default function AboutPage() {
             business management. We're united by our commitment to improving
             learning experiences through technology.
           </motion.p>
-          <motion.p
-            variants={fadeIn}
-            className="text-muted-foreground text-center"
-          >
-            From our customer support representatives to our senior leadership,
-            every member of the EduManage team is dedicated to our mission. We
-            work tirelessly to ensure that our platform not only meets but
-            exceeds the expectations of our users, constantly pushing the
-            boundaries of what's possible in educational technology.
-          </motion.p>
+          <TeamMemberGrid />
         </motion.section>
 
         <motion.section
           initial="hidden"
           animate="visible"
           variants={fadeIn}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl font-semibold mb-6">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6">
             Innovation and Customer Satisfaction
           </h2>
-          <div className="bg-card rounded-lg p-6 shadow-lg">
+          <div className="bg-muted rounded-lg p-6 sm:p-8 shadow-lg">
             <p className="text-card-foreground mb-4">
               At EduManage, innovation is not just a buzzword—it's a core part
               of our DNA. We're constantly exploring new technologies and
@@ -241,7 +243,7 @@ export default function AboutPage() {
               our users' success that drives us to continually improve and
               innovate.
             </p>
-            <div className="text-center">
+            <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Button
                 size="lg"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
@@ -249,8 +251,60 @@ export default function AboutPage() {
                 Join Our Community
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="hover:bg-secondary/80"
+              >
+                Schedule a Demo
+                <MessageCircle className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
+        </motion.section>
+
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="mb-12 sm:mb-16"
+        >
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center">
+            Awards and Recognition
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+              <Award className="h-12 w-12 mx-auto text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">
+                Best EdTech Solution
+              </h3>
+              <p className="text-muted-foreground">
+                EdTech Breakthrough Awards 2022
+              </p>
+            </Card>
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+              <ThumbsUp className="h-12 w-12 mx-auto text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Top Rated LMS</h3>
+              <p className="text-muted-foreground">G2 Crowd Leader 2023</p>
+            </Card>
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300">
+              <Users className="h-12 w-12 mx-auto text-primary mb-4" />
+              <h3 className="text-xl font-semibold mb-2">1 Million+ Users</h3>
+              <p className="text-muted-foreground">Across 50+ countries</p>
+            </Card>
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="mb-12 sm:mb-16"
+        >
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center">
+            Trusted By
+          </h2>
+          <TrustBadges />
         </motion.section>
       </div>
     </div>

@@ -82,7 +82,7 @@ export default function SolutionsPage() {
   const [activeTab, setActiveTab] = useState("schools");
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background">
+    <div className="relative min-h-[100svh] flex items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background">
       {/* Background patterns */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
@@ -117,8 +117,8 @@ export default function SolutionsPage() {
               Tailored Solutions
             </Badge>
           </motion.div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-foreground">
-            EduManage Solutions
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
+            Learnest Solutions
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Discover how EduManage adapts to the unique needs of various

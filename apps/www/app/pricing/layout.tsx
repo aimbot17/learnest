@@ -1,21 +1,21 @@
 import React from "react";
-import { ReactNode } from "react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
 interface LayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Main Content */}
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <main className="flex-grow container mx-auto">{children}</main>
+      <main className="flex-grow container px-0 md:px-8 w-full lg:max-w-6xl xl:max-w-7xl lg:mx-auto">
+        {children}
+      </main>
       <Footer />
     </div>
   );
 };
 
-export default DashboardLayout;
+export default Layout;

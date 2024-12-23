@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useId } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,7 @@ import { Sparkles, ArrowRight, Users, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { sendPostRequest } from "@/utils/api";
 import { validateEmail } from "@/lib/validate";
+import { fadeIn, slideUp, scaleIn } from "@/lib/animation";
 import type { BetaResponse, AnimatedButtonProps } from "@/types/hero";
 import type { ButtonProps } from "@/components/ui/button";
 
@@ -18,11 +19,20 @@ function AnimatedButton({
   ...props
 }: AnimatedButtonProps & ButtonProps) {
   return (
-    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-      <Button disabled={loading} {...props}>
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full sm:w-auto"
+    >
+      <Button
+        disabled={loading}
+        {...props}
+        className={`w-full sm:w-auto ${props.className}`}
+      >
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <span className="sr-only">Loading</span>
             Please wait
           </>
         ) : (
@@ -34,10 +44,10 @@ function AnimatedButton({
 }
 
 const benefits = [
-  { color: "bg-green-500", text: "Early Access" },
-  { color: "bg-blue-500", text: "Priority Support" },
-  { color: "bg-purple-500", text: "Founder Benefits" },
-];
+  { color: "bg-green-500", text: "Early Access", icon: "✨" },
+  { color: "bg-blue-500", text: "Priority Support", icon: "🎯" },
+  { color: "bg-purple-500", text: "Founder Benefits", icon: "👑" },
+] as const;
 
 export default function HeroSection() {
   const [email, setEmail] = useState("");
@@ -48,6 +58,7 @@ export default function HeroSection() {
   } | null>(null);
   const [touched, setTouched] = useState(false);
 
+  const emailId = useId();
   const isValidEmail = validateEmail(email);
   const showEmailError = touched && email && !isValidEmail;
 
@@ -62,7 +73,7 @@ export default function HeroSection() {
 
     try {
       const response = await sendPostRequest<BetaResponse>({
-        url: "http://localhost:7000/api/beta-access",
+        url: "/api/beta-access",
       });
 
       setMessage({
@@ -84,28 +95,18 @@ export default function HeroSection() {
   };
 
   return (
-    <div className="relative min-h-[100svh] flex items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background">
-      {/* Background patterns - made responsive */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-to-bl from-primary/5 to-transparent transform rotate-45" />
-        <div className="absolute -bottom-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-tr from-primary/5 to-transparent transform rotate-45" />
-      </div>
-
+    <section
+      className="relative min-h-[100svh] flex items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background"
+      aria-labelledby="hero-heading"
+    >
       <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            {...fadeIn}
             className="flex flex-col items-center gap-4 sm:gap-6 lg:gap-8 w-full max-w-[90rem] mx-auto"
           >
-            {/* Badge - Responsive sizing and spacing */}
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-              className="mb-2 sm:mb-4"
-            >
+            {/* Beta Badge */}
+            <motion.div {...slideUp} className="mb-2 sm:mb-4">
               <Badge
                 variant="secondary"
                 className="px-3 py-1 sm:px-4 sm:py-1.5 text-xs sm:text-sm font-medium shadow-md hover:shadow-lg transition-shadow"
@@ -115,16 +116,10 @@ export default function HeroSection() {
               </Badge>
             </motion.div>
 
-            {/* Heading - Fluid typography and spacing */}
+            {/* Main Heading */}
             <motion.h1
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-                delay: 0.2,
-              }}
+              id="hero-heading"
+              {...slideUp}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.2] tracking-tight text-center px-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80"
             >
               Be Among the First to Experience Our{" "}
@@ -133,55 +128,47 @@ export default function HeroSection() {
               </span>
             </motion.h1>
 
-            {/* Subheading - Responsive text and width */}
+            {/* Subheading */}
             <motion.p
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30,
-                delay: 0.4,
-              }}
+              {...slideUp}
               className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-[85%] sm:max-w-[75%] lg:max-w-2xl text-center mx-auto px-4"
             >
               Join an exclusive group of early adopters shaping the future of
               learning.
             </motion.p>
 
-            {/* Form section - Improved mobile layout */}
+            {/* Form Section */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
+              {...scaleIn}
               className="w-full max-w-[85%] sm:max-w-md mx-auto mt-4 sm:mt-6 space-y-4"
             >
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleJoinBeta();
+                }}
+                className="flex flex-col sm:flex-row gap-3 w-full"
+              >
                 <div className="flex-1">
+                  <label htmlFor={emailId} className="sr-only">
+                    Email address
+                  </label>
                   <Input
+                    id={emailId}
                     placeholder="Enter your email"
                     type="email"
                     className="h-10 sm:h-12 text-sm sm:text-base w-full"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => setTouched(true)}
-                    aria-label="Email address"
-                    aria-invalid={showEmailError ? "true" : "false"}
+                    aria-invalid={showEmailError || undefined}
                     aria-describedby={
-                      showEmailError ? "email-error" : undefined
+                      showEmailError ? `${emailId}-error` : undefined
                     }
                   />
-                  {showEmailError && (
-                    <p
-                      id="email-error"
-                      className="text-xs sm:text-sm text-destructive mt-1"
-                    >
-                      Please enter a valid email address
-                    </p>
-                  )}
                 </div>
                 <AnimatedButton
-                  onClick={handleJoinBeta}
+                  type="submit"
                   size="lg"
                   className="h-10 sm:h-12 px-4 sm:px-8 whitespace-nowrap bg-primary text-primary-foreground hover:bg-primary/90"
                   loading={loading}
@@ -189,14 +176,30 @@ export default function HeroSection() {
                   <span className="text-sm sm:text-base">Join the Beta</span>
                   <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                 </AnimatedButton>
-              </div>
+              </form>
+
+              <AnimatePresence>
+                {message && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <Alert
+                      variant={
+                        message.type === "error" ? "destructive" : "default"
+                      }
+                    >
+                      <AlertDescription>{message.text}</AlertDescription>
+                    </Alert>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
 
-            {/* Users count - Responsive text and padding */}
+            {/* Users Count */}
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
+              {...fadeIn}
               className="flex items-center gap-1.5 sm:gap-2 text-muted-foreground bg-muted/50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mt-4 sm:mt-6"
             >
               <Users className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -205,11 +208,9 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Benefits grid - Responsive layout and spacing */}
+            {/* Benefits Grid */}
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
+              {...fadeIn}
               className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 mt-6 sm:mt-8 w-full max-w-[85%] sm:max-w-2xl mx-auto"
             >
               {benefits.map((benefit, index) => (
@@ -217,12 +218,14 @@ export default function HeroSection() {
                   key={benefit.text}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 + index * 0.1 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
                   className="flex items-center justify-center gap-1.5 sm:gap-2 bg-muted/50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <span
                     className={`h-1.5 w-1.5 sm:h-2 sm:w-2 ${benefit.color} rounded-full`}
+                    aria-hidden="true"
                   />
+                  <span>{benefit.icon}</span>
                   {benefit.text}
                 </motion.div>
               ))}
@@ -230,6 +233,6 @@ export default function HeroSection() {
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
