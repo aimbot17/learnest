@@ -10,7 +10,7 @@
     "dev": "tsc-watch --onSuccess \"node --trace-warnings -r dotenv/config --experimental-json-modules dist/api/main.js\"",
     "start": "node dist/main.js",
     "build": "tsc -b",
-   "vercel-build": "yarn install && yarn build"
+    "vercel-build": "yarn install && yarn build"
   },
   "keywords": [
     "express",
@@ -48,6 +48,7 @@
     "mongoose": "^8.2.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
+    "serverless-http": "^3.2.0",
     "winston": "^3.15.0"
   },
   "_moduleAliases": {

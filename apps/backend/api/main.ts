@@ -1,3 +1,7 @@
+// handler.ts
+import serverless from 'serverless-http'; 
 import app from '../src/index';
 
-export default app;
+const handler = serverless(app);
+
+export default handler; 

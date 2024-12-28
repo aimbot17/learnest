@@ -7,7 +7,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes/index.route';
-import { CORS_ORIGIN, PORT } from './config/config';
+import { CORS_ORIGIN } from './config/config';
 import {
   databaseConnect,
   handleDatabaseConnectionError,
@@ -44,7 +44,7 @@ class Server {
   private initializeErrorHandling() {
     this.app.use(
       (err: Error, req: Request, res: Response, next: express.NextFunction) => {
-        logger.error(`Internal Server Error: ${err.message}`); // Log the error
+        logger.error(`Internal Server Error: ${err.message}`);
         res.status(500).send(`Internal Server Error: ${err.message}`);
       }
     );
@@ -59,23 +59,23 @@ class Server {
     }
   }
 
-  // This method will be called in the serverless handler
-  public handleRequest(req: Request, res: Response) {
-    this.connectToDatabase()
-      .then(() => {
-        this.app(req, res); // Use Express app to handle the request
-      })
-      .catch((error) => {
-        logger.error(`Database connection error: ${(error as Error).message}`);
-        res.status(500).send('Database connection failed');
-      });
+  public getApp() {
+    return this.app;
   }
 }
 
-// Instantiate the server class
 const server = new Server();
 
-// Export the Vercel handler function
-export default function handler(req: Request, res: Response) {
-  server.handleRequest(req, res);
+if (process.env.NODE_ENV !== 'production') {
+  server.connectToDatabase()
+    .then(() => {
+      server.getApp().listen(3000, () => {
+        console.log('Server is running on http://localhost:3000');
+      });
+    })
+    .catch((error) => {
+      console.error(`Error: ${error.message}`);
+    });
 }
+
+export default server.getApp();  

@@ -77,7 +77,7 @@ export default function Home() {
 
     try {
       const response = await sendPostRequest<BetaResponse>({
-        url: "/api/beta-access",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/beta-access`,
         data: { email },
       });
 
