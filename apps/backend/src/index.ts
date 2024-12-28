@@ -7,7 +7,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes/index.route';
-import { CORS_ORIGIN } from './config/config';
+import { CORS_ORIGIN, PORT } from './config/config';
 import {
   databaseConnect,
   handleDatabaseConnectionError,
@@ -67,10 +67,11 @@ class Server {
 const server = new Server();
 
 if (process.env.NODE_ENV !== 'production') {
-  server.connectToDatabase()
+  server
+    .connectToDatabase()
     .then(() => {
-      server.getApp().listen(3000, () => {
-        console.log('Server is running on http://localhost:3000');
+      server.getApp().listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
       });
     })
     .catch((error) => {
@@ -78,4 +79,4 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-export default server.getApp();  
+export default server.getApp();
