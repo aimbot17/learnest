@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import BetaAccessController from "@/controllers/BetaAccessController"; 
+import BetaAccessController from "../../../controllers/BetaAccessController"; 
 
 export async function POST(req: NextRequest) {
   return await BetaAccessController.createBetaAccess(req);
