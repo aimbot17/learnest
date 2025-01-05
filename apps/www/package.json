@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "vercel-build": "yarn prisma generate && yarn build"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
