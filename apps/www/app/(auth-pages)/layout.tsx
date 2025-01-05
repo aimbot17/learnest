@@ -12,7 +12,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
     <div className="min-h-screen flex flex-col">
       {/* Main Content */}
       <Navbar />
-      <main className="flex-grow container mx-auto">{children}</main>
+      <main>{children}</main>
       <Footer />
     </div>
   );

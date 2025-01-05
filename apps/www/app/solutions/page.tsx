@@ -82,23 +82,24 @@ export default function SolutionsPage() {
   const [activeTab, setActiveTab] = useState("schools");
 
   return (
-    <div className="relative min-h-[100svh] flex items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background">
-      {/* Background patterns */}
+    <div className="relative min-h-[100svh] flex flex-col text-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 overflow-hidden">
+      {/* Enhanced Background patterns */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.03] dark:opacity-[0.02]" />
         <div
-          className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-to-bl from-primary/5 to-transparent rounded-full transform rotate-45 animate-pulse"
-          style={{ animationDuration: "10s" }}
-        />
-        <div
-          className="absolute -bottom-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-tr from-primary/5 to-transparent rounded-full transform rotate-45 animate-pulse"
+          className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-to-bl from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
           style={{ animationDuration: "15s" }}
         />
+        <div
+          className="absolute -bottom-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-tr from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
+          style={{ animationDuration: "20s" }}
+        />
+        <div className="absolute inset-0 bg-background/50 backdrop-blur-3xl" />
       </div>
 
-      <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-16 z-10">
+      <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 z-10">
         <motion.section
-          className="mb-16 text-center"
+          className="mb-24 text-center"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
@@ -107,20 +108,20 @@ export default function SolutionsPage() {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="mb-4"
+            className="mb-6"
           >
             <Badge
               variant="secondary"
-              className="px-3 py-1 text-sm font-medium shadow-md hover:shadow-lg transition-shadow"
+              className="px-4 py-1.5 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm bg-background/80"
             >
-              <Sparkles className="mr-1 h-3.5 w-3.5" />
+              <Sparkles className="mr-2 h-4 w-4" />
               Tailored Solutions
             </Badge>
           </motion.div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
             Learnest Solutions
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
             Discover how EduManage adapts to the unique needs of various
             educational organizations.
           </p>
@@ -130,19 +131,19 @@ export default function SolutionsPage() {
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="mb-16"
+          className="mb-24"
         >
           <Tabs
             defaultValue="schools"
             className="w-full"
             onValueChange={setActiveTab}
           >
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 mb-12 bg-background/50 backdrop-blur-sm">
               {solutions.map((solution) => (
                 <TabsTrigger
                   key={solution.id}
                   value={solution.id}
-                  className="text-lg"
+                  className="text-lg data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
                 >
                   <solution.icon className="mr-2 h-5 w-5" />
                   {solution.title}
@@ -157,77 +158,74 @@ export default function SolutionsPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <Card className="overflow-hidden">
+                    <Card className="overflow-hidden border-primary/10 hover:border-primary/20 transition-colors duration-300">
                       <div
                         className={`h-2 bg-gradient-to-r ${solution.color}`}
                       />
-                      <CardHeader>
-                        <CardTitle className="text-2xl flex items-center">
-                          <solution.icon className="mr-2 h-6 w-6 text-primary" />
-                          {solution.title}
+                      <CardHeader className="p-8">
+                        <CardTitle className="text-3xl flex items-center space-x-3">
+                          <solution.icon className="h-8 w-8 text-primary" />
+                          <span>{solution.title}</span>
                         </CardTitle>
                       </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground mb-6">
+                      <CardContent className="p-8 pt-0">
+                        <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
                           {solution.description}
                         </p>
-                        <div className="grid md:grid-cols-2 gap-8">
-                          <div>
-                            <h3 className="text-xl font-semibold mb-2">
+                        <div className="grid md:grid-cols-2 gap-12">
+                          <div className="space-y-6">
+                            <h3 className="text-2xl font-semibold mb-6">
                               Key Challenges Addressed:
                             </h3>
-                            <ul className="space-y-2">
+                            <ul className="space-y-4">
                               {solution.challenges.map((challenge, index) => (
-                                <li key={index} className="flex items-start">
-                                  <CheckCircle className="mr-2 h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                                  <span className="text-muted-foreground">
+                                <li
+                                  key={index}
+                                  className="flex items-start group"
+                                >
+                                  <CheckCircle className="mr-3 h-6 w-6 text-primary flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
+                                  <span className="text-muted-foreground text-lg leading-relaxed">
                                     {challenge}
                                   </span>
                                 </li>
                               ))}
                             </ul>
                           </div>
-                          <div>
-                            <h3 className="text-xl font-semibold mb-2">
+                          <div className="space-y-6">
+                            <h3 className="text-2xl font-semibold mb-6">
                               Real-World Impact:
                             </h3>
-                            <p className="text-muted-foreground mb-4">
+                            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                               {solution.scenario}
                             </p>
-                            <div className="grid grid-cols-3 gap-4 mt-6">
-                              <div className="text-center">
-                                <div className="text-2xl font-bold text-primary">
-                                  {solution.stats.users}
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                  Active Users
-                                </div>
-                              </div>
-                              <div className="text-center">
-                                <div className="text-2xl font-bold text-primary">
-                                  {solution.stats.satisfaction}
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                  Satisfaction Rate
-                                </div>
-                              </div>
-                              <div className="text-center">
-                                <div className="text-2xl font-bold text-primary">
-                                  {solution.stats.timesSaved}
-                                </div>
-                                <div className="text-sm text-muted-foreground">
-                                  Time Saved
-                                </div>
-                              </div>
+                            <div className="grid grid-cols-3 gap-6 mt-8">
+                              {Object.entries(solution.stats).map(
+                                ([key, value]) => (
+                                  <div
+                                    key={key}
+                                    className="text-center p-4 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors duration-300"
+                                  >
+                                    <div className="text-3xl font-bold text-primary mb-2">
+                                      {value}
+                                    </div>
+                                    <div className="text-sm text-muted-foreground capitalize">
+                                      {key.replace(/([A-Z])/g, " $1").trim()}
+                                    </div>
+                                  </div>
+                                )
+                              )}
                             </div>
                           </div>
                         </div>
-                        <div className="mt-8">
-                          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                        <div className="mt-12 text-center">
+                          <Button
+                            size="lg"
+                            className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                          >
                             Explore {solution.title} Solution
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                            <ArrowRight className="ml-2 h-5 w-5" />
                           </Button>
                         </div>
                       </CardContent>
@@ -243,12 +241,12 @@ export default function SolutionsPage() {
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="mb-16"
+          className="mb-24"
         >
-          <h2 className="text-3xl font-semibold mb-8 text-center text-foreground">
+          <h2 className="text-4xl font-bold mb-16 text-center text-foreground">
             Key Benefits Across All Organizations
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {[
               {
                 icon: Users,
@@ -270,15 +268,15 @@ export default function SolutionsPage() {
               },
             ].map((benefit, index) => (
               <motion.div key={index} variants={fadeIn}>
-                <Card className="h-full bg-card hover:shadow-lg transition-all duration-300 group">
-                  <CardHeader>
-                    <CardTitle className="flex items-center text-primary group-hover:text-primary/80 transition-colors">
-                      <benefit.icon className="mr-2 h-5 w-5" />
+                <Card className="h-full bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 group border-primary/10 hover:border-primary/20">
+                  <CardHeader className="p-6">
+                    <CardTitle className="flex items-center text-xl text-primary group-hover:scale-105 transition-transform duration-300">
+                      <benefit.icon className="mr-3 h-6 w-6" />
                       {benefit.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground group-hover:text-foreground transition-colors">
+                  <CardContent className="p-6 pt-0">
+                    <p className="text-lg text-muted-foreground group-hover:text-foreground transition-colors duration-300 leading-relaxed">
                       {benefit.description}
                     </p>
                   </CardContent>
@@ -289,24 +287,31 @@ export default function SolutionsPage() {
         </motion.section>
 
         <motion.section
-          className="text-center"
+          className="text-center relative py-16"
           initial="hidden"
           animate="visible"
           variants={fadeIn}
         >
-          <h2 className="text-3xl font-semibold mb-4 text-foreground">
+          <div className="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+            <div className="relative aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary to-primary/50 opacity-20" />
+          </div>
+          <h2 className="text-4xl font-bold mb-8 text-foreground">
             Ready to Transform Your Educational Organization?
           </h2>
-          <p className="text-xl mb-8 text-muted-foreground">
+          <p className="text-2xl mb-12 text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Discover how EduManage can be tailored to your specific needs.
           </p>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block"
+          >
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Request a Demo
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </motion.div>
         </motion.section>

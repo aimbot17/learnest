@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -10,6 +10,8 @@ import {
   Users,
   Lightbulb,
   Search,
+  Library,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -125,7 +127,7 @@ const resources = [
   },
 ];
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 9; // Changed to 9 for better grid layout
 
 export default function ResourcesPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -160,136 +162,221 @@ export default function ResourcesPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background">
-      <div className="container mx-auto px-4 py-16">
+    <div className="relative min-h-[100svh] bg-gradient-to-br from-primary/5 via-background to-primary/10 overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.03] dark:opacity-[0.02]" />
+        <div
+          className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-to-bl from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
+          style={{ animationDuration: "15s" }}
+        />
+        <div
+          className="absolute -bottom-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-tr from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
+          style={{ animationDuration: "20s" }}
+        />
+        <div className="absolute inset-0 bg-background/50 backdrop-blur-3xl" />
+      </div>
+
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 z-10">
         <motion.section
           initial="hidden"
           animate="visible"
-          variants={fadeIn}
-          className="text-center mb-16"
+          variants={stagger}
+          className="text-center mb-24"
         >
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
+          <motion.div variants={fadeIn} className="mb-6">
+            <Badge
+              variant="secondary"
+              className="px-4 py-1.5 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm bg-background/80"
+            >
+              <Library className="mr-2 h-4 w-4" />
+              Knowledge Hub
+            </Badge>
+          </motion.div>
+          <motion.h1
+            variants={fadeIn}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80"
+          >
             Learnest Resources
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+          </motion.h1>
+          <motion.p
+            variants={fadeIn}
+            className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
             Empower your educational journey with our comprehensive collection
-            of resources, designed to support educators and administrators in
-            delivering exceptional learning experiences.
-          </p>
-          <div className="flex justify-center mb-8">
-            <div className="relative w-full max-w-md">
+            of resources, designed to support educators and administrators.
+          </motion.p>
+          <motion.div variants={fadeIn} className="flex justify-center mb-12">
+            <div className="relative w-full max-w-2xl">
               <Input
                 type="text"
                 placeholder="Search resources..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setCurrentPage(1); 
+                  setCurrentPage(1);
                 }}
-                className="pl-10 pr-4 py-2 w-full"
+                className="pl-12 pr-4 py-6 w-full text-lg rounded-xl border-primary/20 bg-background/80 backdrop-blur-sm hover:border-primary/30 transition-colors duration-300"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-6 w-6" />
             </div>
-          </div>
+          </motion.div>
         </motion.section>
 
-        <Tabs
-          defaultValue="all"
-          className="mb-12"
-          onValueChange={(value) => {
-            setActiveTab(value);
-            setCurrentPage(1); 
-          }}
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          className="mb-16"
         >
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-8">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="blog">Blog Articles</TabsTrigger>
-            <TabsTrigger value="guide">Guides</TabsTrigger>
-            <TabsTrigger value="whitepaper">Whitepapers</TabsTrigger>
-            <TabsTrigger value="webinar">Webinars</TabsTrigger>
-            <TabsTrigger value="case_study">Case Studies</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        <motion.section initial="hidden" animate="visible" variants={stagger}>
-          {displayedResources.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayedResources.map((resource, index) => (
-                <motion.div key={index} variants={fadeIn}>
-                  <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-                    <CardHeader>
-                      <CardTitle className="flex items-center text-primary">
-                        <resource.icon className="mr-2 h-5 w-5" />
-                        {resource.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground mb-4">
-                        {resource.description}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <Badge variant="secondary">{resource.category}</Badge>
-                        <Button variant="ghost" size="sm">
-                          Learn More
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+          <Tabs
+            defaultValue="all"
+            onValueChange={(value) => {
+              setActiveTab(value);
+              setCurrentPage(1);
+            }}
+          >
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 mb-12 p-1 bg-background/50 backdrop-blur-sm">
+              {[
+                "all",
+                "blog",
+                "guide",
+                "whitepaper",
+                "webinar",
+                "case_study",
+              ].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
+                  className="text-base capitalize data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all duration-300"
+                >
+                  {tab.replace("_", " ")}
+                </TabsTrigger>
               ))}
-            </div>
-          ) : (
-            <p className="text-center text-muted-foreground">
-              No resources found. Please try a different search term.
-            </p>
-          )}
+            </TabsList>
+          </Tabs>
+        </motion.section>
+
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
+          className="mb-16"
+        >
+          <AnimatePresence mode="wait">
+            {displayedResources.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+                {displayedResources.map((resource, index) => (
+                  <motion.div key={index} variants={fadeIn} layout>
+                    <Card className="h-full bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 group border-primary/10 hover:border-primary/20">
+                      <CardHeader className="p-6">
+                        <CardTitle className="flex items-center text-xl text-primary group-hover:scale-105 transition-transform duration-300">
+                          <resource.icon className="mr-3 h-6 w-6" />
+                          {resource.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0">
+                        <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                          {resource.description}
+                        </p>
+                        <div className="flex justify-between items-center">
+                          <Badge
+                            variant="secondary"
+                            className="py-1.5 px-3 text-sm capitalize"
+                          >
+                            {resource.category}
+                          </Badge>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="group-hover:text-primary transition-colors duration-300"
+                          >
+                            Learn More
+                            <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <motion.div variants={fadeIn} className="text-center py-12">
+                <p className="text-xl text-muted-foreground">
+                  No resources found. Please try a different search term.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.section>
 
         {filteredResources.length > ITEMS_PER_PAGE && (
-          <div className="flex justify-center items-center mt-8 gap-4">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="flex justify-center items-center mb-24 gap-6"
+          >
             <Button
               variant="outline"
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
+              className="border-primary/20 hover:bg-primary/5 text-lg px-6 py-5 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Previous
             </Button>
-            <span>
+            <span className="text-lg text-muted-foreground">
               Page {currentPage} of {totalPages}
             </span>
             <Button
               variant="outline"
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
+              className="border-primary/20 hover:bg-primary/5 text-lg px-6 py-5 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Next
             </Button>
-          </div>
+          </motion.div>
         )}
 
         <motion.section
           initial="hidden"
           animate="visible"
-          variants={fadeIn}
-          className="mt-16 text-center"
+          variants={stagger}
+          className="text-center relative py-16"
         >
-          <h2 className="text-3xl font-semibold mb-6">
+          <div className="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+            <div className="relative aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary to-primary/50 opacity-20" />
+          </div>
+          <motion.h2
+            variants={fadeIn}
+            className="text-3xl sm:text-4xl font-bold mb-6 text-foreground"
+          >
             Unlock the Full Potential of EduManage
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+          </motion.h2>
+          <motion.p
+            variants={fadeIn}
+            className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed"
+          >
             Our resources are designed to help you make the most of our
             platform. Whether you're an educator looking to enhance your
             teaching methods or an administrator aiming to streamline
             operations, we have the insights you need.
-          </p>
-          <Button
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          </motion.p>
+          <motion.div
+            variants={fadeIn}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block"
           >
-            Subscribe to Our Newsletter
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+            <Button
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              Subscribe to Our Newsletter
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </motion.div>
         </motion.section>
       </div>
     </div>
