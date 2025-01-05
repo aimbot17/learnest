@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import EmailService from "@/utils/mailer";
-import prisma from "@/utils/prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const EMAIL_TEMPLATE = {
   subject: "Beta Access Request Under Review",
