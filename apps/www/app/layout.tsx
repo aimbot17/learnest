@@ -5,6 +5,9 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { LoadingFallback } from "@/components/loading-fallback";
 // import { Analytics } from "@/components/analytics";
 // import { SpeedInsights } from "@/components/speed-insights";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import Link from "next/link";
 
 import "./globals.css";
 
@@ -108,6 +111,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       </head>
       <body className="relative min-h-screen bg-background font-sans text-foreground antialiased">
+        <Navbar />
         <ErrorBoundary
           fallback={<div>Something went wrong. Please try again.</div>}
         >
@@ -142,13 +146,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           aria-label="Skip to main content"
           className="fixed top-0 left-0 z-50"
         >
-          <a
-            href="#main-content"
+          <Link
+            href="/"
             className="sr-only focus:not-sr-only focus:block focus:p-4 focus:bg-background focus:text-foreground"
           >
             Skip to main content
-          </a>
+          </Link>
         </div>
+        <Footer />
       </body>
     </html>
   );

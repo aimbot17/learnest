@@ -1,110 +1,76 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
-interface RequestOptions<T = Record<string, any>, U = Record<string, any>> {
+interface APIResponse<T = any> {
+  success: boolean;
+  status: number | null;
+  message: string;
+  data: T | null;
+}
+
+interface RequestOptions<T = any, U = Record<string, any>> {
   url: string;
   data?: U;
   headers?: Record<string, string>;
   timeout?: number;
-  params?: Record<string, any>;
+  params?: Record<string, string | number | boolean>;
 }
 
-/**
- * Handles errors thrown by Axios requests.
- * @param {any} error - Axios error object.
- * @throws {Error} - Re-throws an error with a detailed message.
- */
-function handleAxiosError(error: any): never {
+function handleAxiosError<T>(error: any): APIResponse<T> {
   if (error.response) {
-    const { status, statusText, data } = error.response;
-    console.error("Server Error:", data);
-    throw new Error(
-      `Server responded with status ${status} (${statusText}): ${
-        data.message || "Unknown error"
-      }`
-    );
+    const { status, data } = error.response;
+    return {
+      success: false,
+      status,
+      message: data.message || "Unknown error",
+      data: null,
+    };
   } else if (error.request) {
     console.error("Network Error:", error.message);
-    throw new Error("Network error. Please check your connection.");
+    return {
+      success: false,
+      status: null,
+      message: "Network error. Please check your connection.",
+      data: null,
+    };
   } else {
     console.error("Error:", error.message);
-    throw new Error("Error in setting up the request: " + error.message);
+    return {
+      success: false,
+      status: null,
+      message: "Error in setting up the request: " + error.message,
+      data: null,
+    };
   }
 }
+
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: { "Content-Type": "application/json" },
+  timeout: 5000,
+});
 
 /**
  * Sends a POST request using Axios.
  * @param {RequestOptions<T, U>} options - Request configuration.
- * @returns {Promise<AxiosResponse<T>>} - Response data or throws an error.
+ * @returns {Promise<{ success: boolean; data?: T; error?: any }>} - Response data or error JSON.
  */
 export async function sendPostRequest<
   T = Record<string, any>,
   U = Record<string, any>,
->({
-  url,
-  data = {} as U,
-  headers = { "Content-Type": "application/json" },
-  timeout = 5000,
-}: RequestOptions<T, U>): Promise<AxiosResponse<T>> {
-  try {
-    return await axios.post<T>(url, data, { headers, timeout });
-  } catch (error) {
-    handleAxiosError(error);
-  }
-}
+>(
+  options: RequestOptions<T, U>
+): Promise<{ success: boolean; data?: T; error?: any }> {
+  const {
+    url,
+    data = {} as U,
+    headers = { "Content-Type": "application/json" },
+    timeout = 5000,
+  } = options;
 
-/**
- * Sends a GET request using Axios.
- * @param {RequestOptions<T>} options - Request configuration.
- * @returns {Promise<AxiosResponse<T>>} - Response data or throws an error.
- */
-export async function sendGetRequest<T = Record<string, any>>({
-  url,
-  headers = { "Content-Type": "application/json" },
-  timeout = 5000,
-  params = {},
-}: RequestOptions<T>): Promise<AxiosResponse<T>> {
   try {
-    return await axios.get<T>(url, { headers, timeout, params });
+    const response = await axios.post<T>(url, data, { headers, timeout });
+    return { success: true, data: response.data };
   } catch (error) {
-    handleAxiosError(error);
-  }
-}
-
-/**
- * Sends a PUT request using Axios.
- * @param {RequestOptions<T, U>} options - Request configuration.
- * @returns {Promise<AxiosResponse<T>>} - Response data or throws an error.
- */
-export async function sendPutRequest<
-  T = Record<string, any>,
-  U = Record<string, any>,
->({
-  url,
-  data = {} as U,
-  headers = { "Content-Type": "application/json" },
-  timeout = 5000,
-}: RequestOptions<T, U>): Promise<AxiosResponse<T>> {
-  try {
-    return await axios.put<T>(url, data, { headers, timeout });
-  } catch (error) {
-    handleAxiosError(error);
-  }
-}
-
-/**
- * Sends a DELETE request using Axios.
- * @param {RequestOptions<T>} options - Request configuration.
- * @returns {Promise<AxiosResponse<T>>} - Response data or throws an error.
- */
-export async function sendDeleteRequest<T = Record<string, any>>({
-  url,
-  headers = { "Content-Type": "application/json" },
-  timeout = 5000,
-  params = {},
-}: RequestOptions<T>): Promise<AxiosResponse<T>> {
-  try {
-    return await axios.delete<T>(url, { headers, timeout, params });
-  } catch (error) {
-    handleAxiosError(error);
+    return { success: false, error: handleAxiosError(error) };
   }
 }

@@ -1,21 +1,20 @@
 "use client";
-import FeaturesSection from "@/components/feature-section";
-import CTASection from "@/components/cta-section";
-import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
 
-import { useState, useId } from "react";
+import { useState, useId, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Sparkles, ArrowRight, Users, Loader2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { sendPostRequest } from "@/utils/api";
 import { validateEmail } from "@/lib/validate";
 import { fadeIn, slideUp, scaleIn } from "@/lib/animation";
 import type { BetaResponse, AnimatedButtonProps } from "@/types/hero";
 import type { ButtonProps } from "@/components/ui/button";
-import { Badge /*Navbar */ } from "@repo/ui/main";
+import { Badge } from "@repo/ui/main";
+import { useToast } from "@/hooks/use-toast";
+import FeaturesSection from "@/components/feature-section";
+import CTASection from "@/components/cta-section";
 
 const benefits = [
   { text: "Early Access", icon: "✨" },
@@ -56,24 +55,25 @@ function AnimatedButton({
 export default function Home() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{
-    text: string;
-    type: "success" | "error";
-  } | null>(null);
   const [touched, setTouched] = useState(false);
 
   const emailId = useId();
   const isValidEmail = validateEmail(email);
   const showEmailError = touched && email && !isValidEmail;
 
-  const handleJoinBeta = async () => {
+  const { toast } = useToast();
+
+  const handleJoinBeta = useCallback(async () => {
     if (!isValidEmail) {
-      setMessage({ text: "Please enter a valid email address", type: "error" });
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address",
+        variant: "destructive",
+      });
       return;
     }
 
     setLoading(true);
-    setMessage(null);
 
     try {
       const response = await sendPostRequest<BetaResponse>({
@@ -81,27 +81,37 @@ export default function Home() {
         data: { email },
       });
 
-      setMessage({
-        text:
-          response.data.message ||
-          "Welcome to our beta program! Check your email for next steps.",
-        type: "success",
-      });
-      setEmail("");
-      setTouched(false);
-    } catch (error) {
-      setMessage({
-        text: "We couldn't process your request. Please try again in a few moments.",
-        type: "error",
+      if (response.success) {
+        toast({
+          title: "Success",
+          description:
+            response.data?.message ||
+            "Welcome to our beta program! Check your email for next steps.",
+        });
+
+        setEmail("");
+        setTouched(false);
+      } else {
+        toast({
+          title: "Error",
+          description: response.error.message || "Unexpected error occurred.",
+          variant: "destructive",
+        });
+      }
+    } catch (error: any) {
+      console.error("Unexpected Error:", error);
+      toast({
+        title: "Error",
+        description: error.message || "Unexpected error occurred.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [email, isValidEmail, toast]);
 
   return (
-    <div className="relative  min-h-[100svh] flex flex-col text-center justify-center bg-gradient-to-b from-primary/10 via-primary/5 to-background">
-      <Navbar />
+    <div className="relative min-h-[100svh] flex flex-col bg-gradient-to-b from-primary/10 via-primary/5 to-background">
       <section
         className="relative min-h-[90svh] sm:min-h-[85svh] lg:min-h-[80svh] flex items-center bg-gradient-to-b from-primary/10 via-primary/5 to-background"
         aria-labelledby="hero-heading"
@@ -186,18 +196,16 @@ export default function Home() {
                 </form>
 
                 <AnimatePresence>
-                  {message && (
+                  {showEmailError && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                     >
-                      <Alert
-                        variant={
-                          message.type === "error" ? "destructive" : "default"
-                        }
-                      >
-                        <AlertDescription>{message.text}</AlertDescription>
+                      <Alert variant="destructive">
+                        <AlertDescription>
+                          Please enter a valid email address.
+                        </AlertDescription>
                       </Alert>
                     </motion.div>
                   )}
@@ -243,7 +251,6 @@ export default function Home() {
       </section>
       <FeaturesSection />
       <CTASection />
-      <Footer />
     </div>
   );
 }
