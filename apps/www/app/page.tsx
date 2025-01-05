@@ -100,13 +100,13 @@ export default function Home() {
   };
 
   return (
-    <main className="relative w-screen min-h-[100svh] flex flex-col items-cente bg-gradient-to-b from-primary/10 via-primary/5 to-background">
+    <div className="relative  min-h-[100svh] flex flex-col text-center justify-center bg-gradient-to-b from-primary/10 via-primary/5 to-background">
       <Navbar />
       <section
-        className="relative min-h-[90svh] sm:min-h-[85svh] lg:min-h-[80svh] flex items-center overflow-hidden bg-gradient-to-b from-primary/10 via-primary/5 to-background"
+        className="relative min-h-[90svh] sm:min-h-[85svh] lg:min-h-[80svh] flex items-center bg-gradient-to-b from-primary/10 via-primary/5 to-background"
         aria-labelledby="hero-heading"
       >
-        <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+        <div className="relative w-full py-12 sm:py-16 lg:py-24">
           <div className="flex flex-col items-center">
             <motion.div
               {...fadeIn}
@@ -147,7 +147,7 @@ export default function Home() {
               {/* Form Section */}
               <motion.div
                 {...scaleIn}
-                className="w-full max-w-[95%] sm:max-w-lg lg:max-w-xl mx-auto mt-6 sm:mt-8 lg:mt-10 space-y-4"
+                className="w-full sm:max-w-lg lg:max-w-xl mx-auto mt-6 sm:mt-8 lg:mt-10 space-y-4"
               >
                 <form
                   onSubmit={(e) => {
@@ -244,6 +244,6 @@ export default function Home() {
       <FeaturesSection />
       <CTASection />
       <Footer />
-    </main>
+    </div>
   );
 }

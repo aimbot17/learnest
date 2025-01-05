@@ -84,7 +84,7 @@ export function Navbar() {
         hidden: { y: "-100%" },
       }}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40"
+      className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b border-border/40"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -102,11 +102,12 @@ export function Navbar() {
                 <GraduationCap className="h-8 w-8 text-primary" />
               </motion.div>
               <motion.span
-                className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/50 bg-clip-text text-transparent"
+                className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent"
                 whileHover={{ scale: 1.02 }}
               >
                 Learnest
               </motion.span>
+
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Badge variant="secondary" className="hidden sm:flex">
                   <BookOpen className="h-3 w-3 mr-1" />
