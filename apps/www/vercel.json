@@ -1,0 +1,12 @@
+{
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["prisma/**"] }
+    }
+  ],
+  "scripts": {
+    "vercel-build": "prisma generate && next build"
+  }
+}
