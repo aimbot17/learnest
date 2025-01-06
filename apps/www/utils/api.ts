@@ -74,3 +74,35 @@ export async function sendPostRequest<
     return { success: false, error: handleAxiosError(error) };
   }
 }
+
+/**
+ * Sends a GET request using Axios.
+ * @param {RequestOptions<T>} options - Request configuration.
+ * @returns {Promise<APIResponse<T>>} - Response data or error JSON.
+ */
+export async function sendGetRequest<T = Record<string, any>>(
+  options: RequestOptions<T>
+): Promise<APIResponse<T>> {
+  const {
+    url,
+    headers = { "Content-Type": "application/json" },
+    timeout = axiosInstance.defaults.timeout,
+    params,
+  } = options;
+
+  try {
+    const response = await axiosInstance.get<T>(url, {
+      headers,
+      timeout,
+      params,
+    });
+    return {
+      success: true,
+      status: response.status,
+      message: "Request successful",
+      data: response.data,
+    };
+  } catch (error: any) {
+    return handleAxiosError(error);
+  }
+}

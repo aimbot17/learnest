@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,15 +16,7 @@ import {
   BarChart,
   CheckCircle,
 } from "lucide-react";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-};
+import { useToast } from "@/hooks/use-toast";
 
 const solutions = [
   {
@@ -80,6 +71,14 @@ const solutions = [
 
 export default function SolutionsPage() {
   const [activeTab, setActiveTab] = useState("schools");
+  const { toast } = useToast();
+
+  const handleDemoRequest = () => {
+    toast({
+      title: "Demo Requested",
+      description: "We'll be in touch shortly to schedule your demo.",
+    });
+  };
 
   return (
     <div className="relative min-h-[100svh] flex flex-col text-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10 overflow-hidden">
@@ -98,18 +97,8 @@ export default function SolutionsPage() {
       </div>
 
       <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 z-10">
-        <motion.section
-          className="mb-24 text-center"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-        >
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="mb-6"
-          >
+        <section className="mb-24 text-center animate-fadeIn">
+          <div className="mb-6 animate-slideDown">
             <Badge
               variant="secondary"
               className="px-4 py-1.5 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm bg-background/80"
@@ -117,22 +106,17 @@ export default function SolutionsPage() {
               <Sparkles className="mr-2 h-4 w-4" />
               Tailored Solutions
             </Badge>
-          </motion.div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 animate-slideUp">
             Learnest Solutions
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-fadeIn">
             Discover how EduManage adapts to the unique needs of various
             educational organizations.
           </p>
-        </motion.section>
+        </section>
 
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="mb-24"
-        >
+        <section className="mb-24 animate-fadeIn">
           <Tabs
             defaultValue="schools"
             className="w-full"
@@ -152,97 +136,83 @@ export default function SolutionsPage() {
             </TabsList>
             {solutions.map((solution) => (
               <TabsContent key={solution.id} value={solution.id}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={solution.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <Card className="overflow-hidden border-primary/10 hover:border-primary/20 transition-colors duration-300">
-                      <div
-                        className={`h-2 bg-gradient-to-r ${solution.color}`}
-                      />
-                      <CardHeader className="p-8">
-                        <CardTitle className="text-3xl flex items-center space-x-3">
-                          <solution.icon className="h-8 w-8 text-primary" />
-                          <span>{solution.title}</span>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-8 pt-0">
-                        <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
-                          {solution.description}
-                        </p>
-                        <div className="grid md:grid-cols-2 gap-12">
-                          <div className="space-y-6">
-                            <h3 className="text-2xl font-semibold mb-6">
-                              Key Challenges Addressed:
-                            </h3>
-                            <ul className="space-y-4">
-                              {solution.challenges.map((challenge, index) => (
-                                <li
-                                  key={index}
-                                  className="flex items-start group"
+                <div className="animate-fadeIn">
+                  <Card className="overflow-hidden border-primary/10 hover:border-primary/20 transition-colors duration-300">
+                    <div className={`h-2 bg-gradient-to-r ${solution.color}`} />
+                    <CardHeader className="p-8">
+                      <CardTitle className="text-3xl flex items-center space-x-3">
+                        <solution.icon className="h-8 w-8 text-primary" />
+                        <span>{solution.title}</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-8 pt-0">
+                      <p className="text-lg text-muted-foreground mb-12 leading-relaxed">
+                        {solution.description}
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-12">
+                        <div className="space-y-6">
+                          <h3 className="text-2xl font-semibold mb-6">
+                            Key Challenges Addressed:
+                          </h3>
+                          <ul className="space-y-4">
+                            {solution.challenges.map((challenge, index) => (
+                              <li
+                                key={index}
+                                className="flex items-start group"
+                              >
+                                <CheckCircle className="mr-3 h-6 w-6 text-primary flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
+                                <span className="text-muted-foreground text-lg leading-relaxed">
+                                  {challenge}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="space-y-6">
+                          <h3 className="text-2xl font-semibold mb-6">
+                            Real-World Impact:
+                          </h3>
+                          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                            {solution.scenario}
+                          </p>
+                          <div className="grid grid-cols-3 gap-6 mt-8">
+                            {Object.entries(solution.stats).map(
+                              ([key, value]) => (
+                                <div
+                                  key={key}
+                                  className="text-center p-4 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors duration-300"
                                 >
-                                  <CheckCircle className="mr-3 h-6 w-6 text-primary flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
-                                  <span className="text-muted-foreground text-lg leading-relaxed">
-                                    {challenge}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className="space-y-6">
-                            <h3 className="text-2xl font-semibold mb-6">
-                              Real-World Impact:
-                            </h3>
-                            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                              {solution.scenario}
-                            </p>
-                            <div className="grid grid-cols-3 gap-6 mt-8">
-                              {Object.entries(solution.stats).map(
-                                ([key, value]) => (
-                                  <div
-                                    key={key}
-                                    className="text-center p-4 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors duration-300"
-                                  >
-                                    <div className="text-3xl font-bold text-primary mb-2">
-                                      {value}
-                                    </div>
-                                    <div className="text-sm text-muted-foreground capitalize">
-                                      {key.replace(/([A-Z])/g, " $1").trim()}
-                                    </div>
+                                  <div className="text-3xl font-bold text-primary mb-2">
+                                    {value}
                                   </div>
-                                )
-                              )}
-                            </div>
+                                  <div className="text-sm text-muted-foreground capitalize">
+                                    {key.replace(/([A-Z])/g, " $1").trim()}
+                                  </div>
+                                </div>
+                              )
+                            )}
                           </div>
                         </div>
-                        <div className="mt-12 text-center">
-                          <Button
-                            size="lg"
-                            className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
-                          >
-                            Explore {solution.title} Solution
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </AnimatePresence>
+                      </div>
+                      <div className="mt-12 text-center">
+                        <Button
+                          size="lg"
+                          className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                          onClick={handleDemoRequest}
+                        >
+                          Explore {solution.title} Solution
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </TabsContent>
             ))}
           </Tabs>
-        </motion.section>
+        </section>
 
-        <motion.section
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="mb-24"
-        >
+        <section className="mb-24 animate-fadeIn">
           <h2 className="text-4xl font-bold mb-16 text-center text-foreground">
             Key Benefits Across All Organizations
           </h2>
@@ -267,7 +237,11 @@ export default function SolutionsPage() {
                   "Make informed decisions with comprehensive analytics and reporting tools.",
               },
             ].map((benefit, index) => (
-              <motion.div key={index} variants={fadeIn}>
+              <div
+                key={index}
+                className="animate-fadeIn"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <Card className="h-full bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 group border-primary/10 hover:border-primary/20">
                   <CardHeader className="p-6">
                     <CardTitle className="flex items-center text-xl text-primary group-hover:scale-105 transition-transform duration-300">
@@ -281,17 +255,12 @@ export default function SolutionsPage() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section
-          className="text-center relative py-16"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-        >
+        <section className="text-center relative py-16 animate-fadeIn">
           <div className="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl">
             <div className="relative aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary to-primary/50 opacity-20" />
           </div>
@@ -301,20 +270,17 @@ export default function SolutionsPage() {
           <p className="text-2xl mb-12 text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Discover how EduManage can be tailored to your specific needs.
           </p>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block"
-          >
+          <div className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={handleDemoRequest}
             >
               Request a Demo
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
       </div>
     </div>
   );

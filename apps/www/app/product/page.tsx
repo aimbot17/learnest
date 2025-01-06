@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,8 +15,13 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { fadeIn, stagger, buttonHover, slideIn } from "@/lib/animation";
-import type { Feature } from "@/types/product";
+import { useToast } from "@/hooks/use-toast";
+
+interface Feature {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+}
 
 const coreFeatures: Feature[] = [
   {
@@ -84,15 +87,22 @@ const benefits: Feature[] = [
 ];
 
 export default function ProductPage() {
+  const { toast } = useToast();
+
+  const handleStartTrial = () => {
+    toast({
+      title: "Trial Started!",
+      description:
+        "Welcome to your free trial of Learnest. Enjoy exploring our platform!",
+    });
+  };
+
   return (
     <div className="relative min-h-[100svh] flex flex-col text-center justify-center bg-gradient-to-br from-primary/5 via-background to-primary/10">
       <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24">
         {/* Hero Section */}
-        <motion.section
-          className="mb-32 text-center relative"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
+        <section
+          className="mb-32 text-center relative animate-fadeIn"
           aria-labelledby="product-title"
         >
           <div
@@ -101,7 +111,7 @@ export default function ProductPage() {
           >
             <div className="relative aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-secondary opacity-20" />
           </div>
-          <motion.div variants={slideIn} className="mb-6">
+          <div className="mb-6 animate-slideDown">
             <Badge
               variant="secondary"
               className="px-4 py-1.5 text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm bg-background/80"
@@ -109,49 +119,46 @@ export default function ProductPage() {
               <Sparkles className="mr-2 h-4 w-4" aria-hidden="true" />
               Revolutionary CMS/LMS
             </Badge>
-          </motion.div>
+          </div>
           <h1
             id="product-title"
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 animate-slideUp"
           >
             Learnest: Empowering Education
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed animate-fadeIn">
             Transform your educational institution with our cutting-edge CMS/LMS
             solution.
           </p>
-          <motion.div variants={buttonHover} whileHover="hover" whileTap="tap">
+          <div className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={handleStartTrial}
             >
               Start Free Trial
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
             </Button>
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
 
         {/* Core Features */}
-        <motion.section
-          className="mb-32"
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
+        <section
+          className="mb-32 animate-fadeIn"
           aria-labelledby="features-title"
         >
-          <motion.h2
+          <h2
             id="features-title"
-            variants={fadeIn}
             className="text-4xl font-bold mb-16 text-center text-foreground"
           >
             Core Features
-          </motion.h2>
+          </h2>
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {coreFeatures.map((feature, index) => (
-              <motion.div
+              <div
                 key={feature.title}
-                variants={fadeIn}
-                className="h-full"
+                className="h-full animate-fadeIn"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <Card className="h-full bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-300 border-primary/10 hover:border-primary/20 group">
                   <CardHeader>
@@ -169,32 +176,28 @@ export default function ProductPage() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* How It Works */}
-        <motion.section
-          className="mb-32 max-w-4xl mx-auto"
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
+        <section
+          className="mb-32 max-w-4xl mx-auto animate-fadeIn"
           aria-labelledby="steps-title"
         >
-          <motion.h2
+          <h2
             id="steps-title"
-            variants={fadeIn}
             className="text-4xl font-bold mb-16 text-center text-foreground"
           >
             How It Works
-          </motion.h2>
+          </h2>
           <div className="space-y-6">
             {steps.map((step, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={fadeIn}
-                className="bg-background/80 backdrop-blur-sm p-6 rounded-xl hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20 transform hover:-translate-y-1"
+                className="bg-background/80 backdrop-blur-sm p-6 rounded-xl hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20 transform hover:-translate-y-1 animate-fadeIn"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <strong className="text-primary text-lg block mb-2">
                   Step {index + 1}
@@ -202,32 +205,28 @@ export default function ProductPage() {
                 <span className="text-muted-foreground text-lg leading-relaxed">
                   {step}
                 </span>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* Why Choose Us */}
-        <motion.section
-          className="mb-32"
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
+        <section
+          className="mb-32 animate-fadeIn"
           aria-labelledby="benefits-title"
         >
-          <motion.h2
+          <h2
             id="benefits-title"
-            variants={fadeIn}
             className="text-4xl font-bold mb-16 text-center text-foreground"
           >
             Why Choose Us
-          </motion.h2>
+          </h2>
           <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
             {benefits.map((benefit, index) => (
-              <motion.div
+              <div
                 key={benefit.title}
-                variants={fadeIn}
-                className="flex items-start group"
+                className="flex items-start group animate-fadeIn"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <benefit.icon
                   className="mr-6 text-primary shrink-0 h-8 w-8 group-hover:scale-110 transition-transform duration-300"
@@ -241,17 +240,14 @@ export default function ProductPage() {
                     {benefit.description}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* Final CTA */}
-        <motion.section
-          className="text-center relative py-16"
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
+        <section
+          className="text-center relative py-16 animate-fadeIn"
           aria-labelledby="cta-title"
         >
           <div
@@ -270,16 +266,17 @@ export default function ProductPage() {
             Join thousands of satisfied educational institutions and experience
             the power of Learnest.
           </p>
-          <motion.div variants={buttonHover} whileHover="hover" whileTap="tap">
+          <div className="inline-block transition-transform duration-300 hover:scale-105 active:scale-95">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={handleStartTrial}
             >
               Start Your Free Trial Today
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
             </Button>
-          </motion.div>
-        </motion.section>
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -161,7 +161,7 @@ export function Footer() {
               variant="secondary"
               className="text-[10px] sm:text-xs px-1.5 py-0.5"
             >
-              0.1.0
+              0.3.0
             </Badge>
           </div>
         </div>
