@@ -61,7 +61,6 @@ export default function HeroSection() {
   const emailId = useId();
   const isValidEmail = validateEmail(email);
   const showEmailError = touched && email && !isValidEmail;
-
   const handleJoinBeta = async () => {
     if (!isValidEmail) {
       setMessage({ text: "Please enter a valid email address", type: "error" });
@@ -73,18 +72,22 @@ export default function HeroSection() {
 
     try {
       const response = await sendPostRequest<BetaResponse>({
-        url: "/api/beta-access",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/beta-access`,
         data: { email },
       });
 
-      setMessage({
-        text:
-          response.data.message ||
-          "Welcome to our beta program! Check your email for next steps.",
-        type: "success",
-      });
-      setEmail("");
-      setTouched(false);
+      if (response.success && response.data) {
+        setMessage({
+          text:
+            response.data.message ||
+            "Welcome to our beta program! Check your email for next steps.",
+          type: "success",
+        });
+        setEmail("");
+        setTouched(false);
+      } else {
+        throw new Error(response.error?.message || "Unknown error");
+      }
     } catch (error) {
       setMessage({
         text: "We couldn't process your request. Please try again in a few moments.",

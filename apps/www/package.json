@@ -1,12 +1,11 @@
 {
   "name": "learnest",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "vercel-build": "yarn prisma generate && yarn build"
+    "start": "next start"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
@@ -21,6 +20,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@react-spring/web": "^9.7.5",
     "@repo/ui": "*",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
