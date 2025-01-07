@@ -96,7 +96,7 @@ export default function SolutionsPage() {
         <div className="absolute inset-0 bg-background/50 backdrop-blur-3xl" />
       </div>
 
-      <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 z-10">
+      <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 z-10">
         <section className="mb-24 text-center animate-fadeIn">
           <div className="mb-6 animate-slideDown">
             <Badge
