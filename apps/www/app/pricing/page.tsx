@@ -59,20 +59,6 @@ export default function PricingPage() {
 
   return (
     <div className="relative min-h-[100svh] flex flex-col items-center bg-gradient-to-br from-primary/5 via-background to-primary/10 w-full overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.03] dark:opacity-[0.02]" />
-        <div
-          className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-to-bl from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
-          style={{ animationDuration: "15s" }}
-        />
-        <div
-          className="absolute -bottom-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-tr from-primary/10 to-transparent rounded-full transform rotate-45 animate-pulse"
-          style={{ animationDuration: "20s" }}
-        />
-        <div className="absolute inset-0 bg-background/50 backdrop-blur-3xl" />
-      </div>
-
       <div className="container relative w-full mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 z-10">
         {/* Header Section */}
         <section className="text-center mb-24 animate-fadeIn">
