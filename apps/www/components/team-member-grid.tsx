@@ -4,25 +4,25 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const teamMembers = [
   {
-    name: "Dr. Amanda Foster",
+    name: "Utsav joshi",
     role: "CEO & Co-founder",
     avatar: "/avatars/amanda-foster.jpg",
     bio: "Former educator with 15 years of experience, passionate about leveraging technology to improve education.",
   },
   {
-    name: "David Chen",
+    name: "Love sutariya",
     role: "CTO & Co-founder",
     avatar: "/avatars/david-chen.jpg",
     bio: "Software engineer with a background in AI and machine learning, dedicated to creating innovative EdTech solutions.",
   },
   {
-    name: "Maria Rodriguez",
+    name: "Rajat asthana",
     role: "Head of Product",
     avatar: "/avatars/maria-rodriguez.jpg",
     bio: "Ex-teacher turned UX designer, focused on creating intuitive and user-friendly educational platforms.",
   },
   {
-    name: "James Thompson",
+    name: "Shrey hardasani",
     role: "Head of Customer Success",
     avatar: "/avatars/james-thompson.jpg",
     bio: "Former school administrator with a knack for understanding and addressing the needs of educational institutions.",

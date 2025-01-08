@@ -67,14 +67,14 @@ export default function AboutPage() {
             variants={fadeIn}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80"
           >
-            About EduManage
+            About learnest
           </motion.h1>
           <motion.p
             variants={fadeIn}
             className="text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
             Empowering educators and learners with innovative technology
-            solutions since 2015.
+            solutions.
           </motion.p>
         </motion.section>
 
@@ -91,17 +91,15 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  At EduManage, our mission is to revolutionize education
-                  through technology. We strive to create intuitive and powerful
-                  tools that enhance the learning experience, streamline
-                  administrative tasks, and foster collaboration between
-                  educators, students, and institutions.
+                At Learnest, we are transforming education by harnessing the power of technology.
+                Our goal is to empower educators, engage students, and simplify institutional processes with
+                innovative and user-friendly tools. By bridging the gap between traditional learning and modern advancements,
+                we foster collaboration, inspire growth, and create a seamless educational ecosystem for all stakeholders.
                 </p>
                 <p>
-                  We believe that by empowering educational organizations with
-                  the right tools, we can contribute to a world where quality
-                  education is accessible, engaging, and tailored to individual
-                  needs.
+                At Learnest, we believe that empowering educational organizations with the right tools is the key to creating
+                a world where quality education is accessible to everyone. Our mission is to make learning engaging, personalized,
+                and adaptable to the unique needs of each individual, ensuring no one is left behind in their educational journey.
                 </p>
               </div>
             </motion.div>
@@ -111,15 +109,14 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  We envision a future where technology seamlessly integrates
-                  with education, breaking down barriers and opening up new
-                  possibilities for learning and growth. Our goal is to be at
-                  the forefront of this transformation, continually innovating
-                  and adapting to the evolving needs of the education sector.
+                At Learnest, we envision a future where technology serves as a catalyst for transformative education, 
+                seamlessly integrating into learning environments to break down barriers and unlock endless possibilities. 
+                Our aspiration is to lead this evolution by driving innovation, adapting to 
+                the ever-changing needs of educators and learners, and creating solutions that empower 
+                every stakeholder in the education ecosystem.
                 </p>
                 <p>
-                  We see EduManage as not just a tool, but a catalyst for
-                  positive change in education worldwide.
+                We see Learnest as not just a platform, but a catalyst for positive transformation in education across the globe.
                 </p>
               </div>
             </motion.div>
@@ -208,30 +205,27 @@ export default function AboutPage() {
           <Card className="bg-background/80 backdrop-blur-sm border-primary/10 hover:border-primary/20 transition-all duration-300">
             <CardContent className="p-8 sm:p-12 space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                EduManage was born out of a shared frustration among educators
-                and administrators with the limitations of existing educational
-                software. Our founders, a team of experienced educators and
-                software engineers, came together in 2015 with a vision to
-                create a comprehensive, user-friendly platform that would
-                address the real needs of educational institutions.
+              Learnest was born out of a shared frustration among educators and administrators 
+              with the inefficiencies of traditional educational software. A team 
+              of passionate educators and innovative software engineers joined forces to bring their vision 
+              to life: a comprehensive, user-friendly platform designed to meet the real-world needs of 
+              educational institutions. Learnest represents the fusion of expertise and innovation, driven by 
+              a commitment to reshape the future of education.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                What started as a simple tool for course management quickly
-                evolved into a full-fledged CMS/LMS solution. As we collaborated
-                with schools, universities, and training centers, we gained
-                invaluable insights that shaped our product. We listened to the
-                challenges faced by our users and continuously refined our
-                platform to meet their needs.
+              What began as a simple tool for course management quickly evolved 
+              into a robust CMS/LMS solution. Through collaboration with schools, 
+              universities, and training centers, we gained invaluable insights that 
+              have shaped Learnest into what it is today. By listening closely to the challenges 
+              faced by our users, we have continually refined and enhanced our platform to 
+              provide solutions that truly meet the diverse needs of the education community.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Today, EduManage is used by thousands of educational
-                institutions worldwide, from small private schools to large
-                universities. Our impact on the education industry has been
-                significant, with many of our users reporting increased
-                efficiency, improved student engagement, and better learning
-                outcomes. We're proud of how far we've come, but we're even more
-                excited about the future and the continued positive change we
-                can bring to education.
+              Today, Learnest is trusted by thousands of educational institutions worldwide, 
+              ranging from small private schools to large universities. Our impact on the education 
+              sector has been profound, with many of our users reporting increased efficiency, enhanced 
+              student engagement, and improved learning outcomes. While we’re proud of our journey so far, 
+              we’re even more excited about the future and the continued positive transformation we can bring to education.
               </p>
             </CardContent>
           </Card>
@@ -253,10 +247,10 @@ export default function AboutPage() {
             variants={fadeIn}
             className="text-xl text-muted-foreground text-center mb-16 max-w-3xl mx-auto leading-relaxed"
           >
-            Behind EduManage is a diverse team of passionate educators,
-            experienced developers, and visionary leaders. Our combined
-            expertise spans decades in education, software development, and
-            business management.
+            Behind Learnest is a diverse group of passionate educators, 
+            experienced developers, and visionary leaders. Together, 
+            our combined expertise spans decades in education, software development, 
+            and business management, driving us to innovate and shape the future of education.
           </motion.p>
           <TeamMemberGrid />
         </motion.section>
@@ -274,28 +268,20 @@ export default function AboutPage() {
             <CardContent className="p-8 sm:p-12 space-y-8">
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  At EduManage, innovation is not just a buzzword—it's a core
-                  part of our DNA. We're constantly exploring new technologies
-                  and methodologies to enhance our platform. From integrating
-                  AI-powered learning assistants to developing advanced
-                  analytics tools, we're always looking for ways to stay ahead
-                  of the curve and provide our users with cutting-edge
-                  solutions.
+                 At Learnest, innovation is more than just a buzzword—it’s at the heart of everything we do.
+                 We are constantly exploring new technologies and methodologies to enhance our platform. 
+                 From integrating AI-powered learning assistants to developing advanced analytics tools, we are always 
+                 ahead of the curve, committed to delivering cutting-edge solutions that meet the evolving needs of our users.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  But innovation without purpose is meaningless. That's why we
-                  place such a high emphasis on customer satisfaction. We
-                  maintain open lines of communication with our users, regularly
-                  soliciting feedback and ideas. Our customer support team is
-                  known for its responsiveness and dedication to solving user
-                  issues promptly and effectively.
+                 But innovation without purpose is meaningless. That’s why we place such a strong emphasis on customer satisfaction. 
+                 We maintain open lines of communication with our users, regularly seeking feedback and ideas to improve. 
+                 Our customer support team is renowned for its responsiveness and commitment to resolving user concerns quickly and effectively.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  We believe that our success is directly tied to the success of
-                  our users. When educational institutions thrive using our
-                  platform, we consider that our greatest achievement. It's this
-                  commitment to our users' success that drives us to continually
-                  improve and innovate.
+                 We believe that our success is directly tied to the success of our users. 
+                 When educational institutions thrive with the help of Learnest, we consider that our greatest achievement. 
+                 It’s this unwavering commitment to our users' success that drives us to continuously improve and innovate.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
